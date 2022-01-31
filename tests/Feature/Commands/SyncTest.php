@@ -1,5 +1,7 @@
 <?php
 
+use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
+
 it('updates the .env file with missing keys', function () {
     $this->artisan('envsync:sync')
         ->assertSuccessful();
@@ -15,3 +17,8 @@ it('can perform a dry run', function () {
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
 });
+
+it('returns success if performing a dry run but no changes are required', function () {
+    $this->artisan('envsync:sync', ['--dry' => true])
+        ->assertSuccessful();
+})->shouldUseAction(FindsEnvironmentCalls::class, collect());

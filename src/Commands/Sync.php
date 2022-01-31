@@ -15,18 +15,17 @@ use Worksome\Envsync\Support\EnvironmentCall;
 class Sync extends Command
 {
     public $signature = 'envsync:sync
-        {--dry : Run without making actual changes to the env files to see which variables will be added.}
+        {--dry : Run without making actual changes to the .env files to see which variables will be added.}
     ';
 
-    public $description = 'Sync your configured environment files based on calls to env.';
+    public $description = 'Sync your configured .env files based on calls to env in config files.';
 
     public function handle(
-        Finder                  $finder,
-        FindsEnvironmentCalls   $findEnvironmentCalls,
+        Finder $finder,
+        FindsEnvironmentCalls $findEnvironmentCalls,
         FiltersEnvironmentCalls $filterEnvironmentCalls,
-        UpdatesEnvironmentFile  $updateEnvironmentFile,
-    ): int
-    {
+        UpdatesEnvironmentFile $updateEnvironmentFile,
+    ): int {
         $allEnvironmentCalls = $this->environmentCalls($finder->configFilePaths(), $findEnvironmentCalls);
 
         /** @var Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates */
