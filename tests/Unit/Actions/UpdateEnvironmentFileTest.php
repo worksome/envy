@@ -3,7 +3,7 @@
 use Worksome\Envsync\Actions\FindEnvironmentCalls;
 use Worksome\Envsync\Actions\FormatEnvironmentCall;
 use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Actions\UpdateEnvironmentFile;
+use Worksome\Envsync\Actions\UpdateEnvironmentFile\UpdateEnvironmentFile;
 
 it('updates the environment file with missing keys', function () {
     $findEnvironmentVariables = new FindEnvironmentCalls(defaultPhpParser());

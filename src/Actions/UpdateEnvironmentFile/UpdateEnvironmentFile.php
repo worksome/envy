@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envsync\Actions\UpdateEnvironmentFile;
 
 use Illuminate\Support\Collection;
 use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
@@ -10,6 +10,8 @@ use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envsync\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envsync\Support\EnvironmentCall;
 use Worksome\Envsync\Support\EnvironmentVariable;
+
+use function Safe\file_put_contents;
 
 final class UpdateEnvironmentFile implements UpdatesEnvironmentFile
 {

@@ -10,7 +10,7 @@ use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Worksome\Envsync\Actions\FindEnvironmentCalls;
 use Worksome\Envsync\Actions\FormatEnvironmentCall;
 use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Actions\UpdateEnvironmentFile;
+use Worksome\Envsync\Actions\UpdateEnvironmentFile\UpdateEnvironmentFile;
 use Worksome\Envsync\Commands\Sync;
 use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
