@@ -6,6 +6,7 @@ namespace Worksome\Envsync\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
+use Worksome\Envsync\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envsync\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envsync\Contracts\Finder;
@@ -20,14 +21,36 @@ class Sync extends Command
     public $description = 'Sync your configured environment files based on calls to env.';
 
     public function handle(
-        Finder $finder,
-        FindsEnvironmentCalls $findEnvironmentVariables,
-        UpdatesEnvironmentFile $updateEnvironmentFile,
-    ): int {
-        $environmentCalls = $this->environmentCalls($finder->configFilePaths(), $findEnvironmentVariables);
+        Finder                  $finder,
+        FindsEnvironmentCalls   $findEnvironmentCalls,
+        FiltersEnvironmentCalls $filterEnvironmentCalls,
+        UpdatesEnvironmentFile  $updateEnvironmentFile,
+    ): int
+    {
+        $allEnvironmentCalls = $this->environmentCalls($finder->configFilePaths(), $findEnvironmentCalls);
 
-        collect($finder->environmentFilePaths())
-            ->each(fn (string $path) => $updateEnvironmentFile($path, $environmentCalls));
+        /** @var Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates */
+        $pendingUpdates = collect($finder->environmentFilePaths())
+            ->flip()
+            // @phpstan-ignore-next-line
+            ->map(fn(int $index, string $path) => $filterEnvironmentCalls($path, $allEnvironmentCalls))
+            ->filter(fn(Collection $environmentCalls) => $environmentCalls->isNotEmpty());
+
+        if ($pendingUpdates->isEmpty()) {
+            $this->line('  There are no changes to sync!');
+            return self::SUCCESS;
+        }
+
+        $this->printPendingUpdates($pendingUpdates);
+
+        if ($this->option('dry')) {
+            return self::FAILURE;
+        }
+
+        $pendingUpdates->each(fn(Collection $environmentCalls, string $path) => $updateEnvironmentFile(
+            $path,
+            $environmentCalls
+        ));
 
         return self::SUCCESS;
     }
@@ -41,7 +64,22 @@ class Sync extends Command
     {
         // @phpstan-ignore-next-line
         return collect($filePaths)
-            ->map(fn (string $path) => $findEnvironmentVariables($path))
+            ->map(fn(string $path) => $findEnvironmentVariables($path))
             ->flatten();
+    }
+
+    /**
+     * Outputs pending updates to the console.
+     *
+     * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
+     */
+    private function printPendingUpdates(Collection $pendingUpdates): void
+    {
+        $pendingUpdates->each(function (Collection $environmentCalls, string $path) {
+            $this->line("  Updates for {$path}");
+            $this->newLine();
+            $environmentCalls->each(fn(EnvironmentCall $call) => $this->line("  - {$call->getKey()}"));
+            $this->newLine(2);
+        });
     }
 }

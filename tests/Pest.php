@@ -16,8 +16,9 @@ function defaultPhpParser(): Parser
     return (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
 }
 
-function readEnvironmentFile(string $filePath): Collection
+function readEnvironmentFile(string $filePath = null): Collection
 {
+    $filePath ??= testAppPath('.env.example');
     $readEnvironmentFile = new ReadEnvironmentFile();
 
     return $readEnvironmentFile($filePath);

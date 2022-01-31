@@ -32,14 +32,4 @@ class TestCase extends Orchestra
             EnvsyncServiceProvider::class,
         ];
     }
-
-    public function shouldUseAction(string $action, mixed $returnValue = null): self
-    {
-        $this->mock($action)
-            ->shouldReceive('__invoke')
-            ->atLeast()->once()
-            ->andReturn(value($returnValue));
-
-        return $this;
-    }
 }
