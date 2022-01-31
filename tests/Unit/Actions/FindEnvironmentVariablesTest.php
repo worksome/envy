@@ -4,7 +4,7 @@ use Worksome\Envsync\Actions\FindEnvironmentVariables;
 use Worksome\Envsync\Support\EnvironmentCall;
 
 it('can return a collection of environment variables', function (bool $excludeVariablesWithDefaults, int $expectedCount) {
-    $action = new FindEnvironmentVariables($this->defaultPhpParser());
+    $action = new FindEnvironmentVariables(defaultPhpParser());
     $variables = $action(__DIR__ . '/../../Application/config/app.php', $excludeVariablesWithDefaults);
 
     expect($variables)
@@ -12,12 +12,12 @@ it('can return a collection of environment variables', function (bool $excludeVa
         ->toHaveCount($expectedCount)
         ->each->toBeInstanceOf(EnvironmentCall::class);
 })->with([
-    'variables including defaults' => [false, 7],
-    'variables excluding defaults' => [true, 2],
+    'variables including defaults' => [false, 8],
+    'variables excluding defaults' => [true, 4],
 ]);
 
 it('contains the correct keys for each environment variable', function () {
-    $action = new FindEnvironmentVariables($this->defaultPhpParser());
+    $action = new FindEnvironmentVariables(defaultPhpParser());
     $variableNames = $action(__DIR__ . '/../../Application/config/app.php')
         ->map(fn (EnvironmentCall $variable) => $variable->getKey())
         ->all();
@@ -27,6 +27,7 @@ it('contains the correct keys for each environment variable', function () {
         'APP_TITLE',
         'APP_NAME',
         'APP_DESCRIPTION',
+        'APP_TITLE',
         'APP_ENV',
         'APP_DEBUG',
         'APP_URL',
@@ -34,7 +35,7 @@ it('contains the correct keys for each environment variable', function () {
 });
 
 it('correctly retrieves comments', function () {
-    $action = new FindEnvironmentVariables($this->defaultPhpParser());
+    $action = new FindEnvironmentVariables(defaultPhpParser());
     $appName = $action(__DIR__ . '/../../Application/config/app.php')->first();
 
     expect($appName->getComment())->toBe(<<<TXT
@@ -51,9 +52,9 @@ it('correctly retrieves comments', function () {
     TXT);
 });
 
-it('correctly handles env calls used as defaults', function () {
-    $action = new FindEnvironmentVariables($this->defaultPhpParser());
+it('correctly handles function calls used as defaults', function () {
+    $action = new FindEnvironmentVariables(defaultPhpParser());
     $appTitle = $action(__DIR__ . '/../../Application/config/app.php')->get(1);
 
-    expect($appTitle->getDefault())->toBe('env(\'APP_NAME\')');
+    expect($appTitle->getDefault())->toBeNull();
 });

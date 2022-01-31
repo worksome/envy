@@ -88,7 +88,13 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        return $this->print($node->getArgs()[1]->value);
+        $providedDefault = $node->getArgs()[1]->value;
+
+        if ($providedDefault instanceof Node\Expr\CallLike) {
+            return null;
+        }
+
+        return $this->print($providedDefault);
     }
 
     private function getComment(Node\Expr\FuncCall $node): string|null

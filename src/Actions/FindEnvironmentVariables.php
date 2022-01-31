@@ -40,7 +40,7 @@ final class FindEnvironmentVariables implements FindsEnvironmentVariables
             ->getEnvironmentVariables()
             ->when(
                 $excludeVariablesWithDefaults,
-                fn (Collection $variables) => $variables->reject(fn (EnvironmentCall $variable) => $variable->hasDefault())
+                fn (Collection $variables) => $variables->reject(fn (EnvironmentCall $variable) => $variable->getDefault() !== null)
             );
     }
 }

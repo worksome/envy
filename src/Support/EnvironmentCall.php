@@ -46,14 +46,4 @@ final class EnvironmentCall
     {
         return $this->comment;
     }
-
-    public function hasDefault(): bool
-    {
-        return $this->default !== null;
-    }
-
-    public function hasComment(): bool
-    {
-        return $this->comment !== null;
-    }
 }
