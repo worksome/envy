@@ -8,13 +8,13 @@ use Illuminate\Support\Collection;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NodeConnectingVisitor;
 use PhpParser\Parser;
-use Worksome\Envsync\Contracts\Actions\FindsEnvironmentVariables;
+use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envsync\Support\EnvironmentCall;
 use Worksome\Envsync\Support\PhpParser\EnvCallNodeVisitor;
 
 use function Safe\file_get_contents;
 
-final class FindEnvironmentVariables implements FindsEnvironmentVariables
+final class FindEnvironmentCalls implements FindsEnvironmentCalls
 {
     public function __construct(private Parser $parser)
     {

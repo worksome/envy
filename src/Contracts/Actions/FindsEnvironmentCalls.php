@@ -7,7 +7,7 @@ namespace Worksome\Envsync\Contracts\Actions;
 use Illuminate\Support\Collection;
 use Worksome\Envsync\Support\EnvironmentCall;
 
-interface FindsEnvironmentVariables
+interface FindsEnvironmentCalls
 {
     /**
      * @return Collection<int, EnvironmentCall>

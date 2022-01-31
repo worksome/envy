@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Worksome\Envsync;
 
-use Illuminate\Contracts\Foundation\Application;
 use PhpParser\ParserFactory;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Worksome\Envsync\Actions\FindEnvironmentVariables;
+use Worksome\Envsync\Actions\FindEnvironmentCalls;
 use Worksome\Envsync\Actions\FormatEnvironmentCall;
 use Worksome\Envsync\Actions\ReadEnvironmentFile;
 use Worksome\Envsync\Actions\UpdateEnvironmentFile;
 use Worksome\Envsync\Commands\Sync;
-use Worksome\Envsync\Contracts\Actions\FindsEnvironmentVariables;
+use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
 use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envsync\Contracts\Actions\UpdatesEnvironmentFile;
@@ -24,23 +23,24 @@ final class EnvsyncServiceProvider extends PackageServiceProvider
 {
     public function packageRegistered(): void
     {
-        $this->app->bind(Finder::class, LaravelFinder::class);
+        $this->app->bind(Finder::class, fn() => new LaravelFinder($this->config()));
 
-        $this->app->bind(FindsEnvironmentVariables::class, fn() => new FindEnvironmentVariables(
+        $this->app->bind(FindsEnvironmentCalls::class, fn() => new FindEnvironmentCalls(
             (new ParserFactory())->create(ParserFactory::PREFER_PHP7)
         ));
         $this->app->bind(ReadsEnvironmentFile::class, ReadEnvironmentFile::class);
         $this->app->bind(UpdatesEnvironmentFile::class, UpdateEnvironmentFile::class);
-        $this->app->bind(FormatsEnvironmentCall::class, function (Application $app) {
-            // @phpstan-ignore-next-line
-            $config = $app->get('config')->get('envsync');
+        $this->app->bind(FormatsEnvironmentCall::class, fn() => new FormatEnvironmentCall(
+            $this->config()['envsync.display_comments'],
+            $this->config()['envsync.display_location_hints'],
+            $this->config()['envsync.display_default_values'],
+        ));
+    }
 
-            return new FormatEnvironmentCall(
-                $config['display_comments'],
-                $config['display_location_hints'],
-                $config['display_default_values'],
-            );
-        });
+    private function config(): array
+    {
+        // @phpstan-ignore-next-line
+        return config('envsync');
     }
 
     public function configurePackage(Package $package): void

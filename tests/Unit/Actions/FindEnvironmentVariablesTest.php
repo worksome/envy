@@ -1,10 +1,10 @@
 <?php
 
-use Worksome\Envsync\Actions\FindEnvironmentVariables;
+use Worksome\Envsync\Actions\FindEnvironmentCalls;
 use Worksome\Envsync\Support\EnvironmentCall;
 
 it('can return a collection of environment variables', function (bool $excludeVariablesWithDefaults, int $expectedCount) {
-    $action = new FindEnvironmentVariables(defaultPhpParser());
+    $action = new FindEnvironmentCalls(defaultPhpParser());
     $variables = $action(__DIR__ . '/../../Application/config/app.php', $excludeVariablesWithDefaults);
 
     expect($variables)
@@ -17,7 +17,7 @@ it('can return a collection of environment variables', function (bool $excludeVa
 ]);
 
 it('contains the correct keys for each environment variable', function () {
-    $action = new FindEnvironmentVariables(defaultPhpParser());
+    $action = new FindEnvironmentCalls(defaultPhpParser());
     $variableNames = $action(__DIR__ . '/../../Application/config/app.php')
         ->map(fn (EnvironmentCall $variable) => $variable->getKey())
         ->all();
@@ -35,7 +35,7 @@ it('contains the correct keys for each environment variable', function () {
 });
 
 it('correctly retrieves comments', function () {
-    $action = new FindEnvironmentVariables(defaultPhpParser());
+    $action = new FindEnvironmentCalls(defaultPhpParser());
     $appName = $action(__DIR__ . '/../../Application/config/app.php')->first();
 
     expect($appName->getComment())->toBe(<<<TXT
@@ -53,7 +53,7 @@ it('correctly retrieves comments', function () {
 });
 
 it('correctly handles function calls used as defaults', function () {
-    $action = new FindEnvironmentVariables(defaultPhpParser());
+    $action = new FindEnvironmentCalls(defaultPhpParser());
     $appTitle = $action(__DIR__ . '/../../Application/config/app.php')->get(1);
 
     expect($appTitle->getDefault())->toBeNull();

@@ -9,14 +9,18 @@ use Worksome\Envsync\Contracts\Finder;
 
 final class TestFinder implements Finder
 {
-    public function configDirectory(): string
+    public function configFilePaths(): array
     {
-        return $this->path($this->envExampleDirectory() . '/config');
+        return [
+            $this->path(__DIR__ . '/../Application/config/app.php')
+        ];
     }
 
-    public function envExampleDirectory(): string
+    public function environmentFilePaths(): array
     {
-        return $this->path(__DIR__ . '/../Application');
+        return [
+            $this->path(__DIR__ . '/../Application/.env.example')
+        ];
     }
 
     private function path(string $path): string

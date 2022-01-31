@@ -6,7 +6,13 @@ namespace Worksome\Envsync\Contracts;
 
 interface Finder
 {
-    public function configDirectory(): string;
+    /**
+     * @return array<int, string>
+     */
+    public function configFilePaths(): array;
 
-    public function envExampleDirectory(): string;
+    /**
+     * @return array<int, string>
+     */
+    public function environmentFilePaths(): array;
 }
