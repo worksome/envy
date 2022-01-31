@@ -10,14 +10,14 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\PrettyPrinter\Standard;
 use PhpParser\PrettyPrinterAbstract;
-use Worksome\Envsync\Support\EnvironmentVariable;
+use Worksome\Envsync\Support\EnvironmentCall;
 
 final class EnvCallNodeVisitor extends NodeVisitorAbstract
 {
     /**
      * A collection of discovered env calls.
      *
-     * @var Collection<int, EnvironmentVariable>
+     * @var Collection<int, EnvironmentCall>
      */
     private Collection $environmentVariables;
 
@@ -42,7 +42,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return $node;
         }
 
-        $this->environmentVariables->push(new EnvironmentVariable(
+        $this->environmentVariables->push(new EnvironmentCall(
             $this->filePath,
             $node->getStartLine(),
             $this->print($node->getArgs()[0]->value),
@@ -54,7 +54,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
     }
 
     /**
-     * @return Collection<int, EnvironmentVariable>
+     * @return Collection<int, EnvironmentCall>
      */
     public function getEnvironmentVariables(): Collection
     {

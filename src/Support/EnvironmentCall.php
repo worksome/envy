@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Worksome\Envsync\Support;
 
-final class EnvironmentVariable
+final class EnvironmentCall
 {
     /**
      * @param string $file The file path containing this environment variable

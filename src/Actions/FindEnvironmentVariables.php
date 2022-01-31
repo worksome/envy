@@ -9,7 +9,7 @@ use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NodeConnectingVisitor;
 use PhpParser\Parser;
 use Worksome\Envsync\Contracts\Actions\FindsEnvironmentVariables;
-use Worksome\Envsync\Support\EnvironmentVariable;
+use Worksome\Envsync\Support\EnvironmentCall;
 use Worksome\Envsync\Support\PhpParser\EnvCallNodeVisitor;
 
 use function Safe\file_get_contents;
@@ -40,7 +40,7 @@ final class FindEnvironmentVariables implements FindsEnvironmentVariables
             ->getEnvironmentVariables()
             ->when(
                 $excludeVariablesWithDefaults,
-                fn (Collection $variables) => $variables->reject(fn (EnvironmentVariable $variable) => $variable->hasDefault())
+                fn (Collection $variables) => $variables->reject(fn (EnvironmentCall $variable) => $variable->hasDefault())
             );
     }
 }

@@ -4,7 +4,11 @@ namespace Worksome\Envsync\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
+use PhpParser\Parser;
+use PhpParser\ParserFactory;
+use Worksome\Envsync\Contracts\Finder;
 use Worksome\Envsync\EnvsyncServiceProvider;
+use Worksome\Envsync\Tests\Doubles\TestFinder;
 
 class TestCase extends Orchestra
 {
@@ -12,9 +16,7 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-        Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Worksome\\Envsync\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-        );
+        $this->app->bind(Finder::class, TestFinder::class);
     }
 
     protected function getPackageProviders($app)
@@ -24,13 +26,18 @@ class TestCase extends Orchestra
         ];
     }
 
-    public function getEnvironmentSetUp($app)
+    public function defaultPhpParser(): Parser
     {
-        config()->set('database.default', 'testing');
+        return (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+    }
 
-        /*
-        $migration = include __DIR__.'/../database/migrations/create_envsync_table.php.stub';
-        $migration->up();
-        */
+    public function shouldUseAction(string $action, mixed $returnValue = null): self
+    {
+        $this->mock($action)
+            ->shouldReceive('__invoke')
+            ->atLeast()->once()
+            ->andReturn(value($returnValue));
+
+        return $this;
     }
 }

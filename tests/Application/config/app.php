@@ -15,7 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
 
-    'title' => env('APP_TITLE'),
+    'title' => env('APP_TITLE', env('APP_NAME')),
     'description' => env('APP_DESCRIPTION'),
     'currency' => 'GBP',
 
