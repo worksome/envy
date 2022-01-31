@@ -2,7 +2,6 @@
 
 namespace Worksome\Envsync\Tests;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;

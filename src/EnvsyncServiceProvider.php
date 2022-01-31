@@ -13,7 +13,6 @@ use Worksome\Envsync\Contracts\Actions\FindsEnvironmentVariables;
 use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envsync\Contracts\Finder;
 use Worksome\Envsync\Support\LaravelFinder;
-use Worksome\Envsync\Tests\Doubles\TestFinder;
 
 final class EnvsyncServiceProvider extends PackageServiceProvider
 {
