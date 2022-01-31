@@ -45,8 +45,8 @@
     },
     "scripts": {
         "lint": "vendor/bin/phpcbf",
-        "test:unit": "vendor/bin/pest -p",
-        "test:coverage": "vendor/bin/pest -p --coverage",
+        "test:unit": "vendor/bin/pest",
+        "test:coverage": "vendor/bin/pest --coverage",
         "test:types": "vendor/bin/phpstan analyse",
         "test:style": "vendor/bin/phpcs -n",
         "test": [
