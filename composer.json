@@ -1,50 +1,52 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "worksome/envy",
+    "description": "Automatically keep your .env files in sync.",
     "keywords": [
-        ":vendor_name",
+        "worksome",
         "laravel",
-        ":package_slug"
+        "envsync"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/worksome/envsync",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Luke Downing",
+            "email": "luke@worksome.com",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.0|^8.1",
+        "illuminate/contracts": "^8.73 || ^9.0",
+        "nikic/php-parser": "^4.13",
+        "nunomaduro/termwind": "^1.4",
         "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^8.73"
+        "thecodingmachine/safe": "^2.1"
     },
     "require-dev": {
-        "nunomaduro/collision": "^5.10",
-        "nunomaduro/larastan": "^2.0",
-        "orchestra/testbench": "^6.22",
+        "nunomaduro/collision": "^5.10 || ^6.0",
+        "nunomaduro/larastan": "^1.0 || ^2.0",
+        "orchestra/testbench": "^6.24 || ^7.0",
         "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-parallel": "^1.0",
-        "pestphp/pest-plugin-laravel": "^1.1",
+        "pestphp/pest-plugin-laravel": "^1.2",
         "spatie/laravel-ray": "^1.26",
-        "worksome/coding-style": "0.6.2"
+        "worksome/coding-style": "^0.11.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Worksome\\Envy\\": "src",
+            "Worksome\\Envy\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Worksome\\Envy\\Tests\\": "tests"
         }
     },
     "scripts": {
         "lint": "vendor/bin/phpcbf",
-        "test:unit": "vendor/bin/pest -p",
-        "test:coverage": "vendor/bin/pest -p --coverage",
+        "test:unit": "vendor/bin/pest",
+        "test:coverage": "vendor/bin/pest --coverage --min=95",
         "test:types": "vendor/bin/phpstan analyse",
         "test:style": "vendor/bin/phpcs -n",
         "test": [
@@ -59,11 +61,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Worksome\\Envy\\EnvyServiceProvider"
+            ]
         }
     },
     "minimum-stability": "dev",

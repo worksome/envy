@@ -5,6 +5,7 @@ on:
     paths:
       - '**.php'
       - 'phpstan.neon.dist'
+      - '.github/workflows/phpstan.yml'
 
 jobs:
   phpstan:
@@ -16,11 +17,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.0'
+          php-version: '8.1'
           coverage: none
 
       - name: Install composer dependencies
-        uses: ramsey/composer-install@v1
+        run: |
+          composer require "nunomaduro/larastan:^2.0"
+          composer update --prefer-dist --no-interaction
 
       - name: Run PHPStan
         run: composer test:types
