@@ -17,8 +17,10 @@
     ],
     "require": {
         "php": "^8.0|^8.1",
+        "illuminate/contracts": "^8.73",
+        "nikic/php-parser": "^4.13",
         "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^8.73"
+        "thecodingmachine/safe": "^2.1"
     },
     "require-dev": {
         "nunomaduro/collision": "^5.10",
@@ -28,7 +30,7 @@
         "pestphp/pest-plugin-parallel": "^1.0",
         "pestphp/pest-plugin-laravel": "^1.1",
         "spatie/laravel-ray": "^1.26",
-        "worksome/coding-style": "0.6.2"
+        "worksome/coding-style": "^0.10.0"
     },
     "autoload": {
         "psr-4": {
