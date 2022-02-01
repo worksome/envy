@@ -1,7 +1,7 @@
 <?php
 
-use Worksome\Envsync\Actions\FindEnvironmentCalls;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Actions\FindEnvironmentCalls;
+use Worksome\Envy\Support\EnvironmentCall;
 
 it('can return a collection of environment variables', function (bool $excludeVariablesWithDefaults, int $expectedCount) {
     $action = new FindEnvironmentCalls(defaultPhpParser());

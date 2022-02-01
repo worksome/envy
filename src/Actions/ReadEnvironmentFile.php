@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envy\Actions;
 
 use Dotenv\Parser\Entry;
 use Dotenv\Parser\Parser;
 use Illuminate\Support\Collection;
-use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
-use Worksome\Envsync\Support\EnvironmentVariable;
+use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
+use Worksome\Envy\Support\EnvironmentVariable;
 
 use function Safe\file_get_contents;
 

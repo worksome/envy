@@ -1,6 +1,6 @@
 <?php
 
-use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
+use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 
 it('updates the .env file with missing keys', function () {
     $this->artisan('envsync:sync')

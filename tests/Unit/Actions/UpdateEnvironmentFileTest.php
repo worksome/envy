@@ -1,8 +1,8 @@
 <?php
 
-use Worksome\Envsync\Actions\FindEnvironmentCalls;
-use Worksome\Envsync\Actions\FormatEnvironmentCall;
-use Worksome\Envsync\Actions\UpdateEnvironmentFile;
+use Worksome\Envy\Actions\FindEnvironmentCalls;
+use Worksome\Envy\Actions\FormatEnvironmentCall;
+use Worksome\Envy\Actions\UpdateEnvironmentFile;
 
 it('updates the environment file with given keys', function () {
     $findEnvironmentVariables = new FindEnvironmentCalls(defaultPhpParser());

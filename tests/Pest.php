@@ -4,9 +4,9 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
-use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Tests\Unit;
-use Worksome\Envsync\Tests\Feature;
+use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Tests\Unit;
+use Worksome\Envy\Tests\Feature;
 
 uses(Feature\TestCase::class)->in(__DIR__ . '/Feature');
 uses(Unit\TestCase::class)->in(__DIR__ . '/Unit');

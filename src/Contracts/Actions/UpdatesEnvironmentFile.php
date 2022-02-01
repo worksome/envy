@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Contracts\Actions;
+namespace Worksome\Envy\Contracts\Actions;
 
 use Illuminate\Support\Collection;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Support\EnvironmentCall;
 
 interface UpdatesEnvironmentFile
 {

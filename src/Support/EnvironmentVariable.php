@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Support;
+namespace Worksome\Envy\Support;
 
 final class EnvironmentVariable
 {

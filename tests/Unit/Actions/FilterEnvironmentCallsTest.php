@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Collection;
-use Worksome\Envsync\Actions\FilterEnvironmentCalls;
-use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Actions\FilterEnvironmentCalls;
+use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Support\EnvironmentCall;
 
 it('removes duplicates', function () {
     $calls = Collection::times(5, fn () => new EnvironmentCall(

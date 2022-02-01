@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Support;
+namespace Worksome\Envy\Support;
 
 use Illuminate\Support\LazyCollection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use Worksome\Envsync\Contracts\Finder;
+use Worksome\Envy\Contracts\Finder;
 
 final class LaravelFinder implements Finder
 {

@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync;
+namespace Worksome\Envy;
 
 use PhpParser\ParserFactory;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Worksome\Envsync\Actions\FilterEnvironmentCalls;
-use Worksome\Envsync\Actions\FindEnvironmentCalls;
-use Worksome\Envsync\Actions\FormatEnvironmentCall;
-use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Actions\UpdateEnvironmentFile;
-use Worksome\Envsync\Commands\Sync;
-use Worksome\Envsync\Contracts\Actions\FiltersEnvironmentCalls;
-use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
-use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
-use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
-use Worksome\Envsync\Contracts\Actions\UpdatesEnvironmentFile;
-use Worksome\Envsync\Contracts\Finder;
-use Worksome\Envsync\Support\LaravelFinder;
+use Worksome\Envy\Actions\FilterEnvironmentCalls;
+use Worksome\Envy\Actions\FindEnvironmentCalls;
+use Worksome\Envy\Actions\FormatEnvironmentCall;
+use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Actions\UpdateEnvironmentFile;
+use Worksome\Envy\Commands\Sync;
+use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
+use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
+use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
+use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
+use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
+use Worksome\Envy\Contracts\Finder;
+use Worksome\Envy\Support\LaravelFinder;
 
-final class EnvsyncServiceProvider extends PackageServiceProvider
+final class EnvyServiceProvider extends PackageServiceProvider
 {
     public function packageRegistered(): void
     {
@@ -43,16 +43,14 @@ final class EnvsyncServiceProvider extends PackageServiceProvider
     private function config(): array
     {
         // @phpstan-ignore-next-line
-        return config('envsync');
+        return config('envy');
     }
 
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('envsync')
+            ->name('envy')
             ->hasConfigFile()
-            ->hasCommands(
-                Sync::class,
-            );
+            ->hasCommands(Sync::class);
     }
 }

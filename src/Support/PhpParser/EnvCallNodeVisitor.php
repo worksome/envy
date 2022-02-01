@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Support\PhpParser;
+namespace Worksome\Envy\Support\PhpParser;
 
 use Illuminate\Support\Collection;
 use PhpParser\Comment;
@@ -10,7 +10,7 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\PrettyPrinter\Standard;
 use PhpParser\PrettyPrinterAbstract;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Support\EnvironmentCall;
 
 final class EnvCallNodeVisitor extends NodeVisitorAbstract
 {

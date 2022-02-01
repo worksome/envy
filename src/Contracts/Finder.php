@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Contracts;
+namespace Worksome\Envy\Contracts;
 
 interface Finder
 {

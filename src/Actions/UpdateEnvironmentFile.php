@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envy\Actions;
 
 use Illuminate\Support\Collection;
-use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
-use Worksome\Envsync\Contracts\Actions\UpdatesEnvironmentFile;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
+use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
+use Worksome\Envy\Support\EnvironmentCall;
 
 use function Safe\file_put_contents;
 

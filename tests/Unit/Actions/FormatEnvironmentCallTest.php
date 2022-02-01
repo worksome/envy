@@ -1,7 +1,7 @@
 <?php
 
-use Worksome\Envsync\Actions\FormatEnvironmentCall;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Actions\FormatEnvironmentCall;
+use Worksome\Envy\Support\EnvironmentCall;
 
 it('can format an environment call', function (array $options, string $key, mixed $default, string $expectedResult) {
     $call = new EnvironmentCall(

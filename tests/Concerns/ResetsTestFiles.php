@@ -1,6 +1,6 @@
 <?php
 
-namespace Worksome\Envsync\Tests\Concerns;
+namespace Worksome\Envy\Tests\Concerns;
 
 use BadMethodCallException;
 use Closure;

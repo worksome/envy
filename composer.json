@@ -34,13 +34,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Worksome\\Envsync\\": "src",
-            "Worksome\\Envsync\\Database\\Factories\\": "database/factories"
+            "Worksome\\Envy\\": "src",
+            "Worksome\\Envy\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Worksome\\Envsync\\Tests\\": "tests"
+            "Worksome\\Envy\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -61,10 +61,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Worksome\\Envsync\\EnvsyncServiceProvider"
+              "EnvyServiceProvider"
             ],
             "aliases": {
-                "Envsync": "Worksome\\Envsync\\Facades\\Envsync"
+                "Envy": "Worksome\\Envsync\\Facades\\Envy"
             }
         }
     },

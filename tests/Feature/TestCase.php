@@ -1,12 +1,12 @@
 <?php
 
-namespace Worksome\Envsync\Tests\Feature;
+namespace Worksome\Envy\Tests\Feature;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use Worksome\Envsync\Contracts\Finder;
-use Worksome\Envsync\EnvsyncServiceProvider;
-use Worksome\Envsync\Tests\Concerns\ResetsTestFiles;
-use Worksome\Envsync\Tests\Doubles\TestFinder;
+use Worksome\Envy\Contracts\Finder;
+use Worksome\Envy\EnvyServiceProvider;
+use Worksome\Envy\Tests\Concerns\ResetsTestFiles;
+use Worksome\Envy\Tests\Doubles\TestFinder;
 
 class TestCase extends Orchestra
 {
@@ -29,7 +29,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            EnvsyncServiceProvider::class,
+            EnvyServiceProvider::class,
         ];
     }
 

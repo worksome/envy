@@ -1,7 +1,7 @@
 <?php
 
-use Worksome\Envsync\Actions\ReadEnvironmentFile;
-use Worksome\Envsync\Support\EnvironmentVariable;
+use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Support\EnvironmentVariable;
 
 it('returns a collection of environment variables', function () {
     $action = new ReadEnvironmentFile();

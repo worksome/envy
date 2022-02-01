@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envy\Actions;
 
 use Illuminate\Support\Str;
-use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
-use Worksome\Envsync\Support\EnvironmentCall;
+use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
+use Worksome\Envy\Support\EnvironmentCall;
 
 use function Safe\preg_replace;
 

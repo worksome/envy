@@ -52,7 +52,7 @@ php artisan vendor:publish --tag="envsync-views"
 ## Usage
 
 ```php
-$envsync = new Worksome\Envsync();
+$envsync = new Worksome\Envy();
 echo $envsync->echoPhrase('Hello, Worksome!');
 ```
 

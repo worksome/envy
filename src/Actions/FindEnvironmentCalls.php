@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envy\Actions;
 
 use Illuminate\Support\Collection;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor\NodeConnectingVisitor;
 use PhpParser\Parser;
-use Worksome\Envsync\Contracts\Actions\FindsEnvironmentCalls;
-use Worksome\Envsync\Support\EnvironmentCall;
-use Worksome\Envsync\Support\PhpParser\EnvCallNodeVisitor;
+use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
+use Worksome\Envy\Support\EnvironmentCall;
+use Worksome\Envy\Support\PhpParser\EnvCallNodeVisitor;
 
 use function Safe\file_get_contents;
 

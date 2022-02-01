@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions;
+namespace Worksome\Envy\Actions;
 
 use Illuminate\Support\Collection;
-use Worksome\Envsync\Contracts\Actions\FiltersEnvironmentCalls;
-use Worksome\Envsync\Contracts\Actions\ReadsEnvironmentFile;
-use Worksome\Envsync\Support\EnvironmentCall;
-use Worksome\Envsync\Support\EnvironmentVariable;
+use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
+use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
+use Worksome\Envy\Support\EnvironmentCall;
+use Worksome\Envy\Support\EnvironmentVariable;
 
 final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
 {

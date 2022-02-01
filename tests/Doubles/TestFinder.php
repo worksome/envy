@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Tests\Doubles;
+namespace Worksome\Envy\Tests\Doubles;
 
 use Illuminate\Support\Str;
-use Worksome\Envsync\Contracts\Finder;
+use Worksome\Envy\Contracts\Finder;
 
 final class TestFinder implements Finder
 {

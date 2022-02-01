@@ -1,8 +1,8 @@
 <?php
 
-namespace Worksome\Envsync\Tests\Unit;
+namespace Worksome\Envy\Tests\Unit;
 
-use Worksome\Envsync\Tests\Concerns\ResetsTestFiles;
+use Worksome\Envy\Tests\Concerns\ResetsTestFiles;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
