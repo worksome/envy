@@ -1,5 +1,7 @@
 <?php
 
+use PhpParser\ErrorHandler;
+use PhpParser\Parser;
 use Worksome\Envy\Actions\UpdateBlacklist;
 use Worksome\Envy\Exceptions\ConfigFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentVariable;
@@ -22,4 +24,21 @@ it('updates the config file with the given updates', function () {
     $this->assertFileChanged(testAppPath('config/envy.php'), function ($newContents) {
         return str_contains($newContents, '\'FOO\',') && str_contains($newContents, '\'BAZ\',');
     });
+});
+
+it('performs no changes if the parser returns null', function () {
+    $parser = new class implements Parser {
+        public function parse(string $code, ErrorHandler $errorHandler = null)
+        {
+            return null;
+        }
+    };
+
+    $action = new UpdateBlacklist($parser, new TestFinder());
+    $action(collect([
+        new EnvironmentVariable('FOO', 'BAR'),
+        new EnvironmentVariable('BAZ', ''),
+    ]));
+
+    $this->assertFileNotChanged(testAppPath('config/envy.php'));
 });

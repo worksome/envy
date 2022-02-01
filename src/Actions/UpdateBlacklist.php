@@ -38,10 +38,6 @@ final class UpdateBlacklist implements UpdatesBlacklist
             throw new ConfigFileNotFoundException();
         }
 
-        if (! file_exists($this->finder->envyConfigFile())) {
-            throw new ConfigFileNotFoundException();
-        }
-
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NodeConnectingVisitor());
         $traverser->addVisitor(new BlacklistUpdateNodeVisitor($updates));

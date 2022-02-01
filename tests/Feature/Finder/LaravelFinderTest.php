@@ -38,3 +38,9 @@ it('can return all configured environment files', function () {
         testAppPath('.env'),
     ]);
 });
+
+it('can return the envy config file', function () {
+    $finder = new LaravelFinder([], []);
+
+    expect($finder->envyConfigFile())->toBeNull();
+});
