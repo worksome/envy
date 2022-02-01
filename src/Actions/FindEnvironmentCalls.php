@@ -30,7 +30,7 @@ final class FindEnvironmentCalls implements FindsEnvironmentCalls
         $statements = $this->parser->parse(file_get_contents($filePath));
 
         if ($statements === null) {
-            return $envCallNodeVisitor->getEnvironmentVariables();
+            return collect();
         }
 
         $traverser->traverse($statements);

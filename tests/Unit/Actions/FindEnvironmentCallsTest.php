@@ -1,5 +1,7 @@
 <?php
 
+use PhpParser\ErrorHandler;
+use PhpParser\Parser;
 use Worksome\Envy\Actions\FindEnvironmentCalls;
 use Worksome\Envy\Support\EnvironmentCall;
 
@@ -71,4 +73,18 @@ it('correctly handles static ternary checks used as defaults', function () {
     $appEnv = $action(__DIR__ . '/../../Application/config/app.php')->get(5);
 
     expect($appEnv->getDefault())->toBeNull();
+});
+
+it('returns an empty collection if the parser returns null', function () {
+    $parser = new class implements Parser {
+        public function parse(string $code, ErrorHandler $errorHandler = null)
+        {
+            return null;
+        }
+    };
+
+    $action = new FindEnvironmentCalls($parser);
+    expect($action(__DIR__ . '/../../Application/config/app.php'))
+        ->toBeCollection()
+        ->toHaveCount(0);
 });

@@ -21,7 +21,9 @@ class TestCase extends Orchestra
         renderUsing(new BufferedOutput());
         $this->setUpResetsTestFiles();
 
-        $this->app->bind(Finder::class, TestFinder::class);
+        if (! in_array('useRealFinder', $this->getGroups())) {
+            $this->app->bind(Finder::class, TestFinder::class);
+        }
     }
 
     protected function tearDown(): void
