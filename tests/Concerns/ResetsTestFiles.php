@@ -7,6 +7,7 @@ use Closure;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\Comparator\ComparisonFailure;
+use Throwable;
 
 use function Safe\copy;
 use function Safe\file_get_contents;
@@ -27,14 +28,20 @@ trait ResetsTestFiles
         }
 
         foreach ($this->getFilesToReset() as $path) {
-            $this->fileContents[$path] = file_get_contents($path);
+            try {
+                $this->fileContents[$path] = file_get_contents($path);
+            } catch (Throwable) {
+            }
         }
     }
 
     public function tearDownResetsTestFiles(): void
     {
         foreach ($this->getFilesToReset() as $path) {
-            file_put_contents($path, $this->fileContents[$path]);
+            try {
+                file_put_contents($path, $this->fileContents[$path]);
+            } catch (Throwable) {
+            }
         }
 
         if (! in_array('withoutPublishedConfigFile', $this->getGroups())) {
@@ -46,6 +53,7 @@ trait ResetsTestFiles
     {
         return [
             testAppPath('.env.example'),
+            testAppPath('config/envy.php'),
         ];
     }
 
@@ -61,9 +69,11 @@ trait ResetsTestFiles
             $callback(file_get_contents($filePath), $this->fileContents[$filePath]),
             new ExpectationFailedException(
                 "The contents of [{$filePath}] are unchanged.",
-                $this->comparisonFailure($filePath)
+                $this->buildComparisonFailure($filePath)
             ),
         );
+
+        $this->addToAssertionCount(1);
 
         return $this;
     }
@@ -73,16 +83,18 @@ trait ResetsTestFiles
         try {
             $this->assertFileChanged($filePath);
         } catch (ExpectationFailedException $exception) {
+            $this->addToAssertionCount(1);
+
             return $this;
         }
 
         throw new ExpectationFailedException(
             "The contents of [{$filePath}] were updated.",
-            $this->comparisonFailure($filePath)
+            $this->buildComparisonFailure($filePath)
         );
     }
 
-    private function comparisonFailure(string $filePath): ComparisonFailure
+    private function buildComparisonFailure(string $filePath): ComparisonFailure
     {
         $fileContents = file_get_contents($filePath);
 

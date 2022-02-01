@@ -126,5 +126,7 @@ return [
 
         // config/view.php
         'VIEW_COMPILED_PATH',
+
+        // Custom keys
     ],
 ];
