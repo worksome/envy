@@ -37,9 +37,9 @@ return [
     'display_location_hints' => false,
 
     /**
-     * Calls to the `env` function can provide a second parameter that will act as a
-     * default when no matching variable is found in your .env file. Enabling this
-     * option will also insert the default in your .env file when copying a value.
+     * Enabling this option will also insert any provided defaults in your .env file
+     * when updating. Note that only scalar (primitive) types will be copied over.
+     * Defaults that include spaces will be wrapped in quotes for you.
      *
      * Note that `exclude_calls_with_defaults` must be set to `false` for this
      * to take effect.
@@ -53,4 +53,78 @@ return [
      */
     'exclude_calls_with_defaults' => true,
 
+    /**
+     * Any environment variables included in the blacklist will never be inserted
+     * into .env files. Our defaults are based on the base Laravel config files.
+     * Feel free to add or remove variables as required by your project needs.
+     */
+    'blacklist' => [
+        // config/app.php
+        'ASSET_URL',
+
+        // config/broadcasting.php
+        'ABLY_KEY',
+
+        // config/cache.php
+        'MEMCACHED_PERSISTENT_ID',
+        'MEMCACHED_USERNAME',
+        'MEMCACHED_PASSWORD',
+        'MEMCACHED_HOST',
+        'MEMCACHED_PORT',
+        'AWS_ACCESS_KEY_ID',
+        'AWS_SECRET_ACCESS_KEY',
+        'AWS_DEFAULT_REGION',
+        'DYNAMODB_CACHE_TABLE',
+        'DYNAMODB_ENDPOINT',
+
+        // config/database.php
+        'DATABASE_URL',
+        'DB_SOCKET',
+        'REDIS_CLIENT',
+        'REDIS_CLUSTER',
+        'REDIS_PREFIX',
+        'REDIS_URL',
+        'REDIS_DB',
+        'REDIS_CACHE_DB',
+
+        // config/hashing.php
+        'BCRYPT_ROUNDS',
+
+        // config/logging.php
+        'PAPERTRAIL_URL',
+        'PAPERTRAIL_PORT',
+        'LOG_STDERR_FORMATTER',
+
+        // config/mail.php
+        'MAIL_SENDMAIL_PATH',
+        'MAIL_LOG_CHANNEL',
+        'MAIL_FROM_ADDRESS',
+        'MAIL_FROM_NAME',
+
+        // config/queue.php
+        'SQS_PREFIX',
+        'SQS_QUEUE',
+        'SQS_SUFFIX',
+        'REDIS_QUEUE',
+        'QUEUE_FAILED_DRIVER',
+
+        // config/sanctum.php
+        'SANCTUM_STATEFUL_DOMAINS',
+
+        // config/services.php
+        'MAILGUN_DOMAIN',
+        'MAILGUN_SECRET',
+        'MAILGUN_ENDPOINT',
+        'POSTMARK_TOKEN',
+
+        // config/session.php
+        'SESSION_CONNECTION',
+        'SESSION_STORE',
+        'SESSION_COOKIE',
+        'SESSION_DOMAIN',
+        'SESSION_SECURE_COOKIE',
+
+        // config/view.php
+        'VIEW_COMPILED_PATH',
+    ],
 ];
