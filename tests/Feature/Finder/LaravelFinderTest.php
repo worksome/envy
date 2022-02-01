@@ -18,6 +18,7 @@ it('can return all configured config files', function () {
 
     expect($finder->configFilePaths())->toBe([
         testAppPath('config/app.php'),
+        testAppPath('config/envy.php'),
         testAppPath('config/nested/config.php'),
         __DIR__ . '/../../../config/envy.php',
     ]);

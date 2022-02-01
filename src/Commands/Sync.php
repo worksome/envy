@@ -14,6 +14,10 @@ use function Termwind\render;
 
 class Sync extends Command
 {
+    private const ACTION_ADD_TO_ENVIRONMENT_FILE = 'Add to environment file';
+    private const ACTION_ADD_TO_BLACKLIST = 'Add to blacklist';
+    private const ACTION_CANCEL = 'Cancel';
+
     public $signature = 'envy:sync
         {--dry : Run without making actual changes to the .env files to see which variables will be added.}
         {--force : Run without asking for confirmation.}
@@ -36,11 +40,11 @@ class Sync extends Command
             return self::FAILURE;
         }
 
-        if (! $this->option('force') && ! $this->confirm('Are you sure you want to continue?')) {
-            return self::SUCCESS;
-        }
-
-        $envy->updateEnvironmentFiles($pendingUpdates);
+        match ($this->askWhatWeShouldDoNext()) {
+            self::ACTION_ADD_TO_BLACKLIST => null,
+            self::ACTION_ADD_TO_ENVIRONMENT_FILE => $envy->updateEnvironmentFiles($pendingUpdates),
+            default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Sync cancelled</div>'),
+        };
 
         return self::SUCCESS;
     }
@@ -73,5 +77,16 @@ class Sync extends Command
         @endforeach
         </div>
         ', ['pendingUpdates' => $pendingUpdates]));
+    }
+
+    private function askWhatWeShouldDoNext(): string
+    {
+        return $this->option('force')
+            ? self::ACTION_ADD_TO_ENVIRONMENT_FILE
+            : strval($this->choice('How would you like to handle these updates?', [
+                self::ACTION_ADD_TO_ENVIRONMENT_FILE,
+                self::ACTION_ADD_TO_BLACKLIST,
+                self::ACTION_CANCEL,
+            ], self::ACTION_ADD_TO_ENVIRONMENT_FILE));
     }
 }

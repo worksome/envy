@@ -5,17 +5,27 @@ namespace Worksome\Envy\Tests\Concerns;
 use BadMethodCallException;
 use Closure;
 use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\TestCase;
 use SebastianBergmann\Comparator\ComparisonFailure;
 
+use function Safe\copy;
 use function Safe\file_get_contents;
-use function Safe\file_put_contents;
+use function Safe\unlink;
 
+/**
+ * @mixin TestCase
+ */
 trait ResetsTestFiles
 {
     private array $fileContents = [];
 
     public function setUpResetsTestFiles(): void
     {
+        if (! in_array('withoutPublishedConfigFile', $this->getGroups())) {
+            // We always want a fresh copy of the envy config file.
+            copy(__DIR__ . '/../../config/envy.php', testAppPath('config/envy.php'));
+        }
+
         foreach ($this->getFilesToReset() as $path) {
             $this->fileContents[$path] = file_get_contents($path);
         }
@@ -25,6 +35,10 @@ trait ResetsTestFiles
     {
         foreach ($this->getFilesToReset() as $path) {
             file_put_contents($path, $this->fileContents[$path]);
+        }
+
+        if (! in_array('withoutPublishedConfigFile', $this->getGroups())) {
+            unlink(testAppPath('config/envy.php'));
         }
     }
 

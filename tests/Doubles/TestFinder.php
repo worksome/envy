@@ -23,6 +23,13 @@ final class TestFinder implements Finder
         ];
     }
 
+    public function envyConfigFile(): string|null
+    {
+        $path = $this->path(__DIR__ . '/../Application/config/envy.php');
+
+        return file_exists($path) ? $path : null;
+    }
+
     private function path(string $path): string
     {
         return Str::replace('/', DIRECTORY_SEPARATOR, $path);

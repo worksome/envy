@@ -45,4 +45,13 @@ final class LaravelFinder implements Finder
     {
         return $this->environmentFiles;
     }
+
+    public function envyConfigFile(): string|null
+    {
+        if (! file_exists(config_path('envy.php'))) {
+            return null;
+        }
+
+        return config_path('envy.php');
+    }
 }

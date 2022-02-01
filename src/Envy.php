@@ -72,4 +72,9 @@ final class Envy
             $environmentCalls
         ));
     }
+
+    public function hasPublishedConfigFile(): bool
+    {
+        return $this->finder->envyConfigFile() !== null;
+    }
 }

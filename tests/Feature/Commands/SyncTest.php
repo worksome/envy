@@ -25,7 +25,11 @@ it('returns success if performing a dry run but no changes are required', functi
 
 it('asks for confirmation before making the changes', function () {
     $this->artisan('envy:sync')
-        ->expectsQuestion('Are you sure you want to continue?', false);
+        ->expectsChoice('How would you like to handle these updates?', 'Cancel', [
+            'Add to environment file',
+            'Add to blacklist',
+            'Cancel'
+        ]);
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
 });
