@@ -14,7 +14,8 @@ use Worksome\Envy\Actions\FormatEnvironmentCall;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
 use Worksome\Envy\Actions\UpdateBlacklist;
 use Worksome\Envy\Actions\UpdateEnvironmentFile;
-use Worksome\Envy\Commands\Sync;
+use Worksome\Envy\Commands\InstallCommand;
+use Worksome\Envy\Commands\SyncCommand;
 use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
@@ -62,6 +63,9 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $package
             ->name('envy')
             ->hasConfigFile()
-            ->hasCommands(Sync::class);
+            ->hasCommands(
+                InstallCommand::class,
+                SyncCommand::class,
+            );
     }
 }

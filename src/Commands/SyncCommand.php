@@ -12,7 +12,7 @@ use Worksome\Envy\Support\EnvironmentCall;
 
 use function Termwind\render;
 
-class Sync extends Command
+final class SyncCommand extends Command
 {
     private const ACTION_ADD_TO_ENVIRONMENT_FILE = 'Add to environment file';
     private const ACTION_ADD_TO_BLACKLIST = 'Add to blacklist';
