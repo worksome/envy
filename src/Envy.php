@@ -8,9 +8,11 @@ use Illuminate\Config\Repository;
 use Illuminate\Support\Collection;
 use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
+use Worksome\Envy\Contracts\Actions\UpdatesBlacklist;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Support\EnvironmentCall;
+use Worksome\Envy\Support\EnvironmentVariable;
 
 final class Envy
 {
@@ -19,6 +21,7 @@ final class Envy
         private Finder $finder,
         private FindsEnvironmentCalls $findEnvironmentCalls,
         private Repository $config,
+        private UpdatesBlacklist $updateBlacklist,
         private UpdatesEnvironmentFile $updateEnvironmentFile,
     ) {
     }
@@ -71,6 +74,28 @@ final class Envy
             $path,
             $environmentCalls
         ));
+    }
+
+    /**
+     * Convert a collection of pending updates to a collection of
+     * environment variables and update the config blacklist.
+     *
+     * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
+     * @throws Exceptions\ConfigFileNotFoundException
+     */
+    public function updateBlacklistWithPendingUpdates(Collection $pendingUpdates): void
+    {
+        /** @var Collection<int, EnvironmentVariable> $updates */
+        $updates = $pendingUpdates
+            ->flatten()
+            ->unique(fn (EnvironmentCall $environmentCall) => $environmentCall->getKey())
+            // @phpstan-ignore-next-line
+            ->map(fn (EnvironmentCall $environmentCall) => new EnvironmentVariable(
+                $environmentCall->getKey(),
+                $environmentCall->getDefault() ?? ''
+            ));
+
+        ($this->updateBlacklist)($updates);
     }
 
     public function hasPublishedConfigFile(): bool

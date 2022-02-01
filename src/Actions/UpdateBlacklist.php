@@ -11,6 +11,7 @@ use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard;
 use PhpParser\PrettyPrinterAbstract;
 use Worksome\Envy\Contracts\Actions\UpdatesBlacklist;
+use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Exceptions\ConfigFileNotFoundException;
 use Worksome\Envy\Support\PhpParser\BlacklistUpdateNodeVisitor;
 
@@ -26,21 +27,25 @@ final class UpdateBlacklist implements UpdatesBlacklist
 
     public function __construct(
         private Parser $parser,
-        private string $configPath,
+        private Finder $finder,
     ) {
         $this->printer = new Standard();
     }
 
     public function __invoke(Collection $updates): void
     {
-        if (! file_exists($this->configPath)) {
+        if ($this->finder->envyConfigFile() === null) {
+            throw new ConfigFileNotFoundException();
+        }
+
+        if (! file_exists($this->finder->envyConfigFile())) {
             throw new ConfigFileNotFoundException();
         }
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor(new NodeConnectingVisitor());
         $traverser->addVisitor(new BlacklistUpdateNodeVisitor($updates));
-        $statements = $this->parser->parse(file_get_contents($this->configPath));
+        $statements = $this->parser->parse(file_get_contents($this->finder->envyConfigFile()));
 
         if ($statements === null) {
             return;
@@ -48,6 +53,6 @@ final class UpdateBlacklist implements UpdatesBlacklist
 
         $ast = $traverser->traverse($statements);
 
-        file_put_contents($this->configPath, $this->printer->prettyPrintFile($ast));
+        file_put_contents($this->finder->envyConfigFile(), $this->printer->prettyPrintFile($ast));
     }
 }

@@ -41,7 +41,7 @@ class Sync extends Command
         }
 
         match ($this->askWhatWeShouldDoNext()) {
-            self::ACTION_ADD_TO_BLACKLIST => null,
+            self::ACTION_ADD_TO_BLACKLIST => $envy->updateBlacklistWithPendingUpdates($pendingUpdates),
             self::ACTION_ADD_TO_ENVIRONMENT_FILE => $envy->updateEnvironmentFiles($pendingUpdates),
             default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Sync cancelled</div>'),
         };
