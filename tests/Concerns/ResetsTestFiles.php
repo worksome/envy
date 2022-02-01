@@ -5,6 +5,7 @@ namespace Worksome\Envy\Tests\Concerns;
 use BadMethodCallException;
 use Closure;
 use PHPUnit\Framework\ExpectationFailedException;
+use SebastianBergmann\Comparator\ComparisonFailure;
 
 use function Safe\file_get_contents;
 use function Safe\file_put_contents;
@@ -44,7 +45,10 @@ trait ResetsTestFiles
 
         throw_unless(
             $callback(file_get_contents($filePath), $this->fileContents[$filePath]),
-            new ExpectationFailedException("The contents of [{$filePath}] are unchanged."),
+            new ExpectationFailedException(
+                "The contents of [{$filePath}] are unchanged.",
+                $this->comparisonFailure($filePath)
+            ),
         );
 
         return $this;
@@ -58,6 +62,21 @@ trait ResetsTestFiles
             return $this;
         }
 
-        throw new ExpectationFailedException("The contents of [{$filePath}] were updated.");
+        throw new ExpectationFailedException(
+            "The contents of [{$filePath}] were updated.",
+            $this->comparisonFailure($filePath)
+        );
+    }
+
+    private function comparisonFailure(string $filePath): ComparisonFailure
+    {
+        $fileContents = file_get_contents($filePath);
+
+        return new ComparisonFailure(
+            $this->fileContents[$filePath],
+            $fileContents,
+            $this->fileContents[$filePath],
+            $fileContents,
+        );
     }
 }

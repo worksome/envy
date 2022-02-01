@@ -25,18 +25,23 @@ final class EnvyServiceProvider extends PackageServiceProvider
 {
     public function packageRegistered(): void
     {
-        $this->app->bind(Finder::class, fn() => new LaravelFinder($this->config()));
+        $this->app->bind(Finder::class, fn() => new LaravelFinder(
+            $this->config()['config_files'] ?? [],
+            $this->config()['environment_files'] ?? [],
+        ));
 
         $this->app->bind(FindsEnvironmentCalls::class, fn() => new FindEnvironmentCalls(
             (new ParserFactory())->create(ParserFactory::PREFER_PHP7)
         ));
         $this->app->bind(ReadsEnvironmentFile::class, ReadEnvironmentFile::class);
-        $this->app->bind(FiltersEnvironmentCalls::class, FilterEnvironmentCalls::class);
+        $this->app->bind(FiltersEnvironmentCalls::class, fn () => $this->app->make(FilterEnvironmentCalls::class, [
+            'blacklist' => $this->config()['blacklist'] ?? []
+        ]));
         $this->app->bind(UpdatesEnvironmentFile::class, UpdateEnvironmentFile::class);
         $this->app->bind(FormatsEnvironmentCall::class, fn() => new FormatEnvironmentCall(
-            $this->config()['display_comments'],
-            $this->config()['display_location_hints'],
-            $this->config()['display_default_values'],
+            $this->config()['display_comments'] ?? false,
+            $this->config()['display_location_hints'] ?? false,
+            $this->config()['display_default_values'] ?? true,
         ));
     }
 

@@ -11,13 +11,19 @@ use Worksome\Envy\Contracts\Finder;
 
 final class LaravelFinder implements Finder
 {
-    public function __construct(private array $config)
-    {
+    /**
+     * @param array<int, string> $configFiles
+     * @param array<int, string> $environmentFiles
+     */
+    public function __construct(
+        private array $configFiles,
+        private array $environmentFiles,
+    ) {
     }
 
     public function configFilePaths(): array
     {
-        return collect($this->config['config_files'])
+        return collect($this->configFiles)
             ->map(fn(string $path) => is_file($path) ? [$path] : $this->allFilesRecursively($path))
             ->flatten()
             ->all();
@@ -37,6 +43,6 @@ final class LaravelFinder implements Finder
 
     public function environmentFilePaths(): array
     {
-        return $this->config['environment_files'];
+        return $this->environmentFiles;
     }
 }

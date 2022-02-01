@@ -3,10 +3,13 @@
 namespace Worksome\Envy\Tests\Feature;
 
 use Orchestra\Testbench\TestCase as Orchestra;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\EnvyServiceProvider;
 use Worksome\Envy\Tests\Concerns\ResetsTestFiles;
 use Worksome\Envy\Tests\Doubles\TestFinder;
+
+use function Termwind\renderUsing;
 
 class TestCase extends Orchestra
 {
@@ -15,6 +18,7 @@ class TestCase extends Orchestra
     protected function setUp(): void
     {
         parent::setUp();
+        renderUsing(new BufferedOutput());
         $this->setUpResetsTestFiles();
 
         $this->app->bind(Finder::class, TestFinder::class);

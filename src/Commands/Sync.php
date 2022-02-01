@@ -53,10 +53,16 @@ class Sync extends Command
     private function printPendingUpdates(Collection $pendingUpdates): void
     {
         render(Blade::render('
+        <div>
         @foreach($pendingUpdates as $path => $environmentCalls)
             <div class="my-1">
-                <div class="px-1 py-1 w-full text-center bg-green-500 font-bold">
-                    {{ $environmentCalls->count() }} {{ Str::plural("update", $environmentCalls->count()) }} for {{ Str::after($path, base_path()) }}
+                <div class="px-2 py-1 w-full bg-green-500 font-bold">
+                    <span class="text-left w-1/2">
+                        {{ $environmentCalls->count() }} {{ Str::plural("update", $environmentCalls->count()) }} for {{ Str::after($path, base_path()) }}
+                    </span>
+                    <span class="text-right w-1/2">
+                        {{ $loop->iteration }}/{{ $loop->count }}
+                    </span>
                 </div>
                 <ul class="mx-1 mt-1 space-y-1">
                     @foreach($environmentCalls as $environmentCall)
@@ -65,6 +71,7 @@ class Sync extends Command
                 </ul>
             </div>
         @endforeach
+        </div>
         ', ['pendingUpdates' => $pendingUpdates]));
     }
 }

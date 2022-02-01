@@ -29,3 +29,12 @@ it('asks for confirmation before making the changes', function () {
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
 });
+
+it('does not update blacklisted keys', function () {
+    config()->set('envy.blacklist', ['APP_TITLE', 'APP_DESCRIPTION']);
+
+    $this->artisan('envy:sync', ['--force' => true])
+        ->assertSuccessful();
+
+    $this->assertFileNotChanged(testAppPath('.env.example'));
+});

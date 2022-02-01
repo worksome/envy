@@ -12,8 +12,12 @@ use Worksome\Envy\Support\EnvironmentVariable;
 
 final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
 {
+    /**
+     * @param array<int, string> $blacklist
+     */
     public function __construct(
         private ReadsEnvironmentFile $readEnvironmentFile,
+        private array $blacklist = [],
     ) {
     }
 
@@ -23,6 +27,7 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
 
         return $environmentCalls
             ->unique(fn (EnvironmentCall $call) => $call->getKey())
-            ->reject(fn (EnvironmentCall $call) => $existingKeys->contains($call->getKey()));
+            ->reject(fn (EnvironmentCall $call) => $existingKeys->contains($call->getKey()))
+            ->reject(fn (EnvironmentCall $call) => in_array($call->getKey(), $this->blacklist));
     }
 }
