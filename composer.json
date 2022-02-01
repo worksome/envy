@@ -63,10 +63,7 @@
         "laravel": {
             "providers": [
                 "Worksome\\Envy\\EnvyServiceProvider"
-            ],
-            "aliases": {
-                "Envy": "Worksome\\Envy\\Facades\\Envy"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
