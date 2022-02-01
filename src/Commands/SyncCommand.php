@@ -7,6 +7,7 @@ namespace Worksome\Envy\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
 use Worksome\Envy\Support\EnvironmentCall;
 
@@ -14,6 +15,8 @@ use function Termwind\render;
 
 final class SyncCommand extends Command
 {
+    use HasUsefulConsoleMethods;
+
     private const ACTION_ADD_TO_ENVIRONMENT_FILE = 'Add to environment file';
     private const ACTION_ADD_TO_BLACKLIST = 'Add to blacklist';
     private const ACTION_CANCEL = 'Cancel';
@@ -45,6 +48,8 @@ final class SyncCommand extends Command
             self::ACTION_ADD_TO_ENVIRONMENT_FILE => $envy->updateEnvironmentFiles($pendingUpdates),
             default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Sync cancelled</div>'),
         };
+
+        $this->askUserToStarRepository();
 
         return self::SUCCESS;
     }
