@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Worksome\Envsync\Actions\UpdateEnvironmentFile;
+namespace Worksome\Envsync\Actions;
 
 use Illuminate\Support\Collection;
 use Worksome\Envsync\Contracts\Actions\FormatsEnvironmentCall;
