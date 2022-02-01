@@ -19,6 +19,7 @@ return [
 
     'title' => env('APP_TITLE', env('APP_NAME')),
     'description' => env('APP_DESCRIPTION', env('APP_TITLE')),
+    'meta' => env('APP_META'),
 
     'currency' => 'GBP',
     'domain' => strtolower('HTTPS://WWW.GOOGLE.COM'), // Calling a different function

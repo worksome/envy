@@ -40,7 +40,7 @@ class Sync extends Command
             return self::FAILURE;
         }
 
-        match ($this->askWhatWeShouldDoNext()) {
+        match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
             self::ACTION_ADD_TO_BLACKLIST => $envy->updateBlacklistWithPendingUpdates($pendingUpdates),
             self::ACTION_ADD_TO_ENVIRONMENT_FILE => $envy->updateEnvironmentFiles($pendingUpdates),
             default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Sync cancelled</div>'),
@@ -79,14 +79,20 @@ class Sync extends Command
         ', ['pendingUpdates' => $pendingUpdates]));
     }
 
-    private function askWhatWeShouldDoNext(): string
+    private function askWhatWeShouldDoNext(bool $configFileHasBeenPublished): string
     {
+        $options = collect([
+            self::ACTION_ADD_TO_ENVIRONMENT_FILE => true,
+            self::ACTION_ADD_TO_BLACKLIST => $configFileHasBeenPublished,
+            self::ACTION_CANCEL => true,
+        ])->filter()->keys()->all();
+
         return $this->option('force')
             ? self::ACTION_ADD_TO_ENVIRONMENT_FILE
-            : strval($this->choice('How would you like to handle these updates?', [
-                self::ACTION_ADD_TO_ENVIRONMENT_FILE,
-                self::ACTION_ADD_TO_BLACKLIST,
-                self::ACTION_CANCEL,
-            ], self::ACTION_ADD_TO_ENVIRONMENT_FILE));
+            : strval($this->choice(
+                'How would you like to handle these updates?',
+                $options,
+                self::ACTION_ADD_TO_ENVIRONMENT_FILE
+            ));
     }
 }

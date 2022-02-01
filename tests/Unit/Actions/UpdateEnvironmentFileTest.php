@@ -15,5 +15,5 @@ it('updates the environment file with given keys', function () {
     );
 
     $entries = readEnvironmentFile(testAppPath('.env.example'));
-    expect($entries)->toHaveCount(13); // This action performs no filtering, so the result is 13.
+    expect($entries)->toHaveCount(14); // This action performs no filtering, so the result is 14.
 });

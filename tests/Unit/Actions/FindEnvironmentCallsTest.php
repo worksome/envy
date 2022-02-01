@@ -14,8 +14,8 @@ it('can return a collection of environment variables', function (bool $excludeVa
         ->toHaveCount($expectedCount)
         ->each->toBeInstanceOf(EnvironmentCall::class);
 })->with([
-    'variables including defaults' => [false, 8],
-    'variables excluding defaults' => [true, 2],
+    'variables including defaults' => [false, 9],
+    'variables excluding defaults' => [true, 3],
 ]);
 
 it('contains the correct keys for each environment variable', function () {
@@ -30,6 +30,7 @@ it('contains the correct keys for each environment variable', function () {
         'APP_NAME',
         'APP_DESCRIPTION',
         'APP_TITLE',
+        'APP_META',
         'APP_ENV',
         'APP_DEBUG',
         'APP_URL',
