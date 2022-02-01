@@ -10,14 +10,14 @@ final class EnvironmentCall
      * @param string $file The file path containing this environment variable
      * @param int $line The line number the environment variable was found on
      * @param string $key The key used to define the environment variable
-     * @param mixed|null $default The default passed to the env call, if given
+     * @param string|null $default The default passed to the env call, if given
      * @param string|null $comment The PHP comment directly above the env call, if given
      */
     public function __construct(
         private string $file,
         private int $line,
         private string $key,
-        private mixed $default = null,
+        private string|null $default = null,
         private string|null $comment = null,
     ) {
     }
@@ -37,7 +37,7 @@ final class EnvironmentCall
         return $this->key;
     }
 
-    public function getDefault(): mixed
+    public function getDefault(): string|null
     {
         return $this->default;
     }

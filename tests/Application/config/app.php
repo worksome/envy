@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 return [
 
     /*
@@ -13,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', Str::slug('FooBar') . '_cache'),
 
     'title' => env('APP_TITLE', env('APP_NAME')),
     'description' => env('APP_DESCRIPTION', env('APP_TITLE')),
@@ -30,7 +32,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', 'foo' === 'bar' ? 'local' : 'production'),
 
     /*
     |--------------------------------------------------------------------------

@@ -116,3 +116,15 @@ it('can correctly display everything together', function () {
     FOO_BAR=BAZ
     TXT);
 });
+
+it('places quotes around default values if there is whitespace', function () {
+    $path = testAppPath('config/app.php');
+    $call = new EnvironmentCall($path, 1, 'FOO_BAR', 'Foo Bar Baz');
+
+    $action = new FormatEnvironmentCall(false, false, true);
+    $result = $action($call);
+
+    expect($result)->toBe(<<<TXT
+    FOO_BAR="Foo Bar Baz"
+    TXT);
+});

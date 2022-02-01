@@ -13,7 +13,7 @@ it('can return a collection of environment variables', function (bool $excludeVa
         ->each->toBeInstanceOf(EnvironmentCall::class);
 })->with([
     'variables including defaults' => [false, 8],
-    'variables excluding defaults' => [true, 4],
+    'variables excluding defaults' => [true, 2],
 ]);
 
 it('contains the correct keys for each environment variable', function () {
@@ -57,4 +57,18 @@ it('correctly handles function calls used as defaults', function () {
     $appTitle = $action(__DIR__ . '/../../Application/config/app.php')->get(1);
 
     expect($appTitle->getDefault())->toBeNull();
+});
+
+it('correctly handles static method calls used as defaults', function () {
+    $action = new FindEnvironmentCalls(defaultPhpParser());
+    $appName = $action(__DIR__ . '/../../Application/config/app.php')->get(0);
+
+    expect($appName->getDefault())->toBeNull();
+});
+
+it('correctly handles static ternary checks used as defaults', function () {
+    $action = new FindEnvironmentCalls(defaultPhpParser());
+    $appEnv = $action(__DIR__ . '/../../Application/config/app.php')->get(5);
+
+    expect($appEnv->getDefault())->toBeNull();
 });

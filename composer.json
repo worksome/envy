@@ -1,6 +1,6 @@
 {
-    "name": "worksome/envsync",
-    "description": "Automatically keep your .env.example file in sync.",
+    "name": "worksome/envy",
+    "description": "Automatically keep your .env files in sync.",
     "keywords": [
         "worksome",
         "laravel",
@@ -19,6 +19,7 @@
         "php": "^8.0|^8.1",
         "illuminate/contracts": "^8.73",
         "nikic/php-parser": "^4.13",
+        "nunomaduro/termwind": "^1.4",
         "spatie/laravel-package-tools": "^1.9.2",
         "thecodingmachine/safe": "^2.1"
     },
@@ -61,10 +62,10 @@
     "extra": {
         "laravel": {
             "providers": [
-              "EnvyServiceProvider"
+                "Worksome\\Envy\\EnvyServiceProvider"
             ],
             "aliases": {
-                "Envy": "Worksome\\Envsync\\Facades\\Envy"
+                "Envy": "Worksome\\Envy\\Facades\\Envy"
             }
         }
     },

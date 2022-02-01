@@ -26,7 +26,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
      */
     private PrettyPrinterAbstract $printer;
 
-    public function __construct(private string $filePath)
+    public function __construct(private string $filePath, private bool $excludeVariablesWithDefaults = false)
     {
         $this->environmentVariables = collect();
         $this->printer = new Standard();
@@ -42,13 +42,19 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return $node;
         }
 
-        $this->environmentVariables->push(new EnvironmentCall(
+        $call = new EnvironmentCall(
             $this->filePath,
             $node->getStartLine(),
             $this->print($node->getArgs()[0]->value),
             $this->getDefaultValue($node),
             $this->getComment($node),
-        ));
+        );
+
+        if ($this->excludeVariablesWithDefaults && $call->getDefault() !== null) {
+            return $node;
+        }
+
+        $this->environmentVariables->push($call);
 
         return $node;
     }
@@ -82,7 +88,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
         return true;
     }
 
-    private function getDefaultValue(Node\Expr\FuncCall $node): mixed
+    private function getDefaultValue(Node\Expr\FuncCall $node): string|null
     {
         if (count($node->getArgs()) < 2) {
             return null;
@@ -90,7 +96,12 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
 
         $providedDefault = $node->getArgs()[1]->value;
 
-        if ($providedDefault instanceof Node\Expr\CallLike) {
+        // Because the value will be excluded, we should include it regardless.
+        if ($this->excludeVariablesWithDefaults) {
+            return $this->print($providedDefault);
+        }
+
+        if (! $providedDefault instanceof Node\Scalar) {
             return null;
         }
 

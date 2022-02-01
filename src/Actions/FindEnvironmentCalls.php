@@ -23,7 +23,7 @@ final class FindEnvironmentCalls implements FindsEnvironmentCalls
     public function __invoke(string $filePath, bool $excludeVariablesWithDefaults = false): Collection
     {
         $traverser = new NodeTraverser();
-        $envCallNodeVisitor = new EnvCallNodeVisitor($filePath);
+        $envCallNodeVisitor = new EnvCallNodeVisitor($filePath, $excludeVariablesWithDefaults);
 
         $traverser->addVisitor(new NodeConnectingVisitor());
         $traverser->addVisitor($envCallNodeVisitor);

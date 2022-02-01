@@ -24,7 +24,13 @@ final class FormatEnvironmentCall implements FormatsEnvironmentCall
         $value = Str::of("{$environmentCall->getKey()}=");
 
         if ($this->displayDefaultValue && $environmentCall->getDefault() !== null) {
-            $value = $value->append($environmentCall->getDefault());
+            $defaultValue = $environmentCall->getDefault();
+
+            if (Str::match('/\s/', $defaultValue) !== '') {
+                $defaultValue = "\"{$defaultValue}\"";
+            }
+
+            $value = $value->append($defaultValue);
         }
 
         if ($this->displayLocationHint) {

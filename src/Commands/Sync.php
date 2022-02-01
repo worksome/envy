@@ -6,37 +6,27 @@ namespace Worksome\Envy\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
-use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
-use Worksome\Envy\Contracts\Finder;
+use Illuminate\Support\Facades\Blade;
 use Worksome\Envy\Envy;
 use Worksome\Envy\Support\EnvironmentCall;
 
+use function Termwind\render;
+
 class Sync extends Command
 {
-    public $signature = 'envsync:sync
+    public $signature = 'envy:sync
         {--dry : Run without making actual changes to the .env files to see which variables will be added.}
+        {--force : Run without asking for confirmation.}
     ';
 
     public $description = 'Sync your configured .env files based on calls to env in config files.';
 
-    public function handle(
-        Envy $envsync,
-        Finder $finder,
-        FiltersEnvironmentCalls $filterEnvironmentCalls,
-        UpdatesEnvironmentFile $updateEnvironmentFile,
-    ): int {
-        $allEnvironmentCalls = $envsync->environmentCalls();
-
-        /** @var Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates */
-        $pendingUpdates = collect($finder->environmentFilePaths())
-            ->flip()
-            // @phpstan-ignore-next-line
-            ->map(fn(int $index, string $path) => $filterEnvironmentCalls($path, $allEnvironmentCalls))
-            ->filter(fn(Collection $environmentCalls) => $environmentCalls->isNotEmpty());
+    public function handle(Envy $envy): int
+    {
+        $pendingUpdates = $envy->pendingUpdates($envy->environmentCalls());
 
         if ($pendingUpdates->isEmpty()) {
-            $this->line('  There are no changes to sync!');
+            render('<div class="px-1 py-1 bg-green-500 font-bold">There are no changes to sync!</div>');
             return self::SUCCESS;
         }
 
@@ -46,10 +36,11 @@ class Sync extends Command
             return self::FAILURE;
         }
 
-        $pendingUpdates->each(fn(Collection $environmentCalls, string $path) => $updateEnvironmentFile(
-            $path,
-            $environmentCalls
-        ));
+        if (! $this->option('force') && ! $this->confirm('Are you sure you want to continue?')) {
+            return self::SUCCESS;
+        }
+
+        $envy->updateEnvironmentFiles($pendingUpdates);
 
         return self::SUCCESS;
     }
@@ -61,11 +52,19 @@ class Sync extends Command
      */
     private function printPendingUpdates(Collection $pendingUpdates): void
     {
-        $pendingUpdates->each(function (Collection $environmentCalls, string $path) {
-            $this->line("  Updates for {$path}");
-            $this->newLine();
-            $environmentCalls->each(fn(EnvironmentCall $call) => $this->line("  - {$call->getKey()}"));
-            $this->newLine(2);
-        });
+        render(Blade::render('
+        @foreach($pendingUpdates as $path => $environmentCalls)
+            <div class="my-1">
+                <div class="px-1 py-1 w-full text-center bg-green-500 font-bold">
+                    {{ $environmentCalls->count() }} {{ Str::plural("update", $environmentCalls->count()) }} for {{ Str::after($path, base_path()) }}
+                </div>
+                <ul class="mx-1 mt-1 space-y-1">
+                    @foreach($environmentCalls as $environmentCall)
+                        <li>{{ $environmentCall->getKey() }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endforeach
+        ', ['pendingUpdates' => $pendingUpdates]));
     }
 }

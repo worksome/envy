@@ -40,7 +40,17 @@ return [
      * Calls to the `env` function can provide a second parameter that will act as a
      * default when no matching variable is found in your .env file. Enabling this
      * option will also insert the default in your .env file when copying a value.
+     *
+     * Note that `exclude_calls_with_defaults` must be set to `false` for this
+     * to take effect.
      */
     'display_default_values' => true,
+
+    /**
+     * When calling the `env` function, you can optionally provide a default as the
+     * second parameter. Envy will ignore any calls with a set default if this
+     * option is set to true. Otherwise, it will include them whilst syncing.
+     */
+    'exclude_calls_with_defaults' => true,
 
 ];
