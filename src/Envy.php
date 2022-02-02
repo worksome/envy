@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Worksome\Envy;
 
-use Illuminate\Config\Repository;
 use Illuminate\Support\Collection;
 use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
+use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Support\EnvironmentCall;
@@ -21,7 +21,7 @@ final class Envy
         private FiltersEnvironmentCalls $filtersEnvironmentCalls,
         private Finder $finder,
         private FindsEnvironmentCalls $findEnvironmentCalls,
-        private Repository $config,
+        private FindsEnvironmentVariablesToPrune $findEnvironmentVariablesToPrune,
         private UpdatesEnvironmentFile $updateEnvironmentFile,
     ) {
     }
@@ -31,14 +31,11 @@ final class Envy
      *
      * @return Collection<int, EnvironmentCall>
      */
-    public function environmentCalls(): Collection
+    public function environmentCalls(bool $excludeCallsWithDefaults = false): Collection
     {
         // @phpstan-ignore-next-line
         return collect($this->finder->configFilePaths())
-            ->map(fn (string $path) => ($this->findEnvironmentCalls)(
-                $path,
-                boolval($this->config->get('envy.exclude_calls_with_defaults', false))
-            ))
+            ->map(fn (string $path) => ($this->findEnvironmentCalls)($path, $excludeCallsWithDefaults))
             ->flatten()
             ->sortBy(fn (EnvironmentCall $call) => $call->getKey());
     }
@@ -98,8 +95,33 @@ final class Envy
         ($this->addEnvironmentVariablesToList)($updates, AddsEnvironmentVariablesToList::BLACKLIST);
     }
 
+    /**
+     * Determine if the envy.php config file has been published to the project.
+     */
     public function hasPublishedConfigFile(): bool
     {
         return $this->finder->envyConfigFile() !== null;
+    }
+
+    /**
+     * Map the environment variables to be removed to each configured .env file.
+     *
+     * @see Envy::environmentCalls()
+     *
+     * @param Collection<int, EnvironmentCall> $environmentCalls
+     * @param array<int, string>|null $environmentFilePaths
+     * @return Collection<string, Collection<int, string>>
+     */
+    public function pendingPrunes(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
+    {
+        // @phpstan-ignore-next-line
+        return collect($environmentFilePaths ?? $this->finder->environmentFilePaths())
+            ->flip()
+            // @phpstan-ignore-next-line
+            ->map(fn (int $index, string $path) => ($this->findEnvironmentVariablesToPrune)($path, $environmentCalls));
+    }
+
+    public function pruneEnvironmentFiles(): void
+    {
     }
 }

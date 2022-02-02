@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Worksome\Envy\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
@@ -28,12 +29,12 @@ final class SyncCommand extends Command
 
     public $description = 'Sync your configured .env files based on calls to env in config files.';
 
-    public function handle(Envy $envy): int
+    public function handle(Envy $envy, Repository $config): int
     {
-        $pendingUpdates = $envy->pendingUpdates($envy->environmentCalls());
+        $pendingUpdates = $envy->pendingUpdates($envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))));
 
         if ($pendingUpdates->isEmpty()) {
-            render('<div class="px-1 py-1 bg-green-500 font-bold">There are no changes to sync!</div>');
+            render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');
             return self::SUCCESS;
         }
 

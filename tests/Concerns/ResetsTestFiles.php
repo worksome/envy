@@ -18,6 +18,7 @@ use function Safe\unlink;
  */
 trait ResetsTestFiles
 {
+    private array $filesToReset = [];
     private array $fileContents = [];
 
     public function setUpResetsTestFiles(): void
@@ -49,9 +50,18 @@ trait ResetsTestFiles
         }
     }
 
+    public function addResettableFile(string $path): self
+    {
+        $this->filesToReset[] = $path;
+        $this->fileContents[$path] = file_get_contents($path);
+
+        return $this;
+    }
+
     public function getFilesToReset(): array
     {
         return [
+            ...$this->filesToReset,
             testAppPath('.env.example'),
             testAppPath('config/envy.php'),
         ];
