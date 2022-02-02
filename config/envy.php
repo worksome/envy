@@ -129,4 +129,14 @@ return [
 
         // Custom keys
     ],
+
+    /**
+     * Any environment variables included in the whitelist will never be pruned from
+     * your .env files. By default, we include Laravel Mix variables. Feel free to
+     * add or remove environment variables to suit your project's requirements.
+     */
+    'whitelist' => [
+        'MIX_PUSHER_APP_KEY',
+        'MIX_PUSHER_APP_CLUSTER',
+    ],
 ];

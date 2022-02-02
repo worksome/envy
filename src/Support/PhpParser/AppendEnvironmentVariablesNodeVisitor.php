@@ -9,12 +9,14 @@ use PhpParser\Node;
 use PhpParser\NodeVisitorAbstract;
 use Worksome\Envy\Support\EnvironmentVariable;
 
-final class BlacklistUpdateNodeVisitor extends NodeVisitorAbstract
+final class AppendEnvironmentVariablesNodeVisitor extends NodeVisitorAbstract
 {
+    private bool $variablesWereAppended = false;
+
     /**
      * @param Collection<int, EnvironmentVariable> $updates
      */
-    public function __construct(private Collection $updates)
+    public function __construct(private Collection $updates, private string $arrayKey)
     {
     }
 
@@ -24,17 +26,17 @@ final class BlacklistUpdateNodeVisitor extends NodeVisitorAbstract
             return $node;
         }
 
-        $blackListArrayItem = $node->getAttribute('parent');
+        $arrayItem = $node->getAttribute('parent');
 
-        if (! $blackListArrayItem instanceof Node\Expr\ArrayItem) {
+        if (! $arrayItem instanceof Node\Expr\ArrayItem) {
             return $node;
         }
 
-        if (! $blackListArrayItem->key instanceof Node\Scalar\String_) {
+        if (! $arrayItem->key instanceof Node\Scalar\String_) {
             return $node;
         }
 
-        if ($blackListArrayItem->key->value !== 'blacklist') {
+        if ($arrayItem->key->value !== $this->arrayKey) {
             return $node;
         }
 
@@ -42,6 +44,13 @@ final class BlacklistUpdateNodeVisitor extends NodeVisitorAbstract
             $node->items[] = new Node\Expr\ArrayItem(new Node\Scalar\String_($variable->getKey()));
         });
 
+        $this->variablesWereAppended = true;
+
         return $node;
+    }
+
+    public function variablesWereAppended(): bool
+    {
+        return $this->variablesWereAppended;
     }
 }

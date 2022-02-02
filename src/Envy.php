@@ -8,7 +8,7 @@ use Illuminate\Config\Repository;
 use Illuminate\Support\Collection;
 use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
-use Worksome\Envy\Contracts\Actions\UpdatesBlacklist;
+use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Support\EnvironmentCall;
@@ -17,11 +17,11 @@ use Worksome\Envy\Support\EnvironmentVariable;
 final class Envy
 {
     public function __construct(
+        private AddsEnvironmentVariablesToList $addEnvironmentVariablesToList,
         private FiltersEnvironmentCalls $filtersEnvironmentCalls,
         private Finder $finder,
         private FindsEnvironmentCalls $findEnvironmentCalls,
         private Repository $config,
-        private UpdatesBlacklist $updateBlacklist,
         private UpdatesEnvironmentFile $updateEnvironmentFile,
     ) {
     }
@@ -95,7 +95,7 @@ final class Envy
                 $environmentCall->getDefault() ?? ''
             ));
 
-        ($this->updateBlacklist)($updates);
+        ($this->addEnvironmentVariablesToList)($updates, AddsEnvironmentVariablesToList::BLACKLIST);
     }
 
     public function hasPublishedConfigFile(): bool

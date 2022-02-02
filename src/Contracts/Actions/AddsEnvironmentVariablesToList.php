@@ -8,13 +8,16 @@ use Illuminate\Support\Collection;
 use Worksome\Envy\Exceptions\ConfigFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentVariable;
 
-interface UpdatesBlacklist
+interface AddsEnvironmentVariablesToList
 {
+    public const BLACKLIST = 'blacklist';
+    public const WHITELIST = 'whitelist';
+
     /**
-     * Add all given environment variables to the blacklist config.
+     * Add all given environment variables to the given list key in the envy config.
      *
      * @param Collection<int, EnvironmentVariable> $updates
      * @throws ConfigFileNotFoundException Thrown when the envy config file hasn't been published.
      */
-    public function __invoke(Collection $updates): void;
+    public function __invoke(Collection $updates, string $listKey): void;
 }

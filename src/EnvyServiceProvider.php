@@ -12,7 +12,7 @@ use Worksome\Envy\Actions\FilterEnvironmentCalls;
 use Worksome\Envy\Actions\FindEnvironmentCalls;
 use Worksome\Envy\Actions\FormatEnvironmentCall;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
-use Worksome\Envy\Actions\UpdateBlacklist;
+use Worksome\Envy\Actions\AddEnvironmentVariablesToList;
 use Worksome\Envy\Actions\UpdateEnvironmentFile;
 use Worksome\Envy\Commands\InstallCommand;
 use Worksome\Envy\Commands\SyncCommand;
@@ -20,7 +20,7 @@ use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
 use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
-use Worksome\Envy\Contracts\Actions\UpdatesBlacklist;
+use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Support\LaravelFinder;
@@ -47,7 +47,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
             $this->config()['display_location_hints'] ?? false,
             $this->config()['display_default_values'] ?? true,
         ));
-        $this->app->bind(UpdatesBlacklist::class, fn (Application $app) => $app->make(UpdateBlacklist::class, [
+        $this->app->bind(AddsEnvironmentVariablesToList::class, fn (Application $app) => $app->make(AddEnvironmentVariablesToList::class, [
             'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
         ]));
     }
