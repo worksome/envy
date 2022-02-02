@@ -7,14 +7,8 @@ it('removes the given entries from the given environment file', function () {
     $action(testAppPath('.env.example'), collect(['MIX_URL']));
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
-        return $newContent === <<<TXT
-        # The Application Name
-        APP_NAME=
-        APP_ENV=local
-        APP_DEBUG=true
-        APP_URL=http://laravel.com
-
-        TXT;
+        $eol = PHP_EOL;
+        return $newContent === "# The Application Name{$eol}APP_NAME={$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}";
     });
 });
 
@@ -23,16 +17,8 @@ it('will remove comments above entries', function () {
     $action(testAppPath('.env.example'), collect(['APP_NAME']));
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
-        return $newContent === <<<TXT
-
-        APP_ENV=local
-        APP_DEBUG=true
-        APP_URL=http://laravel.com
-
-
-        MIX_URL=\${APP_URL}
-
-        TXT;
+        $eol = PHP_EOL;
+        return $newContent === "{$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}{$eol}{$eol}MIX_URL=\${APP_URL}{$eol}";
     });
 });
 
@@ -42,7 +28,7 @@ it('removes duplicate entries', function () {
     $action(testAppPath('environments/.env.with-duplicates'), collect(['APP_NAME']));
 
     $this->assertFileChanged(testAppPath('environments/.env.with-duplicates'), function (string $newContent) {
-        return $newContent === "\n";
+        return $newContent === PHP_EOL;
     });
 });
 
