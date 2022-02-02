@@ -41,6 +41,10 @@ To learn more about configuring environment files, config files and blacklists, 
 
 The `envy:sync` command provides several options you might find helpful.
 
+#### `--path`
+
+If you'd like to run the sync command against a certain environment file, rather than your configured environment files, you may pass the path to the specified environment file using this option.
+
 #### `--dry`
 
 The `--dry` option will prevent the command from actually performing any updates. This is useful if you want to run Envy as part of a CI check without actually making updates. If missing entries were found, the command will fail, which would in turn fail the check in CI.
@@ -51,13 +55,27 @@ If you want to automatically make changes to your configured environment files w
 
 ### `php artisan envy:prune`
 
+<img width="580" alt="CleanShot 2022-02-02 at 12 03 51@2x" src="https://user-images.githubusercontent.com/12202279/152150299-59909889-8e18-4c19-9387-7f8d11019847.png">
+
 This command will search your project's configured environment files (by default just your `.env.example`) for entries that could not be found in any of the configured config files. If there are additional entries, you will be given the choice to either:
 1. Remove the additional entries from your environment file
 2. Add the missing keys to Envy's whitelist
 
-To learn more about configuring environment files, config files and blacklists, see the Configuration documentation.
+To learn more about configuring environment files, config files and whitelists, see the Configuration documentation.
 
 The `envy:prune` command provides several options you might find helpful.
+
+#### `--path`
+
+If you'd like to run the prune command against a certain environment file, rather than your configured environment files, you may pass the path to the specified environment file using this option.
+
+#### `--dry`
+
+The `--dry` option will prevent the command from actually pruning any environment variables. This is useful if you want to run Envy as part of a CI check without actually making updates. If additional entries were found, the command will fail, which would in turn fail the check in CI.
+
+#### `--force`
+
+If you want to automatically make changes to your configured environment files without being asked to confirm, you may pass the `--force` option. This is useful for CI bots, where you want to automate changes to your `.env.example` file, as no user input will be requested.
 
 ## Configuration
 
@@ -103,13 +121,15 @@ If you copy over every single call to `env`, your environment files will quickly
 
 This array is a collection of environment keys that should never be synced to your environment files. By default, we include all Laravel environment variables that aren't included in the default `.env` file created when you first create a new Laravel project. Removing values from this array will cause them to be picked up again whilst syncing. Of course, if you have custom variables or variables provided by packages that you want to ignore, you may add them here.
 
-If you select the `Add to blacklist` option when running `php artisan envy:sync`, this array will be discovered environment variables listed by that command.
+If you select the `Add to blacklist` option when running `php artisan envy:sync`, this array will be updated with the environment variables listed by that command.
 
 > 💡 You may still manually insert keys from your blacklist into your `.env` file. We won't remove them.
 
 ### `whitelist`
 
 This array is a collection of environment keys that we should never prune from your configured environment files, even if we cannot find reference to those variables in your configured config files. This can be useful for JS variables used by Laravel Mix, for example.
+
+If you select the `Add to whitelist` option when running `php artisan envy:prune`, this array will be updated with the environment variables listed by that command.
 
 ## Testing
 
