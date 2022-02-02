@@ -8,6 +8,7 @@ it('removes the given entries from the given environment file', function () {
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
         $eol = PHP_EOL;
+        dd($newContent);
         return $newContent === "# The Application Name{$eol}APP_NAME={$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}";
     });
 });
@@ -28,7 +29,7 @@ it('removes duplicate entries', function () {
     $action(testAppPath('environments/.env.with-duplicates'), collect(['APP_NAME']));
 
     $this->assertFileChanged(testAppPath('environments/.env.with-duplicates'), function (string $newContent) {
-        return $newContent === PHP_EOL;
+        return ! str_contains($newContent, 'APP_NAME');
     });
 });
 
