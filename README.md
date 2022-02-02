@@ -1,4 +1,6 @@
-# Envy - Automatically keep your .env files in sync.
+
+# Envy
+Automate keeping your environment files in sync.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/worksome/envsync.svg?style=flat-square)](https://packagist.org/packages/worksome/envsync)
 [![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/worksome/envsync/run-tests?label=tests)](https://github.com/worksome/envsync/actions?query=workflow%3Arun-tests+branch%3Amain)
