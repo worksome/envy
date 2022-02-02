@@ -13,11 +13,17 @@ use function Termwind\render;
 
 final class PruneCommand extends Command
 {
+    private const ACTION_PRUNE_ENVIRONMENT_FILE = 'Prune environment file';
+    private const ACTION_ADD_TO_WHITELIST = 'Add to whitelist';
+    private const ACTION_CANCEL = 'Cancel';
+
     protected $signature = 'envy:prune
     {--dry : Run without making actual changes to the .env files to see which variables will be pruned.}
     {--path : The path to a specific environment file to prune.}
     {--force : Run without asking for confirmation.}
     ';
+
+    protected $description = 'Prune environment variables that aren\'t found in your config files.';
 
     public function handle(Envy $envy): int
     {
@@ -36,6 +42,12 @@ final class PruneCommand extends Command
         if ($this->option('dry')) {
             return self::FAILURE;
         }
+
+        match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
+            self::ACTION_ADD_TO_WHITELIST => $envy->updateWhitelistWithPendingPrunes($pendingPrunes),
+            self::ACTION_PRUNE_ENVIRONMENT_FILE => $envy->pruneEnvironmentFiles($pendingPrunes),
+            default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Prune cancelled</div>'),
+        };
 
         return self::SUCCESS;
     }
@@ -66,5 +78,22 @@ final class PruneCommand extends Command
         @endforeach
         </div>
         ', ['pendingPrunes' => $pendingPrunes]));
+    }
+
+    private function askWhatWeShouldDoNext(bool $configFileHasBeenPublished): string
+    {
+        $options = collect([
+            self::ACTION_PRUNE_ENVIRONMENT_FILE => true,
+            self::ACTION_ADD_TO_WHITELIST => $configFileHasBeenPublished,
+            self::ACTION_CANCEL => true,
+        ])->filter()->keys()->all();
+
+        return $this->option('force')
+            ? self::ACTION_PRUNE_ENVIRONMENT_FILE
+            : strval($this->choice(
+                'How would you like to handle pruning?',
+                $options,
+                self::ACTION_PRUNE_ENVIRONMENT_FILE
+            ));
     }
 }

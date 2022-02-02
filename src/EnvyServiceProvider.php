@@ -12,6 +12,7 @@ use Worksome\Envy\Actions\FilterEnvironmentCalls;
 use Worksome\Envy\Actions\FindEnvironmentCalls;
 use Worksome\Envy\Actions\FindEnvironmentVariablesToPrune;
 use Worksome\Envy\Actions\FormatEnvironmentCall;
+use Worksome\Envy\Actions\PruneEnvironmentFile;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
 use Worksome\Envy\Actions\AddEnvironmentVariablesToList;
 use Worksome\Envy\Actions\UpdateEnvironmentFile;
@@ -22,6 +23,7 @@ use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
 use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
+use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
@@ -53,7 +55,10 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $this->app->bind(AddsEnvironmentVariablesToList::class, fn (Application $app) => $app->make(AddEnvironmentVariablesToList::class, [
             'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
         ]));
-        $this->app->bind(FindsEnvironmentVariablesToPrune::class, FindEnvironmentVariablesToPrune::class);
+        $this->app->bind(FindsEnvironmentVariablesToPrune::class, fn (Application $app) => $app->make(FindEnvironmentVariablesToPrune::class, [
+            'whitelist' => $this->config()['whitelist'],
+        ]));
+        $this->app->bind(PrunesEnvironmentFile::class, PruneEnvironmentFile::class);
     }
 
     private function config(): array

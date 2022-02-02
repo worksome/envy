@@ -9,6 +9,7 @@ use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
+use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Support\EnvironmentCall;
@@ -22,6 +23,7 @@ final class Envy
         private Finder $finder,
         private FindsEnvironmentCalls $findEnvironmentCalls,
         private FindsEnvironmentVariablesToPrune $findEnvironmentVariablesToPrune,
+        private PrunesEnvironmentFile $pruneEnvironmentFile,
         private UpdatesEnvironmentFile $updateEnvironmentFile,
     ) {
     }
@@ -118,10 +120,42 @@ final class Envy
         return collect($environmentFilePaths ?? $this->finder->environmentFilePaths())
             ->flip()
             // @phpstan-ignore-next-line
-            ->map(fn (int $index, string $path) => ($this->findEnvironmentVariablesToPrune)($path, $environmentCalls));
+            ->map(fn (int $index, string $path) => ($this->findEnvironmentVariablesToPrune)($path, $environmentCalls))
+            ->filter(fn (Collection $environmentVariables) => $environmentVariables->isNotEmpty());
     }
 
-    public function pruneEnvironmentFiles(): void
+    /**
+     * Prune the given variables from the mapped environment files.
+     *
+     * @see Envy::pendingPrunes()
+     *
+     * @param Collection<string, Collection<int, string>> $pendingPrunes
+     */
+    public function pruneEnvironmentFiles(Collection $pendingPrunes): void
     {
+        $pendingPrunes->each(fn (Collection $environmentVariables, string $path) => ($this->pruneEnvironmentFile)(
+            $path,
+            $environmentVariables,
+        ));
+    }
+
+    /**
+     * Convert a collection of pending prunes to a collection of
+     * environment variables and update the config whitelist.
+     *
+     * @see Envy::pendingPrunes()
+     *
+     * @param Collection<string, Collection<int, string>> $pendingPrunes
+     * @throws Exceptions\ConfigFileNotFoundException
+     */
+    public function updateWhitelistWithPendingPrunes(Collection $pendingPrunes): void
+    {
+        /** @var Collection<int, EnvironmentVariable> $environmentVariables */
+        $environmentVariables = $pendingPrunes
+            ->flatten()
+            // @phpstan-ignore-next-line
+            ->map(fn (string $key) => new EnvironmentVariable($key, ''));
+
+        ($this->addEnvironmentVariablesToList)($environmentVariables, 'whitelist');
     }
 }
