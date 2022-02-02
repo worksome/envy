@@ -31,6 +31,15 @@ trait HasUsefulConsoleMethods
         return $this;
     }
 
+    private function information(string $message): self
+    {
+        render("
+        <div class='px-1 py-1 bg-blue-500 text-black font-bold text-gray-50'>$message</div>
+        ");
+
+        return $this;
+    }
+
     private function askUserToStarRepository(): void
     {
         render('
