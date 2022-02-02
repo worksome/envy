@@ -21,9 +21,9 @@ final class PruneCommand extends Command
     private const ACTION_CANCEL = 'Cancel';
 
     protected $signature = 'envy:prune
-    {--dry : Run without making actual changes to the .env files to see which variables will be pruned.}
-    {--path : The path to a specific environment file to prune.}
-    {--force : Run without asking for confirmation.}
+        {--path= : The path to a specific environment file to prune.}
+        {--dry : Run without making actual changes to the .env files to see which variables will be pruned.}
+        {--force : Run without asking for confirmation.}
     ';
 
     protected $description = 'Prune environment variables that aren\'t found in your config files.';

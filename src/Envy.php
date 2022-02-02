@@ -48,12 +48,13 @@ final class Envy
      * @see Envy::environmentCalls()
      *
      * @param Collection<int, EnvironmentCall> $environmentCalls
+     * @param array<int, string>|null $environmentFilePaths
      * @return Collection<string, Collection<int, EnvironmentCall>>
      */
-    public function pendingUpdates(Collection $environmentCalls): Collection
+    public function pendingUpdates(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
     {
         // @phpstan-ignore-next-line
-        return collect($this->finder->environmentFilePaths())
+        return collect($environmentFilePaths ?? $this->finder->environmentFilePaths())
             ->flip()
             // @phpstan-ignore-next-line
             ->map(fn (int $index, string $path) => ($this->filtersEnvironmentCalls)($path, $environmentCalls))

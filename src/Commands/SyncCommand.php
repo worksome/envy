@@ -23,6 +23,7 @@ final class SyncCommand extends Command
     private const ACTION_CANCEL = 'Cancel';
 
     public $signature = 'envy:sync
+        {--path= : The path to a specific environment file to prune.}
         {--dry : Run without making actual changes to the .env files to see which variables will be added.}
         {--force : Run without asking for confirmation.}
     ';
@@ -31,7 +32,10 @@ final class SyncCommand extends Command
 
     public function handle(Envy $envy, Repository $config): int
     {
-        $pendingUpdates = $envy->pendingUpdates($envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))));
+        $pendingUpdates = $envy->pendingUpdates(
+            $envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))),
+            $this->option('path') ? [strval($this->option('path'))] : null,
+        );
 
         if ($pendingUpdates->isEmpty()) {
             render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');

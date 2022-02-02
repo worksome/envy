@@ -63,3 +63,15 @@ it('can add entries to the blacklist automatically', function () {
         return str_contains($newContent, '\'APP_TITLE\',') && str_contains($newContent, '\'APP_META\',');
     });
 });
+
+it('can specify a specific environment file to sync', function () {
+    $this->addResettableFile(testAppPath('environments/.env.empty'));
+
+    $this->artisan('envy:sync', [
+        '--force' => true,
+        '--path' => testAppPath('environments/.env.empty'),
+    ])
+        ->assertSuccessful();
+
+    $this->assertFileChanged(testAppPath('environments/.env.empty'));
+});
