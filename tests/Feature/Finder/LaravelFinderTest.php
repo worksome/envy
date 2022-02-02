@@ -11,7 +11,7 @@ it('can return all configured config files', function () {
     $finder = new LaravelFinder(
         [
             testAppPath('config'),
-            __DIR__ . '/../../../config/envy.php',
+            str_replace('/', DIRECTORY_SEPARATOR, __DIR__ . '/../../../config/envy.php'),
         ],
         []
     );
