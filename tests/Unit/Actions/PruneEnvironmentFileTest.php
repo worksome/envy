@@ -19,7 +19,7 @@ it('will remove comments above entries', function () {
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
         dump($newContent);
         $eol = PHP_EOL;
-        return $newContent === "{$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}{$eol}{$eol}MIX_URL=\${APP_URL}\n";
+        return $newContent === dump("{$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}{$eol}{$eol}MIX_URL=\${APP_URL}{$eol}");
     });
 });
 
