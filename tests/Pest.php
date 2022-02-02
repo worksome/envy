@@ -29,5 +29,6 @@ function testAppPath(string $path = ''): string
     return Str::of(__DIR__)
         ->append('/Application')
         ->append(Str::start($path, '/'))
+        ->replace('/', DIRECTORY_SEPARATOR)
         ->__toString();
 }

@@ -23,7 +23,7 @@ it('can return all configured config files', function () {
         testAppPath('config/app.php'),
         testAppPath('config/envy.php'),
         testAppPath('config/nested/config.php'),
-        __DIR__ . '/../../../config/envy.php',
+        str_replace('/', DIRECTORY_SEPARATOR, __DIR__ . '/../../../config/envy.php'),
     ]);
 });
 
