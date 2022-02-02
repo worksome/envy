@@ -2,10 +2,10 @@
 # Envy
 Automate keeping your environment files in sync.
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/worksome/envsync.svg?style=flat-square)](https://packagist.org/packages/worksome/envsync)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/worksome/envsync/run-tests?label=tests)](https://github.com/worksome/envsync/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/worksome/envsync/Check%20&%20fix%20styling?label=code%20style)](https://github.com/worksome/envsync/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/worksome/envsync.svg?style=flat-square)](https://packagist.org/packages/worksome/envsync)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/worksome/envy.svg?style=flat-square)](https://packagist.org/packages/worksome/envy)
+[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/worksome/envy/run-tests?label=tests)](https://github.com/worksome/envy/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/worksome/envy/Check%20&%20fix%20styling?label=code%20style)](https://github.com/worksome/envy/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/worksome/envy.svg?style=flat-square)](https://packagist.org/packages/worksome/envy)
 
 How many times have you onboarded a new dev onto your team, only to have to spend ages debugging with them because your project's `.env.example` file is wildly outdated? Too many to count, if you're anything like us. Wouldn't it be nice if there were a way to ensure your environment files stay up to date? That's why we created Envy!
 
