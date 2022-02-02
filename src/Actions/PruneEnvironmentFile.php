@@ -17,7 +17,7 @@ final class PruneEnvironmentFile implements PrunesEnvironmentFile
     {
         $updatedContent = $pendingPrunes->reduce(function (string $content, string $environmentVariable) {
             $environmentVariable = preg_quote($environmentVariable);
-            return preg_replace("/(#.*|\n)*^{$environmentVariable}=.*$/m", '', $content);
+            return preg_replace("/(#.*|\r\n?|\n)*^{$environmentVariable}=.*$/m", '', $content);
         }, file_get_contents($filePath));
 
         file_put_contents($filePath, $updatedContent);
