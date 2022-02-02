@@ -56,7 +56,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
             'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
         ]));
         $this->app->bind(FindsEnvironmentVariablesToPrune::class, fn (Application $app) => $app->make(FindEnvironmentVariablesToPrune::class, [
-            'whitelist' => $this->config()['whitelist'],
+            'whitelist' => $this->config()['whitelist'] ?? [],
         ]));
         $this->app->bind(PrunesEnvironmentFile::class, PruneEnvironmentFile::class);
     }
