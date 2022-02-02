@@ -45,9 +45,9 @@ final class SyncCommand extends Command
         }
 
         match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
-            self::ACTION_ADD_TO_BLACKLIST => $envy->updateBlacklistWithPendingUpdates($pendingUpdates),
-            self::ACTION_ADD_TO_ENVIRONMENT_FILE => $envy->updateEnvironmentFiles($pendingUpdates),
-            default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Sync cancelled</div>'),
+            self::ACTION_ADD_TO_BLACKLIST => $this->addPendingUpdatesToBlacklist($envy, $pendingUpdates),
+            self::ACTION_ADD_TO_ENVIRONMENT_FILE => $this->updateEnvironmentFiles($envy, $pendingUpdates),
+            default => $this->warning('Sync cancelled'),
         };
 
         $this->askUserToStarRepository();
@@ -100,5 +100,17 @@ final class SyncCommand extends Command
                 $options,
                 self::ACTION_ADD_TO_ENVIRONMENT_FILE
             ));
+    }
+
+    private function addPendingUpdatesToBlacklist(Envy $envy, Collection $pendingUpdates): void
+    {
+        $envy->updateBlacklistWithPendingUpdates($pendingUpdates);
+        $this->success('Blacklist updated!');
+    }
+
+    private function updateEnvironmentFiles(Envy $envy, Collection $pendingUpdates): void
+    {
+        $envy->updateEnvironmentFiles($pendingUpdates);
+        $this->success('Environment variables added!');
     }
 }

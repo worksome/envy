@@ -7,12 +7,15 @@ namespace Worksome\Envy\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
+use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
 
 use function Termwind\render;
 
 final class PruneCommand extends Command
 {
+    use HasUsefulConsoleMethods;
+
     private const ACTION_PRUNE_ENVIRONMENT_FILE = 'Prune environment file';
     private const ACTION_ADD_TO_WHITELIST = 'Add to whitelist';
     private const ACTION_CANCEL = 'Cancel';
@@ -44,10 +47,12 @@ final class PruneCommand extends Command
         }
 
         match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
-            self::ACTION_ADD_TO_WHITELIST => $envy->updateWhitelistWithPendingPrunes($pendingPrunes),
-            self::ACTION_PRUNE_ENVIRONMENT_FILE => $envy->pruneEnvironmentFiles($pendingPrunes),
-            default => render('<div class="px-1 py-1 bg-yellow-500 text-black font-bold">Prune cancelled</div>'),
+            self::ACTION_ADD_TO_WHITELIST => $this->addPendingPrunesToWhitelist($envy, $pendingPrunes),
+            self::ACTION_PRUNE_ENVIRONMENT_FILE => $this->updateEnvironmentFiles($envy, $pendingPrunes),
+            default => $this->warning('Prune cancelled'),
         };
+
+        $this->askUserToStarRepository();
 
         return self::SUCCESS;
     }
@@ -95,5 +100,17 @@ final class PruneCommand extends Command
                 $options,
                 self::ACTION_PRUNE_ENVIRONMENT_FILE
             ));
+    }
+
+    private function addPendingPrunesToWhitelist(Envy $envy, Collection $pendingPrunes): void
+    {
+        $envy->updateWhitelistWithPendingPrunes($pendingPrunes);
+        $this->success('Whitelist updated!');
+    }
+
+    private function updateEnvironmentFiles(Envy $envy, Collection $pendingPrunes): void
+    {
+        $envy->pruneEnvironmentFiles($pendingPrunes);
+        $this->success('Environment variables pruned!');
     }
 }
