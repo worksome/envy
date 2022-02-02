@@ -8,7 +8,7 @@ it('removes the given entries from the given environment file', function () {
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
         $eol = PHP_EOL;
-        dd($newContent);
+        dump($newContent);
         return $newContent === "# The Application Name{$eol}APP_NAME={$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}";
     });
 });
