@@ -8,7 +8,6 @@ it('removes the given entries from the given environment file', function () {
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
         $eol = PHP_EOL;
-        dump($newContent);
         return $newContent === "# The Application Name{$eol}APP_NAME={$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com\n";
     });
 });
@@ -18,6 +17,7 @@ it('will remove comments above entries', function () {
     $action(testAppPath('.env.example'), collect(['APP_NAME']));
 
     $this->assertFileChanged(testAppPath('.env.example'), function (string $newContent) {
+        dump($newContent);
         $eol = PHP_EOL;
         return $newContent === "{$eol}APP_ENV=local{$eol}APP_DEBUG=true{$eol}APP_URL=http://laravel.com{$eol}{$eol}{$eol}MIX_URL=\${APP_URL}\n";
     });
