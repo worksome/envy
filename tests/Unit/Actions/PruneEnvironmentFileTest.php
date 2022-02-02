@@ -18,7 +18,7 @@ it('removes the given entries from the given environment file', function () {
     });
 });
 
-it('', function () {
+it('will remove comments above entries', function () {
     $action = new PruneEnvironmentFile();
     $action(testAppPath('.env.example'), collect(['APP_NAME']));
 
@@ -43,5 +43,16 @@ it('removes duplicate entries', function () {
 
     $this->assertFileChanged(testAppPath('environments/.env.with-duplicates'), function (string $newContent) {
         return $newContent === "\n";
+    });
+});
+
+it('does not remove entries with prefixes', function () {
+    $this->addResettableFile(testAppPath('environments/.env.with-similarities'));
+    $action = new PruneEnvironmentFile();
+    $action(testAppPath('environments/.env.with-similarities'), collect(['APP_NAME']));
+
+    $this->assertFileChanged(testAppPath('environments/.env.with-similarities'), function (string $newContent) {
+        return str_contains($newContent, 'APP_NAME_SHORT=')
+            && str_contains($newContent, 'LONG_APP_NAME=');
     });
 });
