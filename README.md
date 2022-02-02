@@ -55,6 +55,8 @@ If you want to automatically make changes to your configured environment files w
 
 ### `php artisan envy:prune`
 
+<img width="580" alt="CleanShot 2022-02-02 at 12 03 51@2x" src="https://user-images.githubusercontent.com/12202279/152150299-59909889-8e18-4c19-9387-7f8d11019847.png">
+
 This command will search your project's configured environment files (by default just your `.env.example`) for entries that could not be found in any of the configured config files. If there are additional entries, you will be given the choice to either:
 1. Remove the additional entries from your environment file
 2. Add the missing keys to Envy's whitelist
