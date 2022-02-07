@@ -86,6 +86,7 @@ return [
         'REDIS_URL',
         'REDIS_DB',
         'REDIS_CACHE_DB',
+        'MYSQL_ATTR_SSL_CA',
 
         // config/hashing.php
         'BCRYPT_ROUNDS',
