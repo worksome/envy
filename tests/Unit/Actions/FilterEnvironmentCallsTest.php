@@ -30,7 +30,7 @@ it('removes keys that already exist in the .env file', function () {
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount(0);
 });
 
-it('removes keys from the given blacklist', function () {
+it('removes keys from the given exclusions', function () {
     $calls = Collection::times(1, fn () => new EnvironmentCall(
         testAppPath('config/app.php'),
         1,

@@ -28,14 +28,14 @@ it('will ask the user to select an option before progressing', function () {
     $this->artisan('envy:prune')
         ->expectsChoice('How would you like to handle pruning?', 'Prune environment file', [
             'Prune environment file',
-            'Add to whitelist',
+            'Add to inclusions',
             'Cancel'
         ]);
 
     $this->assertFileChanged(testAppPath('.env.example'));
 });
 
-it('will not show the Add to whitelist option if the envy config file has not been published', function () {
+it('will not show the "Add to inclusions" option if the envy config file has not been published', function () {
     $this->artisan('envy:prune')
         ->expectsChoice('How would you like to handle pruning?', 'Cancel', [
             'Prune environment file',
@@ -43,11 +43,11 @@ it('will not show the Add to whitelist option if the envy config file has not be
         ]);
 })->group('withoutPublishedConfigFile');
 
-it('can add the pruned variables to the config whitelist', function () {
+it('can add the pruned variables to the config inclusions', function () {
     $this->artisan('envy:prune')
-        ->expectsChoice('How would you like to handle pruning?', 'Add to whitelist', [
+        ->expectsChoice('How would you like to handle pruning?', 'Add to inclusions', [
             'Prune environment file',
-            'Add to whitelist',
+            'Add to inclusions',
             'Cancel'
         ]);
 

@@ -13,11 +13,11 @@ use Worksome\Envy\Support\EnvironmentVariable;
 final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
 {
     /**
-     * @param array<int, string> $blacklist
+     * @param array<int, string> $exclusions
      */
     public function __construct(
         private ReadsEnvironmentFile $readEnvironmentFile,
-        private array $blacklist = [],
+        private array $exclusions = [],
     ) {
     }
 
@@ -29,6 +29,6 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
             // @phpstan-ignore-next-line
             ->unique(fn (EnvironmentCall $call) => $call->getKey())
             ->reject(fn (EnvironmentCall $call) => $existingKeys->contains($call->getKey()))
-            ->reject(fn (EnvironmentCall $call) => in_array($call->getKey(), $this->blacklist));
+            ->reject(fn (EnvironmentCall $call) => in_array($call->getKey(), $this->exclusions));
     }
 }

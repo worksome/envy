@@ -12,7 +12,7 @@ it('throws an exception if the config file is unpublished', function (string $li
     $action = new AddEnvironmentVariablesToList(defaultPhpParser(), new TestFinder());
     $action(collect(), $list);
 })
-    ->with([AddsEnvironmentVariablesToList::BLACKLIST, AddsEnvironmentVariablesToList::WHITELIST])
+    ->with([AddsEnvironmentVariablesToList::EXCLUSIONS, AddsEnvironmentVariablesToList::INCLUSIONS])
     ->throws(ConfigFileNotFoundException::class)
     ->group('withoutPublishedConfigFile');
 
@@ -26,7 +26,7 @@ it('updates the config file with the given updates', function (string $list) {
     $this->assertFileChanged(testAppPath('config/envy.php'), function ($newContents) {
         return str_contains($newContents, '\'FOO\'') && str_contains($newContents, '\'BAZ\'');
     });
-})->with([AddsEnvironmentVariablesToList::BLACKLIST, AddsEnvironmentVariablesToList::WHITELIST]);
+})->with([AddsEnvironmentVariablesToList::EXCLUSIONS, AddsEnvironmentVariablesToList::INCLUSIONS]);
 
 it('performs no changes if the parser returns null', function (string $list) {
     $parser = new class implements Parser {
@@ -43,7 +43,7 @@ it('performs no changes if the parser returns null', function (string $list) {
     ]), $list);
 
     $this->assertFileNotChanged(testAppPath('config/envy.php'));
-})->with([AddsEnvironmentVariablesToList::BLACKLIST, AddsEnvironmentVariablesToList::WHITELIST]);
+})->with([AddsEnvironmentVariablesToList::EXCLUSIONS, AddsEnvironmentVariablesToList::INCLUSIONS]);
 
 it('throws an exception if the given list key doesn\'t exist', function () {
     $action = new AddEnvironmentVariablesToList(defaultPhpParser(), new TestFinder());

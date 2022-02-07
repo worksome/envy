@@ -77,12 +77,12 @@ final class Envy
 
     /**
      * Convert a collection of pending updates to a collection of
-     * environment variables and update the config blacklist.
+     * environment variables and update the config exclusions.
      *
      * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
      * @throws Exceptions\ConfigFileNotFoundException
      */
-    public function updateBlacklistWithPendingUpdates(Collection $pendingUpdates): void
+    public function updateExclusionsWithPendingUpdates(Collection $pendingUpdates): void
     {
         /** @var Collection<int, EnvironmentVariable> $updates */
         $updates = $pendingUpdates
@@ -95,7 +95,7 @@ final class Envy
                 $environmentCall->getDefault() ?? ''
             ));
 
-        ($this->addEnvironmentVariablesToList)($updates, AddsEnvironmentVariablesToList::BLACKLIST);
+        ($this->addEnvironmentVariablesToList)($updates, AddsEnvironmentVariablesToList::EXCLUSIONS);
     }
 
     /**
@@ -141,14 +141,14 @@ final class Envy
 
     /**
      * Convert a collection of pending prunes to a collection of
-     * environment variables and update the config whitelist.
+     * environment variables and update the config inclusions.
      *
      * @see Envy::pendingPrunes()
      *
      * @param Collection<string, Collection<int, string>> $pendingPrunes
      * @throws Exceptions\ConfigFileNotFoundException
      */
-    public function updateWhitelistWithPendingPrunes(Collection $pendingPrunes): void
+    public function updateInclusionsWithPendingPrunes(Collection $pendingPrunes): void
     {
         /** @var Collection<int, EnvironmentVariable> $environmentVariables */
         $environmentVariables = $pendingPrunes
@@ -156,6 +156,6 @@ final class Envy
             // @phpstan-ignore-next-line
             ->map(fn (string $key) => new EnvironmentVariable($key, ''));
 
-        ($this->addEnvironmentVariablesToList)($environmentVariables, 'whitelist');
+        ($this->addEnvironmentVariablesToList)($environmentVariables, AddsEnvironmentVariablesToList::INCLUSIONS);
     }
 }

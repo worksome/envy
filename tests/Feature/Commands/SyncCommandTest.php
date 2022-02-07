@@ -27,15 +27,15 @@ it('asks for confirmation before making the changes', function () {
     $this->artisan('envy:sync')
         ->expectsChoice('How would you like to handle these updates?', 'Cancel', [
             'Add to environment file',
-            'Add to blacklist',
+            'Add to exclusions',
             'Cancel'
         ]);
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
 });
 
-it('does not update blacklisted keys', function () {
-    config()->set('envy.blacklist', ['APP_TITLE', 'APP_META']);
+it('does not update excluded keys', function () {
+    config()->set('envy.exclusions', ['APP_TITLE', 'APP_META']);
 
     $this->artisan('envy:sync', ['--force' => true])
         ->assertSuccessful();
@@ -43,7 +43,7 @@ it('does not update blacklisted keys', function () {
     $this->assertFileNotChanged(testAppPath('.env.example'));
 });
 
-it('does not show the "Add to blacklist" option if the config file is unpublished', function () {
+it('does not show the "Add to exclusions" option if the config file is unpublished', function () {
     $this->artisan('envy:sync')
         ->expectsChoice('How would you like to handle these updates?', 'Cancel', [
             'Add to environment file',
@@ -51,11 +51,11 @@ it('does not show the "Add to blacklist" option if the config file is unpublishe
         ]);
 })->group('withoutPublishedConfigFile');
 
-it('can add entries to the blacklist automatically', function () {
+it('can add entries to exclusions automatically', function () {
     $this->artisan('envy:sync')
-        ->expectsChoice('How would you like to handle these updates?', 'Add to blacklist', [
+        ->expectsChoice('How would you like to handle these updates?', 'Add to exclusions', [
             'Add to environment file',
-            'Add to blacklist',
+            'Add to exclusions',
             'Cancel'
         ]);
 

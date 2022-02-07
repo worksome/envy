@@ -17,7 +17,7 @@ final class PruneCommand extends Command
     use HasUsefulConsoleMethods;
 
     private const ACTION_PRUNE_ENVIRONMENT_FILE = 'Prune environment file';
-    private const ACTION_ADD_TO_WHITELIST = 'Add to whitelist';
+    private const ACTION_ADD_TO_INCLUSIONS = 'Add to inclusions';
     private const ACTION_CANCEL = 'Cancel';
 
     protected $signature = 'envy:prune
@@ -47,7 +47,7 @@ final class PruneCommand extends Command
         }
 
         match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
-            self::ACTION_ADD_TO_WHITELIST => $this->addPendingPrunesToWhitelist($envy, $pendingPrunes),
+            self::ACTION_ADD_TO_INCLUSIONS => $this->addPendingPrunesToInclusions($envy, $pendingPrunes),
             self::ACTION_PRUNE_ENVIRONMENT_FILE => $this->updateEnvironmentFiles($envy, $pendingPrunes),
             default => $this->warning('Prune cancelled'),
         };
@@ -89,7 +89,7 @@ final class PruneCommand extends Command
     {
         $options = collect([
             self::ACTION_PRUNE_ENVIRONMENT_FILE => true,
-            self::ACTION_ADD_TO_WHITELIST => $configFileHasBeenPublished,
+            self::ACTION_ADD_TO_INCLUSIONS => $configFileHasBeenPublished,
             self::ACTION_CANCEL => true,
         ])->filter()->keys()->all();
 
@@ -105,10 +105,10 @@ final class PruneCommand extends Command
     /**
      * @param Collection<string, Collection<int, string>> $pendingPrunes
      */
-    private function addPendingPrunesToWhitelist(Envy $envy, Collection $pendingPrunes): void
+    private function addPendingPrunesToInclusions(Envy $envy, Collection $pendingPrunes): void
     {
-        $envy->updateWhitelistWithPendingPrunes($pendingPrunes);
-        $this->success('Whitelist updated!');
+        $envy->updateInclusionsWithPendingPrunes($pendingPrunes);
+        $this->success('Inclusions updated!');
     }
 
     /**

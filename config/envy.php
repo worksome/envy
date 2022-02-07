@@ -54,11 +54,11 @@ return [
     'exclude_calls_with_defaults' => true,
 
     /**
-     * Any environment variables included in the blacklist will never be inserted
+     * Any environment variables that are added to exclusions will never be inserted
      * into .env files. Our defaults are based on the base Laravel config files.
      * Feel free to add or remove variables as required by your project needs.
      */
-    'blacklist' => [
+    'exclusions' => [
         // config/app.php
         'ASSET_URL',
 
@@ -129,11 +129,11 @@ return [
     ],
 
     /**
-     * Any environment variables included in the whitelist will never be pruned from
+     * Any environment variables that are added to inclusions will never be pruned from
      * your .env files. By default, we include Laravel Mix variables. Feel free to
      * add or remove environment variables to suit your project's requirements.
      */
-    'whitelist' => [
+    'inclusions' => [
         'MIX_PUSHER_APP_KEY',
         'MIX_PUSHER_APP_CLUSTER',
     ],
