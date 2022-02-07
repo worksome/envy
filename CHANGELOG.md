@@ -2,6 +2,7 @@
 
 All notable changes to `envsync` will be documented in this file.
 
-## 1.0.0 - 202X-XX-XX
+## v0.2.0 - 2022-02-07
 
-- initial release
+### Changed
+- Renamed `blacklist` and `whitelist` to `exclusions` and `inclusions` respectively [#1](https://github.com/worksome/envy/pull/1)
