@@ -29,7 +29,7 @@ it('removes duplicates', function () {
     ]);
 });
 
-it('will not include variables on the given whitelist', function () {
+it('will not include variables on the given inclusions', function () {
     $action = new FindEnvironmentVariablesToPrune(new ReadEnvironmentFile(), [
         'APP_NAME',
         'APP_TITLE'

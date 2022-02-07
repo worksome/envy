@@ -44,7 +44,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
         ]));
         $this->app->bind(ReadsEnvironmentFile::class, ReadEnvironmentFile::class);
         $this->app->bind(FiltersEnvironmentCalls::class, fn (Application $app) => $app->make(FilterEnvironmentCalls::class, [
-            'blacklist' => $this->config()['blacklist'] ?? []
+            'exclusions' => $this->config()['exclusions'] ?? []
         ]));
         $this->app->bind(UpdatesEnvironmentFile::class, UpdateEnvironmentFile::class);
         $this->app->bind(FormatsEnvironmentCall::class, fn() => new FormatEnvironmentCall(
@@ -56,7 +56,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
             'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
         ]));
         $this->app->bind(FindsEnvironmentVariablesToPrune::class, fn (Application $app) => $app->make(FindEnvironmentVariablesToPrune::class, [
-            'whitelist' => $this->config()['whitelist'] ?? [],
+            'inclusions' => $this->config()['inclusions'] ?? [],
         ]));
         $this->app->bind(PrunesEnvironmentFile::class, PruneEnvironmentFile::class);
     }

@@ -19,7 +19,7 @@ final class SyncCommand extends Command
     use HasUsefulConsoleMethods;
 
     private const ACTION_ADD_TO_ENVIRONMENT_FILE = 'Add to environment file';
-    private const ACTION_ADD_TO_BLACKLIST = 'Add to blacklist';
+    private const ACTION_ADD_TO_EXCLUSIONS = 'Add to exclusions';
     private const ACTION_CANCEL = 'Cancel';
 
     public $signature = 'envy:sync
@@ -49,7 +49,7 @@ final class SyncCommand extends Command
         }
 
         match ($this->askWhatWeShouldDoNext($envy->hasPublishedConfigFile())) {
-            self::ACTION_ADD_TO_BLACKLIST => $this->addPendingUpdatesToBlacklist($envy, $pendingUpdates),
+            self::ACTION_ADD_TO_EXCLUSIONS => $this->addPendingUpdatesToExclusions($envy, $pendingUpdates),
             self::ACTION_ADD_TO_ENVIRONMENT_FILE => $this->updateEnvironmentFiles($envy, $pendingUpdates),
             default => $this->warning('Sync cancelled'),
         };
@@ -93,7 +93,7 @@ final class SyncCommand extends Command
     {
         $options = collect([
             self::ACTION_ADD_TO_ENVIRONMENT_FILE => true,
-            self::ACTION_ADD_TO_BLACKLIST => $configFileHasBeenPublished,
+            self::ACTION_ADD_TO_EXCLUSIONS => $configFileHasBeenPublished,
             self::ACTION_CANCEL => true,
         ])->filter()->keys()->all();
 
@@ -109,10 +109,10 @@ final class SyncCommand extends Command
     /**
      * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
      */
-    private function addPendingUpdatesToBlacklist(Envy $envy, Collection $pendingUpdates): void
+    private function addPendingUpdatesToExclusions(Envy $envy, Collection $pendingUpdates): void
     {
-        $envy->updateBlacklistWithPendingUpdates($pendingUpdates);
-        $this->success('Blacklist updated!');
+        $envy->updateExclusionsWithPendingUpdates($pendingUpdates);
+        $this->success('Exclusions updated!');
     }
 
     /**

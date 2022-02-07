@@ -13,9 +13,9 @@ use Worksome\Envy\Support\EnvironmentVariable;
 final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariablesToPrune
 {
     /**
-     * @param array<int, string> $whitelist
+     * @param array<int, string> $inclusions
      */
-    public function __construct(private ReadsEnvironmentFile $readEnvironmentFile, private array $whitelist = [])
+    public function __construct(private ReadsEnvironmentFile $readEnvironmentFile, private array $inclusions = [])
     {
     }
 
@@ -25,7 +25,7 @@ final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariables
 
         return $this->environmentVariables($filePath)
             ->diff($variablesInEnvironmentCalls)
-            ->diff($this->whitelist)
+            ->diff($this->inclusions)
             ->unique()
             ->sort()
             ->values();

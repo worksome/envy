@@ -11,8 +11,8 @@ use Worksome\Envy\Support\EnvironmentVariable;
 
 interface AddsEnvironmentVariablesToList
 {
-    public const BLACKLIST = 'blacklist';
-    public const WHITELIST = 'whitelist';
+    public const EXCLUSIONS = 'exclusions';
+    public const INCLUSIONS = 'inclusions';
 
     /**
      * Add all given environment variables to the given list key in the envy config.

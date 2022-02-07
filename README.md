@@ -35,9 +35,9 @@ Envy provides two commands: `envy:sync` and `envy:prune`. Let's break down how t
 
 This command combs through your project's config files for calls to Laravel's `env` function. After finding them all, it will compare them against your configured environment files (by default just your `.env.example`) for missing entries. If there are missing entries, you will be given the choice to either:
 1. Add the missing keys to your environment file
-2. Add the missing keys to Envy's blacklist
+2. Add the missing keys to Envy's exclusion list
 
-To learn more about configuring environment files, config files and blacklists, see the Configuration documentation.
+To learn more about configuring environment files, config files and exclusions, see the Configuration documentation.
 
 The `envy:sync` command provides several options you might find helpful.
 
@@ -59,9 +59,9 @@ If you want to automatically make changes to your configured environment files w
 
 This command will search your project's configured environment files (by default just your `.env.example`) for entries that could not be found in any of the configured config files. If there are additional entries, you will be given the choice to either:
 1. Remove the additional entries from your environment file
-2. Add the missing keys to Envy's whitelist
+2. Add the missing keys to Envy's inclusion list
 
-To learn more about configuring environment files, config files and whitelists, see the Configuration documentation.
+To learn more about configuring environment files, config files and inclusions, see the Configuration documentation.
 
 The `envy:prune` command provides several options you might find helpful.
 
@@ -117,19 +117,19 @@ For obvious reasons, we will only insert scalar (primitive) types when copying d
 
 If you copy over every single call to `env`, your environment files will quickly become difficult to read. To help alleviate this, we provide the option to ignore calls to `env` that have default values provided. By default this is enabled, but setting this to `false` will let Envy sync environment variables that have defaults too.
 
-### `blacklist`
+### `exclusions`
 
 This array is a collection of environment keys that should never be synced to your environment files. By default, we include all Laravel environment variables that aren't included in the default `.env` file created when you first create a new Laravel project. Removing values from this array will cause them to be picked up again whilst syncing. Of course, if you have custom variables or variables provided by packages that you want to ignore, you may add them here.
 
-If you select the `Add to blacklist` option when running `php artisan envy:sync`, this array will be updated with the environment variables listed by that command.
+If you select the `Add to exclusions` option when running `php artisan envy:sync`, this array will be updated with the environment variables listed by that command.
 
-> 💡 You may still manually insert keys from your blacklist into your `.env` file. We won't remove them.
+> 💡 You may still manually insert keys from your exclusions into your `.env` file. We won't remove them.
 
-### `whitelist`
+### `inclusions`
 
 This array is a collection of environment keys that we should never prune from your configured environment files, even if we cannot find reference to those variables in your configured config files. This can be useful for JS variables used by Laravel Mix, for example.
 
-If you select the `Add to whitelist` option when running `php artisan envy:prune`, this array will be updated with the environment variables listed by that command.
+If you select the `Add to inclusions` option when running `php artisan envy:prune`, this array will be updated with the environment variables listed by that command.
 
 ## Testing
 
