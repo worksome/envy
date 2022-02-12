@@ -102,7 +102,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return $this->print($providedDefault);
         }
 
-        if (! $providedDefault instanceof Node\Scalar) {
+        if (! ($providedDefault instanceof Node\Scalar || $providedDefault instanceof Node\Expr\ConstFetch)) {
             return null;
         }
 

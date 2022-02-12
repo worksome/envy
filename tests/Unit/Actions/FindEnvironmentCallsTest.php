@@ -76,6 +76,13 @@ it('correctly handles static ternary checks used as defaults', function () {
     expect($appEnv->getDefault())->toBeNull();
 });
 
+it('correctly handles boolean values used as defaults', function () {
+    $action = new FindEnvironmentCalls(defaultPhpParser());
+    $appEnv = $action(__DIR__ . '/../../Application/config/app.php')->get(7);
+
+    expect($appEnv->getDefault())->toEqual('false');
+});
+
 it('returns an empty collection if the parser returns null', function () {
     $parser = new class implements Parser {
         public function parse(string $code, ErrorHandler $errorHandler = null)
