@@ -102,11 +102,15 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return $this->print($providedDefault);
         }
 
-        if (! ($providedDefault instanceof Node\Scalar || $providedDefault instanceof Node\Expr\ConstFetch)) {
-            return null;
+        if ($providedDefault instanceof Node\Scalar) {
+            return $this->print($providedDefault);
         }
 
-        return $this->print($providedDefault);
+        if ($this->isBoolean($providedDefault)) {
+            return $this->print($providedDefault);
+        }
+
+        return null;
     }
 
     private function getComment(Node\Expr\FuncCall $node): string|null
@@ -135,5 +139,16 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
         }
 
         return $this->printer->prettyPrint([$node]);
+    }
+
+    private function isBoolean(Node\Expr $providedDefault): bool
+    {
+        if (! $providedDefault instanceof Node\Expr\ConstFetch) {
+            return false;
+        }
+
+        $value = $providedDefault->name->parts[0];
+
+        return $value === 'true' || $value === 'false';
     }
 }
