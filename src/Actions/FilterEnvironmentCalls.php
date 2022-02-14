@@ -26,7 +26,6 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
         $existingKeys = ($this->readEnvironmentFile)($filePath)->map(fn (EnvironmentVariable $variable) => $variable->getKey());
 
         return $environmentCalls
-            // @phpstan-ignore-next-line
             ->unique(fn (EnvironmentCall $call) => $call->getKey())
             ->reject(fn (EnvironmentCall $call) => $existingKeys->contains($call->getKey()))
             ->reject(fn (EnvironmentCall $call) => in_array($call->getKey(), $this->exclusions));

@@ -68,7 +68,6 @@ final class Envy
      */
     public function updateEnvironmentFiles(Collection $pendingUpdates): void
     {
-        // @phpstan-ignore-next-line
         $pendingUpdates->each(fn (Collection $environmentCalls, string $path) => ($this->updateEnvironmentFile)(
             $path,
             $environmentCalls
@@ -132,7 +131,6 @@ final class Envy
      */
     public function pruneEnvironmentFiles(Collection $pendingPrunes): void
     {
-        // @phpstan-ignore-next-line
         $pendingPrunes->each(fn (Collection $environmentVariables, string $path) => ($this->pruneEnvironmentFile)(
             $path,
             $environmentVariables,
