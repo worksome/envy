@@ -2,6 +2,11 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v0.2.2 - 2022-02-14
+
+### Fixed
+- Boolean values will now be copied over as defaults [#2](https://github.com/worksome/envy/pull/2)
+
 ## v0.2.1 - 2022-02-07
 
 ### Added
