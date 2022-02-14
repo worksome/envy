@@ -147,8 +147,6 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return false;
         }
 
-        $value = $providedDefault->name->parts[0];
-
-        return $value === 'true' || $value === 'false';
+        return in_array($providedDefault->name->parts[0], ['true', 'false'], true);
     }
 }
