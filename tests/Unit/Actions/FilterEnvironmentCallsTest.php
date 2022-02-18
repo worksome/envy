@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Collection;
 use Worksome\Envy\Actions\FilterEnvironmentCalls;
+use Worksome\Envy\Actions\ParseFilterList;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Contracts\Filter;
 use Worksome\Envy\Support\EnvironmentCall;
 
 it('removes duplicates', function () {
@@ -13,7 +15,7 @@ it('removes duplicates', function () {
         'BAR'
     ));
 
-    $action = new FilterEnvironmentCalls(new ReadEnvironmentFile());
+    $action = new FilterEnvironmentCalls(new ReadEnvironmentFile(), new ParseFilterList());
 
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount(1);
 });
@@ -25,7 +27,7 @@ it('removes keys that already exist in the .env file', function () {
         'APP_URL', // This already exists
     ));
 
-    $action = new FilterEnvironmentCalls(new ReadEnvironmentFile());
+    $action = new FilterEnvironmentCalls(new ReadEnvironmentFile(), new ParseFilterList());
 
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount(0);
 });
@@ -37,7 +39,41 @@ it('removes keys from the given exclusions', function () {
         'FOO_BAR', // This already exists
     ));
 
-    $action = new FilterEnvironmentCalls(new ReadEnvironmentFile(), ['FOO_BAR']);
+    $action = new FilterEnvironmentCalls(
+        new ReadEnvironmentFile(),
+        new ParseFilterList(),
+        ['FOO_BAR']
+    );
 
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount(0);
 });
+
+it('can parse Describers in exclusions', function (bool $variableMatches, int $expectedFilteredCallCount) {
+    $customDescriber = new class ($variableMatches) implements Filter {
+        public function __construct(private bool $variableMatches)
+        {
+        }
+
+        public function environmentVariableMatches(string $environmentVariable): bool
+        {
+            return $this->variableMatches;
+        }
+    };
+
+    $calls = Collection::times(1, fn () => new EnvironmentCall(
+        testAppPath('config/app.php'),
+        1,
+        'FOO_BAR',
+    ));
+
+    $action = new FilterEnvironmentCalls(
+        new ReadEnvironmentFile(),
+        new ParseFilterList(),
+        [$customDescriber],
+    );
+
+    expect($action(testAppPath('.env.example'), $calls))->toHaveCount($expectedFilteredCallCount);
+})->with([
+    [true, 0],
+    [false, 1],
+]);
