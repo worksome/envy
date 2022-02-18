@@ -137,7 +137,7 @@ Once you're familiar with the basics of Envy, you may find these advanced featur
 
 ### Filters
 
-Sometimes, you'll want a more powerful way to represent items in the `exclusions` and `inclusion` lists than basic strings. For example, imagine you want to add all environment variables beginning with `STRIPE_` to the 
+Sometimes, you'll want a more powerful way to represent items in the `exclusions` and `inclusions` lists than basic strings. For example, imagine you want to add all environment variables beginning with `STRIPE_` to the 
 exclusions list. Rather than manually inserting them all individually, you can use the `Worksome\Envy\Support\Filters\Filter` class.
 
 ```php
