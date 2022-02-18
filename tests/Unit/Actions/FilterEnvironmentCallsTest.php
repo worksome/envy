@@ -48,8 +48,8 @@ it('removes keys from the given exclusions', function () {
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount(0);
 });
 
-it('can parse Describers in exclusions', function (bool $variableMatches, int $expectedFilteredCallCount) {
-    $customDescriber = new class ($variableMatches) implements Filter {
+it('can parse Filters in exclusions', function (bool $variableMatches, int $expectedFilteredCallCount) {
+    $customFilter = new class ($variableMatches) implements Filter {
         public function __construct(private bool $variableMatches)
         {
         }
@@ -69,7 +69,7 @@ it('can parse Describers in exclusions', function (bool $variableMatches, int $e
     $action = new FilterEnvironmentCalls(
         new ReadEnvironmentFile(),
         new ParseFilterList(),
-        [$customDescriber],
+        [$customFilter],
     );
 
     expect($action(testAppPath('.env.example'), $calls))->toHaveCount($expectedFilteredCallCount);

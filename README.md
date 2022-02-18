@@ -131,6 +131,30 @@ This array is a collection of environment keys that we should never prune from y
 
 If you select the `Add to inclusions` option when running `php artisan envy:prune`, this array will be updated with the environment variables listed by that command.
 
+## Advanced
+
+Once you're familiar with the basics of Envy, you may find these advanced features useful.
+
+### Filters
+
+Sometimes, you'll want a more powerful way to represent items in the `exclusions` and `inclusion` lists than basic strings. For example, imagine you want to add all environment variables beginning with `STRIPE_` to the 
+exclusions list. Rather than manually inserting them all individually, you can use the `Worksome\Envy\Support\Filters\Filter` class.
+
+```php
+/**
+ * Any environment variables that are added to exclusions will never be inserted
+ * into .env files. Our defaults are based on the base Laravel config files.
+ * Feel free to add or remove variables as required by your project needs.
+ */
+'exclusions' => [
+    Filter::wildcard('STRIPE_*'),
+],
+```
+
+Now, any environment variable starting with `STRIPE_` will automatically be excluded when syncing to your configured environment files. We also offer `Filter::regex`, which is an even more powerful 
+filter that allows you to match environment variables against regular expression you provide. In fact, the `exclusions` and `inclusions` lists will accept a `string` or *any* class which implements
+the `Worksome\Envy\Contracts\Filter` contract, so you can even implement your own filters if that's your style.
+
 ## Testing
 
 Envy prides itself on a thorough test suite written in Pest, strict static analysis, and a very high level of code coverage. You may run these tests yourself by cloning the project and running our test script:

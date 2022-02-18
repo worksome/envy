@@ -37,7 +37,7 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
     private function exclusionsContainVariable(string $environmentVariable): bool
     {
         return collect(($this->parseFilterList)($this->exclusions))
-            ->filter(fn(Filter $filter) => $filter->environmentVariableMatches($environmentVariable))
+            ->filter(fn (Filter $filter) => $filter->environmentVariableMatches($environmentVariable))
             ->isNotEmpty();
     }
 }
