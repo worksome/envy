@@ -2,6 +2,11 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v0.3.0 - 2022-02-19
+
+### Added
+- Support for `Filter` objects for more complex inclusions and exclusions [#5](https://github.com/worksome/envy/pull/5)
+
 ## v0.2.2 - 2022-02-14
 
 ### Fixed
