@@ -12,6 +12,7 @@ use Worksome\Envy\Actions\FilterEnvironmentCalls;
 use Worksome\Envy\Actions\FindEnvironmentCalls;
 use Worksome\Envy\Actions\FindEnvironmentVariablesToPrune;
 use Worksome\Envy\Actions\FormatEnvironmentCall;
+use Worksome\Envy\Actions\ParseFilterList;
 use Worksome\Envy\Actions\PruneEnvironmentFile;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
 use Worksome\Envy\Actions\AddEnvironmentVariablesToList;
@@ -23,6 +24,7 @@ use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
 use Worksome\Envy\Contracts\Actions\FormatsEnvironmentCall;
+use Worksome\Envy\Contracts\Actions\ParsesFilterList;
 use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
@@ -43,6 +45,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
             'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
         ]));
         $this->app->bind(ReadsEnvironmentFile::class, ReadEnvironmentFile::class);
+        $this->app->bind(ParsesFilterList::class, ParseFilterList::class);
         $this->app->bind(FiltersEnvironmentCalls::class, fn (Application $app) => $app->make(FilterEnvironmentCalls::class, [
             'exclusions' => $this->config()['exclusions'] ?? []
         ]));
