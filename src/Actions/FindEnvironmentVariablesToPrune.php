@@ -48,7 +48,7 @@ final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariables
     private function inclusionsContainVariable(string $environmentVariable): bool
     {
         return collect(($this->parsesFilterList)($this->inclusions))
-            ->filter(fn (Filter $filter) => $filter->environmentVariableMatches($environmentVariable))
+            ->filter(fn (Filter $filter) => $filter->check($environmentVariable))
             ->isNotEmpty();
     }
 }

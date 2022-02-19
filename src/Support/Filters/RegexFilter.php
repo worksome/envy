@@ -12,7 +12,7 @@ final class RegexFilter implements Filter
     {
     }
 
-    public function environmentVariableMatches(string $environmentVariable): bool
+    public function check(string $environmentVariable): bool
     {
         return preg_match($this->pattern, $environmentVariable) === 1;
     }

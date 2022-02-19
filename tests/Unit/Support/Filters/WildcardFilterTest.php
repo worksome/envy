@@ -7,9 +7,10 @@ use Worksome\Envy\Support\Filters\WildcardFilter;
 it('matches based on the given wildcard character', function (string $variable, string $comparison, bool $matches) {
     $filter = new WildcardFilter($variable, '%');
 
-    expect($filter->environmentVariableMatches($comparison))->toBe($matches);
+    expect($filter->check($comparison))->toBe($matches);
 })->with([
     ['FOO_%', 'FOO_BAR', true],
+    ['FOO_%', 'FOO_BAR_BAR', true],
     ['FOO_%', 'FOO_BAZ', true],
     ['FOO_%', 'FOO_', false],
     ['FOO_%', 'BAZ_FOO', false],

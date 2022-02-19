@@ -54,7 +54,7 @@ it('can parse Filters in exclusions', function (bool $variableMatches, int $expe
         {
         }
 
-        public function environmentVariableMatches(string $environmentVariable): bool
+        public function check(string $environmentVariable): bool
         {
             return $this->variableMatches;
         }

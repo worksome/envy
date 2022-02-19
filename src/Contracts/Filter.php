@@ -6,5 +6,5 @@ namespace Worksome\Envy\Contracts;
 
 interface Filter
 {
-    public function environmentVariableMatches(string $environmentVariable): bool;
+    public function check(string $environmentVariable): bool;
 }

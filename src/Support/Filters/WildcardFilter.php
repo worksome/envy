@@ -15,7 +15,7 @@ final class WildcardFilter implements Filter
     {
     }
 
-    public function environmentVariableMatches(string $environmentVariable): bool
+    public function check(string $environmentVariable): bool
     {
         $comparison = collect(explode($this->wildcard, $this->comparison))
             ->map(fn (string $part) => preg_quote($part))
