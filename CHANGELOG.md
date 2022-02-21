@@ -2,6 +2,11 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v0.3.1 - 2022-02-21
+
+### Fixed
+- Two missing environment variables in the default configuration for Laravel 9 projects [#6](https://github.com/worksome/envy/pull/6)
+
 ## v0.3.0 - 2022-02-19
 
 ### Added
