@@ -88,6 +88,10 @@ return [
         'REDIS_CACHE_DB',
         'MYSQL_ATTR_SSL_CA',
 
+        // config/filesystem.php
+        'AWS_ENDPOINT',
+        'AWS_URL',
+
         // config/hashing.php
         'BCRYPT_ROUNDS',
 
@@ -95,6 +99,7 @@ return [
         'PAPERTRAIL_URL',
         'PAPERTRAIL_PORT',
         'LOG_STDERR_FORMATTER',
+        'LOG_SLACK_WEBHOOK_URL',
 
         // config/mail.php
         'MAIL_SENDMAIL_PATH',
