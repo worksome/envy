@@ -45,6 +45,11 @@ final class LaravelFinder implements Finder
 
     public function environmentFilePaths(): array
     {
+        foreach($this->environmentFiles as $envFile) {
+            if(!file_exists( $envFile )) {
+                File::copy(base_path() . "/vendor/worksome/envy/config/.env.example", $envFile);
+            }
+        }
         return $this->environmentFiles;
     }
 
