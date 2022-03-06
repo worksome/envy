@@ -8,6 +8,8 @@ use Illuminate\Support\LazyCollection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use Worksome\Envy\Contracts\Finder;
+use File;
+use Storage;
 
 final class LaravelFinder implements Finder
 {
@@ -47,7 +49,12 @@ final class LaravelFinder implements Finder
     {
         foreach($this->environmentFiles as $envFile) {
             if(!file_exists( $envFile )) {
-                File::copy(base_path() . "/vendor/worksome/envy/config/.env.example", $envFile);
+                $fileName = substr($envFile, strrpos($envFile, '/') + 1);
+                if ($fileName == '.env.example') {
+                    File::copy(base_path() . "/vendor/worksome/envy/config/$fileName.".substr(app()->version(),0,1), $envFile);
+                } else {
+                    File::copy(base_path() . "/vendor/worksome/envy/config/$fileName", $envFile);
+                }
             }
         }
         return $this->environmentFiles;
