@@ -88,9 +88,10 @@ return [
         'REDIS_CACHE_DB',
         'MYSQL_ATTR_SSL_CA',
 
-        // config/filesystem.php
+        // config/filesystems.php
         'AWS_ENDPOINT',
         'AWS_URL',
+        'AWS_BUCKET',
 
         // config/hashing.php
         'BCRYPT_ROUNDS',
