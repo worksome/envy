@@ -2,6 +2,15 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v0.4.0 - 2022-04-13
+
+### Added
+- Missing .env files will now display a friendly error message in the console [#21](https://github.com/worksome/envy/pull/21)
+- Missing broadcast .env values added to default values [#20](https://github.com/worksome/envy/pull/20)
+- Missing AWS .env values added to default values [#19](https://github.com/worksome/envy/pull/19)
+- Illuminate/Contracts version has been updated to earliest that supports feature set [#18](https://github.com/worksome/envy/pull/18)
+- Github Actions checkout upgraded from v2 to v3 [#16](https://github.com/worksome/envy/pull/16)
+
 ## v0.3.1 - 2022-02-21
 
 ### Fixed
