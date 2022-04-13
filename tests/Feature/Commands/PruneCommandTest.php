@@ -1,5 +1,7 @@
 <?php
 
+use Symfony\Component\Console\Command\Command;
+
 it('prunes an environment file with additional entries', function () {
     $this->artisan('envy:prune', ['--force' => true]);
 
@@ -55,4 +57,10 @@ it('can add the pruned variables to the config inclusions', function () {
     $this->assertFileChanged(testAppPath('config/envy.php'), function (string $newContent) {
         return str_contains($newContent, 'MIX_URL');
     });
+});
+
+it('shows a useful error message if a configured environment file doesn\'t exist', function () {
+    $this->artisan('envy:prune', [
+        '--path' => testAppPath('environments/.env.testing')
+    ])->assertExitCode(Command::INVALID);
 });

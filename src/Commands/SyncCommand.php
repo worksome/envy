@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
+use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentCall;
 
 use function Termwind\render;
@@ -32,10 +33,13 @@ final class SyncCommand extends Command
 
     public function handle(Envy $envy, Repository $config): int
     {
-        $pendingUpdates = $envy->pendingUpdates(
-            $envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))),
-            $this->option('path') ? [strval($this->option('path'))] : null,
-        );
+        try {
+            $pendingUpdates = $this->getPendingPrunes($envy, $config);
+        } catch (EnvironmentFileNotFoundException $exception) {
+            $this->warning($exception->getMessage());
+
+            return self::INVALID;
+        }
 
         if ($pendingUpdates->isEmpty()) {
             render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');
@@ -57,6 +61,18 @@ final class SyncCommand extends Command
         $this->askUserToStarRepository();
 
         return self::SUCCESS;
+    }
+
+    /**
+     * @return Collection<string, Collection<int, EnvironmentCall>>
+     * @throws EnvironmentFileNotFoundException
+     */
+    private function getPendingPrunes(Envy $envy, Repository $config): Collection
+    {
+        return $envy->pendingUpdates(
+            $envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))),
+            $this->option('path') ? [strval($this->option('path'))] : null,
+        );
     }
 
     /**

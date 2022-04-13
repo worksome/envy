@@ -12,6 +12,7 @@ use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
 use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
 use Worksome\Envy\Contracts\Finder;
+use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentCall;
 use Worksome\Envy\Support\EnvironmentVariable;
 
@@ -50,6 +51,7 @@ final class Envy
      * @param Collection<int, EnvironmentCall> $environmentCalls
      * @param array<int, string>|null $environmentFilePaths
      * @return Collection<string, Collection<int, EnvironmentCall>>
+     * @throws EnvironmentFileNotFoundException
      */
     public function pendingUpdates(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
     {
@@ -113,6 +115,7 @@ final class Envy
      * @param Collection<int, EnvironmentCall> $environmentCalls
      * @param array<int, string>|null $environmentFilePaths
      * @return Collection<string, Collection<int, string>>
+     * @throws EnvironmentFileNotFoundException
      */
     public function pendingPrunes(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
     {
