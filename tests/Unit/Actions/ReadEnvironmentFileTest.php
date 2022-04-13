@@ -1,6 +1,7 @@
 <?php
 
 use Worksome\Envy\Actions\ReadEnvironmentFile;
+use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentVariable;
 
 it('returns a collection of environment variables', function () {
@@ -24,3 +25,8 @@ it('reads the keys correctly', function () {
         'MIX_URL',
     ]);
 });
+
+it('throws an EnvironmentFileNotFoundException if the requested .env file could not be located', function () {
+    $action = new ReadEnvironmentFile();
+    $action(__DIR__ . '/../../Application/.env.testing');
+})->throws(EnvironmentFileNotFoundException::class);

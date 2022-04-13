@@ -1,5 +1,6 @@
 <?php
 
+use Symfony\Component\Console\Command\Command;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
 
 it('updates the .env file with missing keys', function () {
@@ -74,4 +75,10 @@ it('can specify a specific environment file to sync', function () {
         ->assertSuccessful();
 
     $this->assertFileChanged(testAppPath('environments/.env.empty'));
+});
+
+it('shows a useful error message if a configured environment file doesn\'t exist', function () {
+    $this->artisan('envy:sync', [
+        '--path' => testAppPath('environments/.env.testing')
+    ])->assertExitCode(Command::INVALID);
 });

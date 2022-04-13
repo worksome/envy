@@ -9,6 +9,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
 use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
+use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
 
 use function Termwind\render;
 
@@ -30,10 +31,13 @@ final class PruneCommand extends Command
 
     public function handle(Envy $envy): int
     {
-        $pendingPrunes = $envy->pendingPrunes(
-            $envy->environmentCalls(),
-            $this->option('path') ? [strval($this->option('path'))] : null
-        );
+        try {
+            $pendingPrunes = $this->getPendingPrunes($envy);
+        } catch (EnvironmentFileNotFoundException $exception) {
+            $this->warning($exception->getMessage());
+
+            return self::INVALID;
+        }
 
         if ($pendingPrunes->isEmpty()) {
             render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to prune!</div>');
@@ -55,6 +59,18 @@ final class PruneCommand extends Command
         $this->askUserToStarRepository();
 
         return self::SUCCESS;
+    }
+
+    /**
+     * @return Collection<string, Collection<int, string>>
+     * @throws EnvironmentFileNotFoundException
+     */
+    private function getPendingPrunes(Envy $envy): Collection
+    {
+        return $envy->pendingPrunes(
+            $envy->environmentCalls(),
+            $this->option('path') ? [strval($this->option('path'))] : null
+        );
     }
 
     /**
