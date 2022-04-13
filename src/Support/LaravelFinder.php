@@ -7,6 +7,7 @@ namespace Worksome\Envy\Support;
 use Illuminate\Support\LazyCollection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 use Worksome\Envy\Contracts\Finder;
 
 final class LaravelFinder implements Finder
@@ -37,8 +38,9 @@ final class LaravelFinder implements Finder
     {
         // @phpstan-ignore-next-line
         return LazyCollection::make(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)))
-            ->reject(fn($file) => $file->isDir())
-            ->map(fn($file) => $file->getPathname())
+            ->filter(fn(mixed $file) => $file instanceof SplFileInfo)
+            ->reject(fn(SplFileInfo $file) => $file->isDir())
+            ->map(fn(SplFileInfo $file) => $file->getPathname())
             ->values()
             ->all();
     }
