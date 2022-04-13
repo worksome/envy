@@ -64,6 +64,10 @@ return [
 
         // config/broadcasting.php
         'ABLY_KEY',
+        'PUSHER_APP_KEY',
+        'PUSHER_APP_SECRET',
+        'PUSHER_APP_ID',
+        'PUSHER_APP_CLUSTER',
 
         // config/cache.php
         'MEMCACHED_PERSISTENT_ID',
@@ -88,9 +92,10 @@ return [
         'REDIS_CACHE_DB',
         'MYSQL_ATTR_SSL_CA',
 
-        // config/filesystem.php
+        // config/filesystems.php
         'AWS_ENDPOINT',
         'AWS_URL',
+        'AWS_BUCKET',
 
         // config/hashing.php
         'BCRYPT_ROUNDS',
