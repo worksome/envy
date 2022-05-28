@@ -41,10 +41,10 @@ trait HasUsefulConsoleMethods
     }
 
     private function askUserToStarRepository(): void
-    {
+    {<span>
         render('
             <footer class="mx-2 my-1 italic">
-                ⭐️ <a href="https://github.com/worksome/envy">If you like Exchange, show your support by starring the repository!</a> ⭐️
+                ⭐️ <a href="https://github.com/worksome/envy">If you like Envy, show your support by starring the repository!</a> ⭐️
             </footer>
         ');
     }
