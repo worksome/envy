@@ -40,7 +40,7 @@ final class PruneCommand extends Command
         }
 
         if ($pendingPrunes->isEmpty()) {
-            render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to prune!</div>');
+            render('<div class="mx-2 my-1 py-1 px-2 bg-green-500 font-bold">There are no variables to prune!</div>');
             return self::SUCCESS;
         }
 
@@ -78,27 +78,27 @@ final class PruneCommand extends Command
      */
     private function printPendingPrunes(Collection $pendingPrunes): void
     {
-        render(Blade::render('
-        <div>
-        @foreach($pendingPrunes as $path => $environmentVariables)
-        <div class="my-1">
-            <div class="px-2 py-1 w-full bg-green-500 font-bold">
-                <span class="text-left w-1/2">
-                    {{ $environmentVariables->count() }} {{ Str::plural("variable", $environmentVariables->count()) }} to remove for {{ Str::after($path, base_path()) }}
-                </span>
-                <span class="text-right w-1/2">
-                    {{ $loop->iteration }}/{{ $loop->count }}
-                </span>
-            </div>
-            <ul class="mx-1 mt-1 space-y-1">
-                @foreach($environmentVariables as $environmentVariable)
-                    <li>{{ $environmentVariable }}</li>
+        render(Blade::render(<<<'HTML'
+            <div class="mx-2 my-1 space-y-1">
+                @foreach ($pendingPrunes as $path => $environmentVariables)
+                    <div class="space-y-1">
+                        <div class="px-2 py-1 w-full max-w-90 flex justify-between bg-green-500 font-bold">
+                            <span>
+                                {{ $environmentVariables->count() }} {{ Str::plural("variable", $environmentVariables->count()) }} to remove for {{ Str::after($path, base_path()) }}
+                            </span>
+                            <span>
+                                {{ $loop->iteration }}/{{ $loop->count }}
+                            </span>
+                        </div>
+                        <div>
+                            @foreach ($environmentVariables as $environmentVariable)
+                                <div><span class="text-gray">⇁</span> {{ $environmentVariable }}</div>
+                            @endforeach
+                        </div>
+                    </div>
                 @endforeach
-            </ul>
-        </div>
-        @endforeach
-        </div>
-        ', ['pendingPrunes' => $pendingPrunes]));
+            </div>
+        HTML, ['pendingPrunes' => $pendingPrunes]));
     }
 
     private function askWhatWeShouldDoNext(bool $configFileHasBeenPublished): string

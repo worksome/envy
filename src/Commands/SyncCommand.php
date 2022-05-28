@@ -42,7 +42,7 @@ final class SyncCommand extends Command
         }
 
         if ($pendingUpdates->isEmpty()) {
-            render('<div class="px-1 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');
+            render('<div class="mx-2 my-1 px-2 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');
             return self::SUCCESS;
         }
 
@@ -82,27 +82,27 @@ final class SyncCommand extends Command
      */
     private function printPendingUpdates(Collection $pendingUpdates): void
     {
-        render(Blade::render('
-        <div>
-        @foreach($pendingUpdates as $path => $environmentCalls)
-            <div class="my-1">
-                <div class="px-2 py-1 w-full bg-green-500 font-bold">
-                    <span class="text-left w-1/2">
-                        {{ $environmentCalls->count() }} {{ Str::plural("update", $environmentCalls->count()) }} for {{ Str::after($path, base_path()) }}
-                    </span>
-                    <span class="text-right w-1/2">
-                        {{ $loop->iteration }}/{{ $loop->count }}
-                    </span>
-                </div>
-                <ul class="mx-1 mt-1 space-y-1">
-                    @foreach($environmentCalls as $environmentCall)
-                        <li>{{ $environmentCall->getKey() }}</li>
-                    @endforeach
-                </ul>
+        render(Blade::render(<<<'HTML'
+            <div class="mx-2 my-1 space-y-1">
+                @foreach ($pendingUpdates as $path => $environmentCalls)
+                    <div class="space-y-1">
+                        <div class="px-2 py-1 w-full max-w-90 flex justify-between bg-green-500 font-bold">
+                            <span>
+                                <b>{{ $environmentCalls->count() }}</b> {{ Str::plural("update", $environmentCalls->count()) }} for {{ Str::after($path, base_path()) }}
+                            </span>
+                            <span>
+                                {{ $loop->iteration }}/{{ $loop->count }}
+                            </span>
+                        </div>
+                        <div>
+                            @foreach ($environmentCalls as $environmentCall)
+                                <div><span class="text-gray">⇁</span> {{ $environmentCall->getKey() }}</div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
             </div>
-        @endforeach
-        </div>
-        ', ['pendingUpdates' => $pendingUpdates]));
+        HTML, ['pendingUpdates' => $pendingUpdates]));
     }
 
     private function askWhatWeShouldDoNext(bool $configFileHasBeenPublished): string
