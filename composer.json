@@ -19,7 +19,7 @@
         "php": "^8.0|^8.1",
         "illuminate/contracts": "^8.80 || ^9.0",
         "nikic/php-parser": "^4.13",
-        "nunomaduro/termwind": "^1.4",
+        "nunomaduro/termwind": "^1.10",
         "spatie/laravel-package-tools": "^1.9.2",
         "thecodingmachine/safe": "^2.1"
     },
