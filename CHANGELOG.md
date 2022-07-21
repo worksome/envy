@@ -2,6 +2,11 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v0.5.0 - 2022-07-21
+
+### Changed
+- Improved layouts for console commands [#24](https://github.com/worksome/envy/pull/24)
+
 ## v0.4.0 - 2022-04-13
 
 ### Added
