@@ -18,8 +18,9 @@ interface AddsEnvironmentVariablesToList
      * Add all given environment variables to the given list key in the envy config.
      *
      * @param Collection<int, EnvironmentVariable> $updates
+     *
      * @throws ConfigFileNotFoundException Thrown when the envy config file hasn't been published.
-     * @throws InvalidArgumentException Thrown when the envy config file doesn't contain the given key.
+     * @throws InvalidArgumentException    Thrown when the envy config file doesn't contain the given key.
      */
     public function __invoke(Collection $updates, string $listKey): void;
 }

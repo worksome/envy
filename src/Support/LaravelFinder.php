@@ -10,7 +10,7 @@ use RecursiveIteratorIterator;
 use SplFileInfo;
 use Worksome\Envy\Contracts\Finder;
 
-final class LaravelFinder implements Finder
+final readonly class LaravelFinder implements Finder
 {
     /**
      * @param array<int, string> $configFiles

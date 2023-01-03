@@ -26,7 +26,9 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
 
     public function __invoke(string $filePath, Collection $environmentCalls): Collection
     {
-        $existingKeys = ($this->readEnvironmentFile)($filePath)->map(fn(EnvironmentVariable $variable) => $variable->getKey());
+        $existingKeys = ($this->readEnvironmentFile)($filePath)->map(
+            fn(EnvironmentVariable $variable) => $variable->getKey()
+        );
 
         return $environmentCalls
             ->unique(fn(EnvironmentCall $call) => $call->getKey())

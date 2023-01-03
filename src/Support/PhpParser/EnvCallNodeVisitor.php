@@ -26,9 +26,8 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
      */
     private PrettyPrinterAbstract $printer;
 
-    public function __construct(private string $filePath, private bool $excludeVariablesWithDefaults = false)
+    public function __construct(private readonly string $filePath, private readonly bool $excludeVariablesWithDefaults = false)
     {
-        // @phpstan-ignore-next-line
         $this->environmentVariables = collect();
         $this->printer = new Standard();
     }

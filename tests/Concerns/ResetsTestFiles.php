@@ -73,7 +73,7 @@ trait ResetsTestFiles
 
     public function assertFileChanged(string $filePath, Closure $callback = null): self
     {
-        if (!key_exists($filePath, $this->fileContents)) {
+        if (! key_exists($filePath, $this->fileContents)) {
             throw new BadMethodCallException("The file [{$filePath}] was not configured as a resettable file.");
         }
 

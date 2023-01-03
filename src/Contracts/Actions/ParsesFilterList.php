@@ -10,6 +10,7 @@ interface ParsesFilterList
 {
     /**
      * @param array<int, string|Filter> $list
+     *
      * @return array<int, Filter>
      */
     public function __invoke(array $list): array;

@@ -7,9 +7,9 @@ namespace Worksome\Envy\Support;
 final class EnvironmentCall
 {
     /**
-     * @param string $file The file path containing this environment variable
-     * @param int $line The line number the environment variable was found on
-     * @param string $key The key used to define the environment variable
+     * @param string      $file    The file path containing this environment variable
+     * @param int         $line    The line number the environment variable was found on
+     * @param string      $key     The key used to define the environment variable
      * @param string|null $default The default passed to the env call, if given
      * @param string|null $comment The PHP comment directly above the env call, if given
      */

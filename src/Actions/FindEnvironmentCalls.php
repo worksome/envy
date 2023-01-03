@@ -39,7 +39,9 @@ final class FindEnvironmentCalls implements FindsEnvironmentCalls
             ->getEnvironmentVariables()
             ->when(
                 $excludeVariablesWithDefaults,
-                fn (Collection $variables) => $variables->reject(fn (EnvironmentCall $variable) => $variable->getDefault() !== null)
+                fn (Collection $variables) => $variables->reject(
+                    fn (EnvironmentCall $variable) => $variable->getDefault() !== null
+                )
             );
     }
 }

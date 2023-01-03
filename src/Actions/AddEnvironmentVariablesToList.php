@@ -16,8 +16,8 @@ use Worksome\Envy\Contracts\Finder;
 use Worksome\Envy\Exceptions\ConfigFileNotFoundException;
 use Worksome\Envy\Support\PhpParser\AppendEnvironmentVariablesNodeVisitor;
 
-use function Safe\file_put_contents;
 use function Safe\file_get_contents;
+use function Safe\file_put_contents;
 
 final class AddEnvironmentVariablesToList implements AddsEnvironmentVariablesToList
 {
