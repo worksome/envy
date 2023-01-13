@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Worksome\Envy;
 
 use Illuminate\Support\Collection;
+use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\FiltersEnvironmentCalls;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentCalls;
-use Worksome\Envy\Contracts\Actions\AddsEnvironmentVariablesToList;
 use Worksome\Envy\Contracts\Actions\FindsEnvironmentVariablesToPrune;
 use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 use Worksome\Envy\Contracts\Actions\UpdatesEnvironmentFile;
@@ -49,8 +49,10 @@ final class Envy
      * @see Envy::environmentCalls()
      *
      * @param Collection<int, EnvironmentCall> $environmentCalls
-     * @param array<int, string>|null $environmentFilePaths
+     * @param array<int, string>|null          $environmentFilePaths
+     *
      * @return Collection<string, Collection<int, EnvironmentCall>>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     public function pendingUpdates(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
@@ -81,6 +83,7 @@ final class Envy
      * environment variables and update the config exclusions.
      *
      * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
+     *
      * @throws Exceptions\ConfigFileNotFoundException
      */
     public function updateExclusionsWithPendingUpdates(Collection $pendingUpdates): void
@@ -113,8 +116,10 @@ final class Envy
      * @see Envy::environmentCalls()
      *
      * @param Collection<int, EnvironmentCall> $environmentCalls
-     * @param array<int, string>|null $environmentFilePaths
+     * @param array<int, string>|null          $environmentFilePaths
+     *
      * @return Collection<string, Collection<int, string>>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     public function pendingPrunes(Collection $environmentCalls, array|null $environmentFilePaths = null): Collection
@@ -147,6 +152,7 @@ final class Envy
      * @see Envy::pendingPrunes()
      *
      * @param Collection<string, Collection<int, string>> $pendingPrunes
+     *
      * @throws Exceptions\ConfigFileNotFoundException
      */
     public function updateInclusionsWithPendingPrunes(Collection $pendingPrunes): void

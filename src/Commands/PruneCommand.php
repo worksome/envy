@@ -63,6 +63,7 @@ final class PruneCommand extends Command
 
     /**
      * @return Collection<string, Collection<int, string>>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     private function getPendingPrunes(Envy $envy): Collection

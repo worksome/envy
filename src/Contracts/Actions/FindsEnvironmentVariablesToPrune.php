@@ -12,7 +12,9 @@ interface FindsEnvironmentVariablesToPrune
 {
     /**
      * @param Collection<int, EnvironmentCall> $environmentCalls
+     *
      * @return Collection<int, string>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     public function __invoke(string $filePath, Collection $environmentCalls): Collection;

@@ -5,8 +5,8 @@ use Illuminate\Support\Str;
 use PhpParser\Parser;
 use PhpParser\ParserFactory;
 use Worksome\Envy\Actions\ReadEnvironmentFile;
-use Worksome\Envy\Tests\Unit;
 use Worksome\Envy\Tests\Feature;
+use Worksome\Envy\Tests\Unit;
 
 uses(Feature\TestCase::class)->in(__DIR__ . '/Feature');
 uses(Unit\TestCase::class)->in(__DIR__ . '/Unit');

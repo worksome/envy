@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 use Worksome\Envy\Contracts\Actions\PrunesEnvironmentFile;
 
 use function Safe\file_get_contents;
-use function Safe\preg_replace;
 use function Safe\file_put_contents;
+use function Safe\preg_replace;
 
 final class PruneEnvironmentFile implements PrunesEnvironmentFile
 {

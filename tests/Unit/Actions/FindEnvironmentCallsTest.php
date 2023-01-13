@@ -5,15 +5,18 @@ use PhpParser\Parser;
 use Worksome\Envy\Actions\FindEnvironmentCalls;
 use Worksome\Envy\Support\EnvironmentCall;
 
-it('can return a collection of environment variables', function (bool $excludeVariablesWithDefaults, int $expectedCount) {
-    $action = new FindEnvironmentCalls(defaultPhpParser());
-    $variables = $action(__DIR__ . '/../../Application/config/app.php', $excludeVariablesWithDefaults);
-
-    expect($variables)
-        ->toBeCollection()
-        ->toHaveCount($expectedCount)
-        ->each->toBeInstanceOf(EnvironmentCall::class);
-})->with([
+it(
+    'can return a collection of environment variables',
+    function (bool $excludeVariablesWithDefaults, int $expectedCount) {
+        $action = new FindEnvironmentCalls(defaultPhpParser());
+        $variables = $action(__DIR__ . '/../../Application/config/app.php', $excludeVariablesWithDefaults);
+    
+        expect($variables)
+            ->toBeCollection()
+            ->toHaveCount($expectedCount)
+            ->each->toBeInstanceOf(EnvironmentCall::class);
+    }
+)->with([
     'variables including defaults' => [false, 9],
     'variables excluding defaults' => [true, 3],
 ]);
@@ -84,7 +87,7 @@ it('correctly handles boolean values used as defaults', function () {
 });
 
 it('returns an empty collection if the parser returns null', function () {
-    $parser = new class implements Parser {
+    $parser = new class() implements Parser {
         public function parse(string $code, ErrorHandler $errorHandler = null)
         {
             return null;

@@ -12,7 +12,9 @@ interface FiltersEnvironmentCalls
 {
     /**
      * @param Collection<int, EnvironmentCall> $environmentCalls
+     *
      * @return Collection<int, EnvironmentCall>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     public function __invoke(string $filePath, Collection $environmentCalls): Collection;

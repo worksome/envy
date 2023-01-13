@@ -19,7 +19,9 @@ final class InstallCommand extends Command
     {
         $this->call('vendor:publish', ['--tag' => 'envy-config']);
 
-        $this->information('Alright, Envy is ready to rock! Get started with either `php artisan envy:sync` or `php artisan envy:prune`.');
+        $this->information(
+            'Alright, Envy is ready to rock! Get started with either `php artisan envy:sync` or `php artisan envy:prune`.'
+        );
 
         return self::SUCCESS;
     }

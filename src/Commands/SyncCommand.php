@@ -65,6 +65,7 @@ final class SyncCommand extends Command
 
     /**
      * @return Collection<string, Collection<int, EnvironmentCall>>
+     *
      * @throws EnvironmentFileNotFoundException
      */
     private function getPendingPrunes(Envy $envy, Repository $config): Collection
