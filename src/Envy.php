@@ -40,6 +40,7 @@ final class Envy
         return collect($this->finder->configFilePaths())
             ->map(fn (string $path) => ($this->findEnvironmentCalls)($path, $excludeCallsWithDefaults))
             ->flatten()
+            // @phpstan-ignore-next-line
             ->sortBy(fn (EnvironmentCall $call) => $call->getKey());
     }
 

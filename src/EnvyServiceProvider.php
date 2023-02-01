@@ -36,7 +36,8 @@ final class EnvyServiceProvider extends PackageServiceProvider
 {
     public function packageRegistered(): void
     {
-        $this->app->bind(Finder::class, fn() => new LaravelFinder(
+        $this->app->bind(Finder::class, fn(Application $app) => new LaravelFinder(
+            $app,
             $this->config()['config_files'] ?? [],
             $this->config()['environment_files'] ?? [],
         ));

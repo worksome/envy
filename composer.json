@@ -46,7 +46,7 @@
         "lint": "vendor/bin/ecs --fix",
         "test:unit": "vendor/bin/pest",
         "test:coverage": "vendor/bin/pest --coverage --min=95",
-        "test:types": "vendor/bin/phpstan analyse",
+        "test:types": "vendor/bin/phpstan analyse --memory-limit=-1",
         "test:style": "vendor/bin/ecs",
         "test": [
             "@test:style",

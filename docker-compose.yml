@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  php:
+    build: ./docker
+    volumes:
+      - .:/var/www/html
+    environment:
+      - XDEBUG_MODE=${XDEBUG_MODE:-off}
+      - XDEBUG_CONFIG=${XDEBUG_CONFIG:-client_host=host.docker.internal}
+  composer:
+    build: ./docker
+    entrypoint: ["composer"]
+    volumes:
+      - .:/var/www/html

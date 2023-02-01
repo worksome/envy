@@ -9,6 +9,7 @@ it('can be resolved correctly', function () {
 
 it('can return all configured config files', function () {
     $finder = new LaravelFinder(
+        $this->app,
         [
             testAppPath('config'),
             str_replace('/', DIRECTORY_SEPARATOR, __DIR__ . '/../../../config/envy.php'),
@@ -29,6 +30,7 @@ it('can return all configured config files', function () {
 
 it('can return all configured environment files', function () {
     $finder = new LaravelFinder(
+        $this->app,
         [],
         [
             testAppPath('.env.example'),
@@ -43,7 +45,7 @@ it('can return all configured environment files', function () {
 });
 
 it('can return the envy config file', function () {
-    $finder = new LaravelFinder([], []);
+    $finder = new LaravelFinder($this->app, [], []);
 
     expect($finder->envyConfigFile())->toBeNull();
 });

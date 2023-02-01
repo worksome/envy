@@ -6,7 +6,7 @@ namespace Worksome\Envy\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\View\Compilers\BladeCompiler;
 use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
 use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
@@ -29,7 +29,7 @@ final class PruneCommand extends Command
 
     protected $description = 'Prune environment variables that aren\'t found in your config files.';
 
-    public function handle(Envy $envy): int
+    public function handle(Envy $envy, BladeCompiler $blade): int
     {
         try {
             $pendingPrunes = $this->getPendingPrunes($envy);
@@ -44,7 +44,7 @@ final class PruneCommand extends Command
             return self::SUCCESS;
         }
 
-        $this->printPendingPrunes($pendingPrunes);
+        $this->printPendingPrunes($pendingPrunes, $blade);
 
         if ($this->option('dry')) {
             return self::FAILURE;
@@ -77,9 +77,9 @@ final class PruneCommand extends Command
     /**
      * @param Collection<string, Collection<int, string>> $pendingPrunes
      */
-    private function printPendingPrunes(Collection $pendingPrunes): void
+    private function printPendingPrunes(Collection $pendingPrunes, BladeCompiler $blade): void
     {
-        render(Blade::render(<<<'HTML'
+        render($blade->render(<<<'HTML'
             <div class="mx-2 my-1 space-y-1">
                 @foreach ($pendingPrunes as $path => $environmentVariables)
                     <div class="space-y-1">
