@@ -2,7 +2,7 @@
 # Envy
 Automate keeping your environment files in sync.
 
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/worksome/envy/run-tests?label=tests)](https://github.com/worksome/envy/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/worksome/envy/run-tests.yml?branch=main)](https://github.com/worksome/envy/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![PHPStan](https://github.com/worksome/envy/actions/workflows/phpstan.yml/badge.svg)](https://github.com/worksome/envy/actions/workflows/phpstan.yml)
 
 How many times have you onboarded a new dev onto your team, only to have to spend ages debugging with them because your project's `.env.example` file is wildly outdated? Too many to count, if you're anything like us. Wouldn't it be nice if there were a way to ensure your environment files stay up to date? That's why we created Envy!
