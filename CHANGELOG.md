@@ -2,6 +2,14 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v1.0.0 - 2023-02-01
+
+> Note: Whilst this is a major release, there are no breaking changes. We feel Envy is battle tested enough to be considered stable,
+> so we're moving to a 1.0.0 release 🥳
+
+### Added
+- Added support for Laravel 10 [#30](https://github.com/worksome/envy/pull/30)
+
 ## v0.5.0 - 2022-07-21
 
 ### Changed
