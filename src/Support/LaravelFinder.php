@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Worksome\Envy\Support;
 
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\LazyCollection;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -17,6 +18,7 @@ final readonly class LaravelFinder implements Finder
      * @param array<int, string> $environmentFiles
      */
     public function __construct(
+        private Application $app,
         private array $configFiles,
         private array $environmentFiles,
     ) {
@@ -52,10 +54,10 @@ final readonly class LaravelFinder implements Finder
 
     public function envyConfigFile(): string|null
     {
-        if (! file_exists(config_path('envy.php'))) {
+        if (! file_exists($this->app->configPath('envy.php'))) {
             return null;
         }
 
-        return config_path('envy.php');
+        return $this->app->configPath('envy.php');
     }
 }

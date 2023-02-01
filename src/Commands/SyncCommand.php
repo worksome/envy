@@ -7,7 +7,7 @@ namespace Worksome\Envy\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Blade;
+use Illuminate\View\Compilers\BladeCompiler;
 use Worksome\Envy\Commands\Concerns\HasUsefulConsoleMethods;
 use Worksome\Envy\Envy;
 use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
@@ -31,7 +31,7 @@ final class SyncCommand extends Command
 
     public $description = 'Sync your configured .env files based on calls to env in config files.';
 
-    public function handle(Envy $envy, Repository $config): int
+    public function handle(Envy $envy, Repository $config, BladeCompiler $blade): int
     {
         try {
             $pendingUpdates = $this->getPendingPrunes($envy, $config);
@@ -46,7 +46,7 @@ final class SyncCommand extends Command
             return self::SUCCESS;
         }
 
-        $this->printPendingUpdates($pendingUpdates);
+        $this->printPendingUpdates($pendingUpdates, $blade);
 
         if ($this->option('dry')) {
             return self::FAILURE;
@@ -81,9 +81,9 @@ final class SyncCommand extends Command
      *
      * @param Collection<string, Collection<int, EnvironmentCall>> $pendingUpdates
      */
-    private function printPendingUpdates(Collection $pendingUpdates): void
+    private function printPendingUpdates(Collection $pendingUpdates, BladeCompiler $blade): void
     {
-        render(Blade::render(<<<'HTML'
+        render($blade->render(<<<'HTML'
             <div class="mx-2 my-1 space-y-1">
                 @foreach ($pendingUpdates as $path => $environmentCalls)
                     <div class="space-y-1">

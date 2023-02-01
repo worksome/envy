@@ -17,3 +17,5 @@
 /UPGRADING.md       export-ignore
 /phpstan.neon.dist  export-ignore
 /phpstan-baseline.neon  export-ignore
+/docker             export-ignore
+docker-compose.yml  export-ignore
