@@ -23,7 +23,7 @@ trait ResetsTestFiles
 
     public function setUpResetsTestFiles(): void
     {
-        if (! in_array('withoutPublishedConfigFile', $this->getGroups())) {
+        if (! in_array('withoutPublishedConfigFile', $this->groups())) {
             // We always want a fresh copy of the envy config file.
             copy(__DIR__ . '/../../config/envy.php', testAppPath('config/envy.php'));
         }
@@ -49,7 +49,7 @@ trait ResetsTestFiles
             }
         }
 
-        if (! in_array('withoutPublishedConfigFile', $this->getGroups())) {
+        if (! in_array('withoutPublishedConfigFile', $this->groups())) {
             unlink(testAppPath('config/envy.php'));
         }
     }

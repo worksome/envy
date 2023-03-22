@@ -7,12 +7,9 @@ namespace Worksome\Envy\Actions;
 use Dotenv\Parser\Entry;
 use Dotenv\Parser\Parser;
 use Illuminate\Support\Collection;
-use Throwable;
 use Worksome\Envy\Contracts\Actions\ReadsEnvironmentFile;
 use Worksome\Envy\Exceptions\EnvironmentFileNotFoundException;
 use Worksome\Envy\Support\EnvironmentVariable;
-
-use function Safe\file_get_contents;
 
 final class ReadEnvironmentFile implements ReadsEnvironmentFile
 {
@@ -32,10 +29,14 @@ final class ReadEnvironmentFile implements ReadsEnvironmentFile
      */
     private function getFileContents(string $envFilePath): string
     {
-        try {
-            return file_get_contents($envFilePath);
-        } catch (Throwable) {
+        if (! file_exists($envFilePath)) {
             throw new EnvironmentFileNotFoundException($envFilePath);
         }
+
+        $content = file_get_contents($envFilePath);
+
+        assert($content !== false);
+
+        return $content;
     }
 }
