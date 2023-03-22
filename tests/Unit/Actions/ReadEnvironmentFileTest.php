@@ -27,7 +27,6 @@ it('reads the keys correctly', function () {
 });
 
 it('throws an EnvironmentFileNotFoundException if the requested .env file could not be located', function () {
-    $this->expectException(EnvironmentFileNotFoundException::class);
     $action = new ReadEnvironmentFile();
     $action(__DIR__ . '/../../Application/.env.testing');
-});
+})->throws(EnvironmentFileNotFoundException::class);
