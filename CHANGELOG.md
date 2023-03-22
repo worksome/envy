@@ -2,6 +2,16 @@
 
 All notable changes to `envsync` will be documented in this file.
 
+## v1.1.0 - 2023-03-22
+
+### Added
+
+- Migrated to Pest v2 [#34](https://github.com/worksome/envy/pull/34)
+
+### Changed
+
+- Required Laravel 10 as minimum Laravel version [#34](https://github.com/worksome/envy/pull/34)
+
 ## v1.0.0 - 2023-02-01
 
 > Note: Whilst this is a major release, there are no breaking changes. We feel Envy is battle tested enough to be considered stable,
