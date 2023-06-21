@@ -87,6 +87,7 @@ return [
         'REDIS_CLIENT',
         'REDIS_CLUSTER',
         'REDIS_PREFIX',
+        'REDIS_USERNAME',
         'REDIS_URL',
         'REDIS_DB',
         'REDIS_CACHE_DB',
@@ -107,8 +108,10 @@ return [
         'LOG_SLACK_WEBHOOK_URL',
 
         // config/mail.php
+        'MAIL_URL',
         'MAIL_SENDMAIL_PATH',
         'MAIL_LOG_CHANNEL',
+        'MAIL_EHLO_DOMAIN',
         'MAIL_FROM_ADDRESS',
         'MAIL_FROM_NAME',
 
