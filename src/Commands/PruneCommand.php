@@ -80,6 +80,7 @@ final class PruneCommand extends Command
     private function printPendingPrunes(Collection $pendingPrunes, BladeCompiler $blade): void
     {
         render($blade->render(<<<'HTML'
+            @php use Illuminate\Support\Str; @endphp
             <div class="mx-2 my-1 space-y-1">
                 @foreach ($pendingPrunes as $path => $environmentVariables)
                     <div class="space-y-1">
