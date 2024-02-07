@@ -12,7 +12,7 @@ jobs:
     name: phpstan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -22,7 +22,7 @@ jobs:
 
       - name: Install composer dependencies
         run: |
-          composer require "nunomaduro/larastan:^2.0"
+          composer require "larastan/larastan:^2.6"
           composer update --prefer-dist --no-interaction
 
       - name: Run PHPStan
