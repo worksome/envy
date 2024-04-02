@@ -10,7 +10,3 @@ parameters:
 			count: 1
 			path: src/Commands/SyncCommand.php
 
-		-
-			message: "#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#"
-			count: 1
-			path: src/Support/PhpParser/EnvCallNodeVisitor.php

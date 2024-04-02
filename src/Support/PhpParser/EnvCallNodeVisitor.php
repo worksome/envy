@@ -123,14 +123,24 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return null;
         }
 
-        /** @var array<int, Comment>|null $comments */
-        $comments = $previousNode->getAttribute('comments');
+        /** @var \PhpParser\Node\Expr\ArrayItem $parent */
+        $parent = $previousNode->getAttribute('parent');
 
-        if ($comments === null || count($comments) === 0) {
-            return null;
+        if ($parent->hasAttribute('comments')) {
+            /** @var list<Comment>|null $comments */
+            $comments = $parent->getAttribute('comments');
+
+            if ($comments === null || count($comments) === 0) {
+                return null;
+            }
+
+            /** @var string $comment */
+            $comment = $comments[0]->getReformattedText();
+
+            return $comment;
         }
 
-        return strval($comments[0]->getReformattedText());
+        return null;
     }
 
     private function print(Node $node): string
@@ -148,6 +158,8 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
             return false;
         }
 
-        return in_array($providedDefault->name->parts[0], ['true', 'false'], true);
+        $name = $providedDefault->name->name ?? $providedDefault->name->getParts()[0];
+
+        return in_array($name, ['true', 'false'], true);
     }
 }

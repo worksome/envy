@@ -13,7 +13,7 @@ uses(Unit\TestCase::class)->in(__DIR__ . '/Unit');
 
 function defaultPhpParser(): Parser
 {
-    return (new ParserFactory())->create(ParserFactory::PREFER_PHP7);
+    return (new ParserFactory())->createForNewestSupportedVersion();
 }
 
 function readEnvironmentFile(string $filePath = null): Collection

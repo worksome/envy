@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace PhpParser\Node\Expr;
+
+use PhpParser\Node\ArrayItem;
+
+class Array_ {
+
+    /** @var \PhpParser\Node\Expr\ArrayItem[] $items */
+    public array $items;
+}

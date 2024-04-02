@@ -45,7 +45,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $this->app->bind(
             FindsEnvironmentCalls::class,
             fn(Application $app) => $app->make(FindEnvironmentCalls::class, [
-                'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
+                'parser' => (new ParserFactory())->createForNewestSupportedVersion(),
             ])
         );
         $this->app->bind(ReadsEnvironmentFile::class, ReadEnvironmentFile::class);
@@ -65,7 +65,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $this->app->bind(
             AddsEnvironmentVariablesToList::class,
             fn (Application $app) => $app->make(AddEnvironmentVariablesToList::class, [
-                'parser' => (new ParserFactory())->create(ParserFactory::PREFER_PHP7),
+                'parser' => (new ParserFactory())->createForNewestSupportedVersion(),
             ])
         );
         $this->app->bind(
