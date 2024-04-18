@@ -10,3 +10,6 @@ parameters:
     checkModelProperties: true
     parallel:
             processTimeout: 300.0
+    stubFiles:
+        - stubs/Array_.stub
+        - stubs/ArrayItem.stub

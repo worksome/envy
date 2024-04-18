@@ -6,6 +6,7 @@ namespace Worksome\Envy\Support\PhpParser;
 
 use Illuminate\Support\Collection;
 use PhpParser\Node;
+use PhpParser\Node\Expr\ArrayItem;
 use PhpParser\NodeVisitorAbstract;
 use Worksome\Envy\Support\EnvironmentVariable;
 
@@ -41,7 +42,9 @@ final class AppendEnvironmentVariablesNodeVisitor extends NodeVisitorAbstract
         }
 
         $this->updates->each(function (EnvironmentVariable $variable) use (&$node) {
-            $node->items[] = new Node\Expr\ArrayItem(new Node\Scalar\String_($variable->getKey()));
+            $item = new ArrayItem(new Node\Scalar\String_($variable->getKey()));
+
+            $node->items[] = $item;
         });
 
         $this->variablesWereAppended = true;

@@ -88,9 +88,14 @@ it('correctly handles boolean values used as defaults', function () {
 
 it('returns an empty collection if the parser returns null', function () {
     $parser = new class() implements Parser {
-        public function parse(string $code, ErrorHandler $errorHandler = null)
+        public function parse(string $code, ?ErrorHandler $errorHandler = null): ?array
         {
             return null;
+        }
+
+        public function getTokens(): array
+        {
+            return [];
         }
     };
 

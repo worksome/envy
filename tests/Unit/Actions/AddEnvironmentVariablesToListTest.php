@@ -30,9 +30,14 @@ it('updates the config file with the given updates', function (string $list) {
 
 it('performs no changes if the parser returns null', function (string $list) {
     $parser = new class() implements Parser {
-        public function parse(string $code, ErrorHandler $errorHandler = null)
+        public function parse(string $code, ?ErrorHandler $errorHandler = null): ?array
         {
             return null;
+        }
+
+        public function getTokens(): array
+        {
+            return [];
         }
     };
 
