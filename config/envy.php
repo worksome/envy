@@ -20,6 +20,7 @@ return [
      */
     'config_files' => [
         config_path(),
+        base_path('vendor/laravel/framework/config'),
     ],
 
     /**
