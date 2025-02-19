@@ -21,7 +21,7 @@
         "nikic/php-parser": "^4.19.1 || ^5.0.2",
         "nunomaduro/termwind": "^1.15 || ^2.0",
         "spatie/laravel-package-tools": "^1.16",
-        "thecodingmachine/safe": "^2.4"
+        "thecodingmachine/safe": "^2.4 || ^3.0"
     },
     "require-dev": {
         "nunomaduro/collision": "^7.0 || ^8.1",
