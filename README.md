@@ -1,5 +1,5 @@
-
 # Envy
+
 Automate keeping your environment files in sync.
 
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/worksome/envy/run-tests.yml?branch=main)](https://github.com/worksome/envy/actions?query=workflow%3Arun-tests+branch%3Amain)

@@ -68,9 +68,12 @@ final class PruneCommand extends Command
      */
     private function getPendingPrunes(Envy $envy): Collection
     {
+        /** @var string|null $path */
+        $path = $this->option('path');
+
         return $envy->pendingPrunes(
             $envy->environmentCalls(),
-            $this->option('path') ? [strval($this->option('path'))] : null
+            $path ? [strval($path)] : null
         );
     }
 
@@ -110,6 +113,7 @@ final class PruneCommand extends Command
             self::ACTION_CANCEL => true,
         ])->filter()->keys()->all();
 
+        // @phpstan-ignore return.type
         return $this->option('force')
             ? self::ACTION_PRUNE_ENVIRONMENT_FILE
             : strval($this->choice(

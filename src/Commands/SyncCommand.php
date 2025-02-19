@@ -70,9 +70,12 @@ final class SyncCommand extends Command
      */
     private function getPendingPrunes(Envy $envy, Repository $config): Collection
     {
+        /** @var string|null $path */
+        $path = $this->option('path');
+
         return $envy->pendingUpdates(
             $envy->environmentCalls(boolval($config->get('envy.exclude_calls_with_defaults', false))),
-            $this->option('path') ? [strval($this->option('path'))] : null,
+            $path ? [strval($path)] : null,
         );
     }
 
@@ -114,6 +117,7 @@ final class SyncCommand extends Command
             self::ACTION_CANCEL => true,
         ])->filter()->keys()->all();
 
+        // @phpstan-ignore return.type
         return $this->option('force')
             ? self::ACTION_ADD_TO_ENVIRONMENT_FILE
             : strval($this->choice(
