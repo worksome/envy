@@ -30,7 +30,7 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
         private readonly string $filePath,
         private readonly bool $excludeVariablesWithDefaults = false,
     ) {
-        $this->environmentVariables = collect();
+        $this->environmentVariables = new Collection();
         $this->printer = new Standard();
     }
 

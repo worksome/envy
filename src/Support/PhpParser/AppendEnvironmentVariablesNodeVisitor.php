@@ -21,7 +21,7 @@ final class AppendEnvironmentVariablesNodeVisitor extends NodeVisitorAbstract
     {
     }
 
-    public function leaveNode(Node $node)
+    public function leaveNode(Node $node): Node
     {
         if (! $node instanceof Node\Expr\Array_) {
             return $node;

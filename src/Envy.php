@@ -40,7 +40,6 @@ final class Envy
         return collect($this->finder->configFilePaths())
             ->map(fn (string $path) => ($this->findEnvironmentCalls)($path, $excludeCallsWithDefaults))
             ->flatten()
-            // @phpstan-ignore-next-line
             ->sortBy(fn (EnvironmentCall $call) => $call->getKey());
     }
 
@@ -92,9 +91,7 @@ final class Envy
         /** @var Collection<int, EnvironmentVariable> $updates */
         $updates = $pendingUpdates
             ->flatten()
-            // @phpstan-ignore-next-line
             ->unique(fn (EnvironmentCall $environmentCall) => $environmentCall->getKey())
-            // @phpstan-ignore-next-line
             ->map(fn (EnvironmentCall $environmentCall) => new EnvironmentVariable(
                 $environmentCall->getKey(),
                 $environmentCall->getDefault() ?? ''
@@ -161,7 +158,6 @@ final class Envy
         /** @var Collection<int, EnvironmentVariable> $environmentVariables */
         $environmentVariables = $pendingPrunes
             ->flatten()
-            // @phpstan-ignore-next-line
             ->map(fn (string $key) => new EnvironmentVariable($key, ''));
 
         ($this->addEnvironmentVariablesToList)($environmentVariables, AddsEnvironmentVariablesToList::INCLUSIONS);

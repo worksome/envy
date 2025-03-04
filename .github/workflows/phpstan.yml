@@ -22,7 +22,7 @@ jobs:
 
       - name: Install composer dependencies
         run: |
-          composer require "larastan/larastan:^2.6"
+          composer require "larastan/larastan:^3.0"
           composer update --prefer-dist --no-interaction
 
       - name: Run PHPStan

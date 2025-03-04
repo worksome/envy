@@ -77,6 +77,18 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $this->app->bind(PrunesEnvironmentFile::class, PruneEnvironmentFile::class);
     }
 
+    /**
+     * @return array{
+     *     environment_files?: list<string>,
+     *     config_files?: list<string>,
+     *     display_comments?: bool,
+     *     display_location_hints?: bool,
+     *     display_default_values?: bool,
+     *     exclude_calls_with_defaults?: bool,
+     *     exclusions?: list<string>,
+     *     inclusions?: list<string>,
+     * }
+     */
     private function config(): array
     {
         // @phpstan-ignore-next-line
