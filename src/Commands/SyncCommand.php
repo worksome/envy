@@ -87,6 +87,7 @@ final class SyncCommand extends Command
     private function printPendingUpdates(Collection $pendingUpdates, BladeCompiler $blade): void
     {
         render($blade->render(<<<'HTML'
+            @php use Illuminate\Support\Str; @endphp
             <div class="mx-2 my-1 space-y-1">
                 @foreach ($pendingUpdates as $path => $environmentCalls)
                     <div class="space-y-1">
