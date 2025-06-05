@@ -18,10 +18,12 @@ final class ReadEnvironmentFile implements ReadsEnvironmentFile
         $parser = new Parser();
         $entries = $parser->parse($this->getFileContents($envFilePath));
 
-        return collect($entries)->map(fn (Entry $entry) => new EnvironmentVariable(
-            $entry->getName(),
-            $entry->getValue()->get()->getChars()
-        ));
+        return collect($entries)
+            ->filter(fn (Entry $entry) => $entry->getValue()->isDefined())
+            ->map(fn (Entry $entry) => new EnvironmentVariable(
+                $entry->getName(),
+                $entry->getValue()->get()->getChars()
+            ));
     }
 
     /**

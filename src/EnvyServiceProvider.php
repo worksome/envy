@@ -36,7 +36,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
 {
     public function packageRegistered(): void
     {
-        $this->app->bind(Finder::class, fn(Application $app) => new LaravelFinder(
+        $this->app->bind(Finder::class, fn (Application $app) => new LaravelFinder(
             $app,
             $this->config()['config_files'] ?? [],
             $this->config()['environment_files'] ?? [],
@@ -44,7 +44,7 @@ final class EnvyServiceProvider extends PackageServiceProvider
 
         $this->app->bind(
             FindsEnvironmentCalls::class,
-            fn(Application $app) => $app->make(FindEnvironmentCalls::class, [
+            fn (Application $app) => $app->make(FindEnvironmentCalls::class, [
                 'parser' => (new ParserFactory())->createForNewestSupportedVersion(),
             ])
         );
@@ -53,11 +53,11 @@ final class EnvyServiceProvider extends PackageServiceProvider
         $this->app->bind(
             FiltersEnvironmentCalls::class,
             fn (Application $app) => $app->make(FilterEnvironmentCalls::class, [
-                'exclusions' => $this->config()['exclusions'] ?? []
+                'exclusions' => $this->config()['exclusions'] ?? [],
             ])
         );
         $this->app->bind(UpdatesEnvironmentFile::class, UpdateEnvironmentFile::class);
-        $this->app->bind(FormatsEnvironmentCall::class, fn() => new FormatEnvironmentCall(
+        $this->app->bind(FormatsEnvironmentCall::class, fn () => new FormatEnvironmentCall(
             $this->config()['display_comments'] ?? false,
             $this->config()['display_location_hints'] ?? false,
             $this->config()['display_default_values'] ?? true,

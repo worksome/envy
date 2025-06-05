@@ -12,14 +12,14 @@ final class TestFinder implements Finder
     public function configFilePaths(): array
     {
         return [
-            $this->path(__DIR__ . '/../Application/config/app.php')
+            $this->path(__DIR__ . '/../Application/config/app.php'),
         ];
     }
 
     public function environmentFilePaths(): array
     {
         return [
-            $this->path(__DIR__ . '/../Application/.env.example')
+            $this->path(__DIR__ . '/../Application/.env.example'),
         ];
     }
 

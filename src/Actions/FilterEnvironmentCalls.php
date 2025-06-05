@@ -27,13 +27,13 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
     public function __invoke(string $filePath, Collection $environmentCalls): Collection
     {
         $existingKeys = ($this->readEnvironmentFile)($filePath)->map(
-            fn(EnvironmentVariable $variable) => $variable->getKey()
+            fn (EnvironmentVariable $variable) => $variable->getKey()
         );
 
         return $environmentCalls
-            ->unique(fn(EnvironmentCall $call) => $call->getKey())
-            ->reject(fn(EnvironmentCall $call) => $existingKeys->contains($call->getKey()))
-            ->reject(fn(EnvironmentCall $call) => $this->exclusionsContainVariable($call->getKey()));
+            ->unique(fn (EnvironmentCall $call) => $call->getKey())
+            ->reject(fn (EnvironmentCall $call) => $existingKeys->contains($call->getKey()))
+            ->reject(fn (EnvironmentCall $call) => $this->exclusionsContainVariable($call->getKey()));
     }
 
     private function exclusionsContainVariable(string $environmentVariable): bool

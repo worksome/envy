@@ -19,6 +19,7 @@ use function Safe\unlink;
 trait ResetsTestFiles
 {
     private array $filesToReset = [];
+
     private array $fileContents = [];
 
     public function setUpResetsTestFiles(): void
@@ -77,7 +78,7 @@ trait ResetsTestFiles
             throw new BadMethodCallException("The file [{$filePath}] was not configured as a resettable file.");
         }
 
-        $callback ??= fn($newContent, $originalContent) => $newContent !== $originalContent;
+        $callback ??= fn ($newContent, $originalContent) => $newContent !== $originalContent;
 
         throw_unless(
             $callback(file_get_contents($filePath), $this->fileContents[$filePath]),

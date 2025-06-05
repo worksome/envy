@@ -28,7 +28,7 @@ final readonly class LaravelFinder implements Finder
     {
         // @phpstan-ignore-next-line
         return collect($this->configFiles)
-            ->map(fn(string $path) => is_file($path) ? [$path] : $this->allFilesRecursively($path))
+            ->map(fn (string $path) => is_file($path) ? [$path] : $this->allFilesRecursively($path))
             ->flatten()
             ->all();
     }
@@ -40,9 +40,9 @@ final readonly class LaravelFinder implements Finder
     {
         // @phpstan-ignore-next-line
         return LazyCollection::make(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)))
-            ->filter(fn(mixed $file) => $file instanceof SplFileInfo)
-            ->reject(fn(SplFileInfo $file) => $file->isDir())
-            ->map(fn(SplFileInfo $file) => $file->getPathname())
+            ->filter(fn (mixed $file) => $file instanceof SplFileInfo)
+            ->reject(fn (SplFileInfo $file) => $file->isDir())
+            ->map(fn (SplFileInfo $file) => $file->getPathname())
             ->values()
             ->all();
     }
