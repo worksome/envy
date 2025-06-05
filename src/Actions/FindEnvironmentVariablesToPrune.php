@@ -27,7 +27,7 @@ final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariables
     public function __invoke(string $filePath, Collection $environmentCalls): Collection
     {
         $variablesInEnvironmentCalls = $environmentCalls->map(
-            fn(EnvironmentCall $environmentCall) => $environmentCall->getKey()
+            fn (EnvironmentCall $environmentCall) => $environmentCall->getKey()
         );
 
         return $this->environmentVariables($filePath)
@@ -44,7 +44,7 @@ final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariables
     private function environmentVariables(string $filePath): Collection
     {
         return ($this->readEnvironmentFile)($filePath)
-            ->map(fn(EnvironmentVariable $environmentVariable) => $environmentVariable->getKey());
+            ->map(fn (EnvironmentVariable $environmentVariable) => $environmentVariable->getKey());
     }
 
     private function inclusionsContainVariable(string $environmentVariable): bool

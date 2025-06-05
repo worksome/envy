@@ -18,7 +18,9 @@ final class PruneCommand extends Command
     use HasUsefulConsoleMethods;
 
     private const ACTION_PRUNE_ENVIRONMENT_FILE = 'Prune environment file';
+
     private const ACTION_ADD_TO_INCLUSIONS = 'Add to inclusions';
+
     private const ACTION_CANCEL = 'Cancel';
 
     protected $signature = 'envy:prune
@@ -41,6 +43,7 @@ final class PruneCommand extends Command
 
         if ($pendingPrunes->isEmpty()) {
             render('<div class="mx-2 my-1 py-1 px-2 bg-green-500 font-bold">There are no variables to prune!</div>');
+
             return self::SUCCESS;
         }
 

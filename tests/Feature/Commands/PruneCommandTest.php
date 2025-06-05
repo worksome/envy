@@ -14,7 +14,7 @@ it('returns a success code if there are no variables to prune', function () {
     $this->addResettableFile(testAppPath('environments/.env.empty'));
     $this->artisan('envy:prune', [
         '--force' => true,
-        '--path' => testAppPath('environments/.env.empty')
+        '--path' => testAppPath('environments/.env.empty'),
     ])->assertSuccessful();
 
     $this->assertFileNotChanged(testAppPath('environments/.env.empty'));
@@ -31,7 +31,7 @@ it('will ask the user to select an option before progressing', function () {
         ->expectsChoice('How would you like to handle pruning?', 'Prune environment file', [
             'Prune environment file',
             'Add to inclusions',
-            'Cancel'
+            'Cancel',
         ]);
 
     $this->assertFileChanged(testAppPath('.env.example'));
@@ -41,7 +41,7 @@ it('will not show the "Add to inclusions" option if the envy config file has not
     $this->artisan('envy:prune')
         ->expectsChoice('How would you like to handle pruning?', 'Cancel', [
             'Prune environment file',
-            'Cancel'
+            'Cancel',
         ]);
 })->group('withoutPublishedConfigFile');
 
@@ -50,7 +50,7 @@ it('can add the pruned variables to the config inclusions', function () {
         ->expectsChoice('How would you like to handle pruning?', 'Add to inclusions', [
             'Prune environment file',
             'Add to inclusions',
-            'Cancel'
+            'Cancel',
         ]);
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
@@ -61,6 +61,6 @@ it('can add the pruned variables to the config inclusions', function () {
 
 it('shows a useful error message if a configured environment file doesn\'t exist', function () {
     $this->artisan('envy:prune', [
-        '--path' => testAppPath('environments/.env.testing')
+        '--path' => testAppPath('environments/.env.testing'),
     ])->assertExitCode(Command::INVALID);
 });
