@@ -47,5 +47,5 @@ it('ignores environment variables that have no value', function () {
         ->map(fn (EnvironmentVariable $variable) => $variable->getKey())
         ->all();
 
-    expect($keys)->not()->toContain('WITHOUT_VALUE');
+    expect($keys)->not()->toContain('ENV_VARIABLE_WITHOUT_VALUE');
 });
