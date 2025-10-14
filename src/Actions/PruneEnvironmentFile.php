@@ -18,6 +18,7 @@ final class PruneEnvironmentFile implements PrunesEnvironmentFile
         // @phpstan-ignore-next-line
         $updatedContent = $pendingPrunes->reduce(function (string $content, string $environmentVariable) {
             $environmentVariable = preg_quote($environmentVariable);
+
             return preg_replace("/(#.*|\r\n?|\n)*^{$environmentVariable}=.*$/m", '', $content);
         }, file_get_contents($filePath));
 
