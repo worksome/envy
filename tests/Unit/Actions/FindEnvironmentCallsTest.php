@@ -44,7 +44,7 @@ it('correctly retrieves comments', function () {
     $action = new FindEnvironmentCalls(defaultPhpParser());
     $appName = $action(__DIR__ . '/../../Application/config/app.php')->first();
 
-    $normalize = fn(string $s) => str_replace(["\r\n", "\r"], "\n", $s);
+    $normalize = fn (string $s) => str_replace(["\r\n", "\r"], "\n", $s);
 
     expect($normalize($appName->getComment()))->toBe($normalize(<<<'TXT'
     /*
@@ -58,7 +58,6 @@ it('correctly retrieves comments', function () {
     |
     */
     TXT));
-
 });
 
 it('correctly handles function calls used as defaults', function () {
