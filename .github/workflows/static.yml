@@ -40,8 +40,8 @@ jobs:
           php-version: '8.3'
           coverage: none
 
-      - name: Install Dependencies
-        run: composer update --prefer-dist --no-interaction --no-progress --ansi
+      - name: Install composer dependencies
+        uses: ramsey/composer-install@v3
 
       - name: Run ECS
         run: composer test:style
