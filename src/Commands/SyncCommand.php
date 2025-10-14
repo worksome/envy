@@ -20,7 +20,9 @@ final class SyncCommand extends Command
     use HasUsefulConsoleMethods;
 
     private const ACTION_ADD_TO_ENVIRONMENT_FILE = 'Add to environment file';
+
     private const ACTION_ADD_TO_EXCLUSIONS = 'Add to exclusions';
+
     private const ACTION_CANCEL = 'Cancel';
 
     public $signature = 'envy:sync
@@ -43,6 +45,7 @@ final class SyncCommand extends Command
 
         if ($pendingUpdates->isEmpty()) {
             render('<div class="mx-2 my-1 px-2 py-1 bg-green-500 font-bold">There are no variables to sync!</div>');
+
             return self::SUCCESS;
         }
 

@@ -12,6 +12,7 @@ use Worksome\Envy\Support\EnvironmentVariable;
 interface AddsEnvironmentVariablesToList
 {
     public const EXCLUSIONS = 'exclusions';
+
     public const INCLUSIONS = 'inclusions';
 
     /**

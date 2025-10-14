@@ -29,7 +29,7 @@ it('asks for confirmation before making the changes', function () {
         ->expectsChoice('How would you like to handle these updates?', 'Cancel', [
             'Add to environment file',
             'Add to exclusions',
-            'Cancel'
+            'Cancel',
         ]);
 
     $this->assertFileNotChanged(testAppPath('.env.example'));
@@ -48,7 +48,7 @@ it('does not show the "Add to exclusions" option if the config file is unpublish
     $this->artisan('envy:sync')
         ->expectsChoice('How would you like to handle these updates?', 'Cancel', [
             'Add to environment file',
-            'Cancel'
+            'Cancel',
         ]);
 })->group('withoutPublishedConfigFile');
 
@@ -57,7 +57,7 @@ it('can add entries to exclusions automatically', function () {
         ->expectsChoice('How would you like to handle these updates?', 'Add to exclusions', [
             'Add to environment file',
             'Add to exclusions',
-            'Cancel'
+            'Cancel',
         ]);
 
     $this->assertFileChanged(testAppPath('config/envy.php'), function ($newContent) {
@@ -79,6 +79,6 @@ it('can specify a specific environment file to sync', function () {
 
 it('shows a useful error message if a configured environment file doesn\'t exist', function () {
     $this->artisan('envy:sync', [
-        '--path' => testAppPath('environments/.env.testing')
+        '--path' => testAppPath('environments/.env.testing'),
     ])->assertExitCode(Command::INVALID);
 });

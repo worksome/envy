@@ -47,7 +47,7 @@ it('will not include variables on the given inclusions', function () {
 it('will can parse Filters in inclusions', function () {
     $action = new FindEnvironmentVariablesToPrune(new ReadEnvironmentFile(), new ParseFilterList(), [
         Filter::wildcard('APP_*', '*'),
-        'APP_TITLE'
+        'APP_TITLE',
     ]);
     $variables = $action(testAppPath('.env.example'), collect())->all();
 
