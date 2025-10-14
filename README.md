@@ -2,8 +2,10 @@
 
 Automate keeping your environment files in sync.
 
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/worksome/envy/run-tests.yml?branch=main)](https://github.com/worksome/envy/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![PHPStan](https://github.com/worksome/envy/actions/workflows/phpstan.yml/badge.svg)](https://github.com/worksome/envy/actions/workflows/phpstan.yml)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/worksome/envy.svg?style=flat-square)](https://packagist.org/packages/worksome/envy)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/worksome/envy/tests.yml?branch=main&style=flat-square&label=Tests)](https://github.com/worksome/envy/actions?query=workflow%3ATests+branch%3Amain)
+[![GitHub Static Analysis Action Status](https://img.shields.io/github/actions/workflow/status/worksome/envy/static.yml?branch=main&style=flat-square&label=Static%20Analysis)](https://github.com/worksome/envy/actions?query=workflow%3A"Static%20Analysis"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/worksome/envy.svg?style=flat-square)](https://packagist.org/packages/worksome/envy)
 
 How many times have you onboarded a new dev onto your team, only to have to spend ages debugging with them because your project's `.env.example` file is wildly outdated? Too many to count, if you're anything like us. Wouldn't it be nice if there were a way to ensure your environment files stay up to date? That's why we created Envy!
 
