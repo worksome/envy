@@ -84,7 +84,7 @@ If you want to automatically make changes to your configured environment files w
 You can fail CI when your `.env.example` is out of sync by running Envy in dry mode:
 
 ```yaml
-name: Envy check
+name: Envy Check
 
 on:
   pull_request:
@@ -95,10 +95,10 @@ jobs:
   envy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           coverage: none
       - run: composer install --no-interaction --no-progress
       - run: php artisan envy:sync --dry
