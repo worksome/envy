@@ -77,6 +77,32 @@ The `--dry` option will prevent the command from actually pruning any environmen
 
 If you want to automatically make changes to your configured environment files without being asked to confirm, you may pass the `--force` option. This is useful for CI bots, where you want to automate changes to your `.env.example` file, as no user input will be requested.
 
+## CI recipes (GitHub Actions)
+
+You can fail CI when your `.env.example` is out of sync by running Envy in dry mode:
+
+```yaml
+name: Envy check
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  envy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+      - run: composer install --no-interaction --no-progress
+      - run: php artisan envy:sync --dry
+      - run: php artisan envy:prune --dry
+```
+
 ## Configuration
 
 You can customise Envy to suit your project's requirements using our `envy.php` config file. Here is a breakdown of the available options.
