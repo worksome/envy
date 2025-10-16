@@ -212,6 +212,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Credits
 
 - [Luke Downing](https://github.com/lukeraymonddowning)
+- [Owen Voke](https://github.com/owenvoke)
 - [All Contributors](../../contributors)
 
 ## License
