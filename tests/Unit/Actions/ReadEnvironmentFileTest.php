@@ -30,3 +30,22 @@ it('throws an EnvironmentFileNotFoundException if the requested .env file could 
     $action = new ReadEnvironmentFile();
     $action(__DIR__ . '/../../Application/.env.testing');
 })->throws(EnvironmentFileNotFoundException::class);
+
+it('does not throw an exception when encountering a variable without a value', function () {
+    $action = new ReadEnvironmentFile();
+
+    expect(fn () => $action(__DIR__ . '/../../Application/environments/.env.with-undefined-value'))
+        ->not()
+        ->toThrow(RuntimeException::class);
+});
+
+it('ignores environment variables that have no value', function () {
+    $action = new ReadEnvironmentFile();
+    $entries = $action(__DIR__ . '/../../Application/environments/.env.with-undefined-value');
+
+    $keys = $entries
+        ->map(fn (EnvironmentVariable $variable) => $variable->getKey())
+        ->all();
+
+    expect($keys)->not()->toContain('ENV_VARIABLE_WITHOUT_VALUE');
+});
