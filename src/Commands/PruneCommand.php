@@ -116,14 +116,19 @@ final class PruneCommand extends Command
             self::ACTION_CANCEL => true,
         ])->filter()->keys()->all();
 
-        // @phpstan-ignore return.type
-        return $this->option('force')
-            ? self::ACTION_PRUNE_ENVIRONMENT_FILE
-            : strval($this->choice(
-                'How would you like to handle pruning?',
-                $options,
-                self::ACTION_PRUNE_ENVIRONMENT_FILE
-            ));
+        if ($this->option('force')) {
+            return self::ACTION_PRUNE_ENVIRONMENT_FILE;
+        }
+
+        $choice = $this->choice(
+            'How would you like to handle pruning?',
+            $options,
+            self::ACTION_PRUNE_ENVIRONMENT_FILE
+        );
+
+        assert(is_string($choice));
+
+        return $choice;
     }
 
     /**
