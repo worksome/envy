@@ -97,7 +97,7 @@ trait ResetsTestFiles
     {
         try {
             $this->assertFileChanged($filePath);
-        } catch (ExpectationFailedException $exception) {
+        } catch (ExpectationFailedException) {
             $this->addToAssertionCount(1);
 
             return $this;

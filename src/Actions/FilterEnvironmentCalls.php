@@ -18,9 +18,9 @@ final class FilterEnvironmentCalls implements FiltersEnvironmentCalls
      * @param array<int, string|Filter> $exclusions
      */
     public function __construct(
-        private ReadsEnvironmentFile $readEnvironmentFile,
-        private ParsesFilterList $parseFilterList,
-        private array $exclusions = [],
+        private readonly ReadsEnvironmentFile $readEnvironmentFile,
+        private readonly ParsesFilterList $parseFilterList,
+        private readonly array $exclusions = [],
     ) {
     }
 

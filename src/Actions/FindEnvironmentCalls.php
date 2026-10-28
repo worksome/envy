@@ -16,7 +16,7 @@ use function Safe\file_get_contents;
 
 final class FindEnvironmentCalls implements FindsEnvironmentCalls
 {
-    public function __construct(private Parser $parser)
+    public function __construct(private readonly Parser $parser)
     {
     }
 

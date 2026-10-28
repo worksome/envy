@@ -8,7 +8,7 @@ use Worksome\Envy\Contracts\Filter;
 
 final class EqualityFilter implements Filter
 {
-    public function __construct(private string $comparison)
+    public function __construct(private readonly string $comparison)
     {
     }
 

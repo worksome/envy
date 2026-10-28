@@ -50,7 +50,7 @@ it('removes keys from the given exclusions', function () {
 
 it('can parse Filters in exclusions', function (bool $variableMatches, int $expectedFilteredCallCount) {
     $customFilter = new class($variableMatches) implements Filter {
-        public function __construct(private bool $variableMatches)
+        public function __construct(private readonly bool $variableMatches)
         {
         }
 

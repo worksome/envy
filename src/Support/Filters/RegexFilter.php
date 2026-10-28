@@ -8,7 +8,7 @@ use Worksome\Envy\Contracts\Filter;
 
 final class RegexFilter implements Filter
 {
-    public function __construct(private string $pattern)
+    public function __construct(private readonly string $pattern)
     {
     }
 

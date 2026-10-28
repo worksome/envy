@@ -1,5 +1,4 @@
 includes:
-    - ./vendor/worksome/coding-style/larastan.neon
     - phpstan-baseline.neon
 
 parameters:

@@ -11,7 +11,7 @@ final class WildcardFilter implements Filter
     /**
      * @param non-empty-string $wildcard
      */
-    public function __construct(private string $comparison, private string $wildcard)
+    public function __construct(private readonly string $comparison, private readonly string $wildcard)
     {
     }
 

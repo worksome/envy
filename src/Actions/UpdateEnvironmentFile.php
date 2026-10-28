@@ -13,7 +13,7 @@ use function Safe\file_put_contents;
 
 final class UpdateEnvironmentFile implements UpdatesEnvironmentFile
 {
-    public function __construct(private FormatsEnvironmentCall $formatEnvironmentCall)
+    public function __construct(private readonly FormatsEnvironmentCall $formatEnvironmentCall)
     {
     }
 
