@@ -19,12 +19,12 @@ final class EnvCallNodeVisitor extends NodeVisitorAbstract
      *
      * @var Collection<int, EnvironmentCall>
      */
-    private Collection $environmentVariables;
+    private readonly Collection $environmentVariables;
 
     /**
      * The printer to format env calls with.
      */
-    private PrettyPrinterAbstract $printer;
+    private readonly PrettyPrinterAbstract $printer;
 
     public function __construct(
         private readonly string $filePath,

@@ -18,9 +18,9 @@ final class FindEnvironmentVariablesToPrune implements FindsEnvironmentVariables
      * @param array<int, string|Filter> $inclusions
      */
     public function __construct(
-        private ReadsEnvironmentFile $readEnvironmentFile,
-        private ParsesFilterList $parsesFilterList,
-        private array $inclusions = [],
+        private readonly ReadsEnvironmentFile $readEnvironmentFile,
+        private readonly ParsesFilterList $parsesFilterList,
+        private readonly array $inclusions = [],
     ) {
     }
 

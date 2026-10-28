@@ -13,9 +13,9 @@ use function Safe\preg_replace;
 final class FormatEnvironmentCall implements FormatsEnvironmentCall
 {
     public function __construct(
-        private bool $displayComment = false,
-        private bool $displayLocationHint = false,
-        private bool $displayDefaultValue = false,
+        private readonly bool $displayComment = false,
+        private readonly bool $displayLocationHint = false,
+        private readonly bool $displayDefaultValue = false,
     ) {
     }
 

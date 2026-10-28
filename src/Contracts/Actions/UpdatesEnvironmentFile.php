@@ -10,7 +10,6 @@ use Worksome\Envy\Support\EnvironmentCall;
 interface UpdatesEnvironmentFile
 {
     /**
-     * @param string                           $filePath
      * @param Collection<int, EnvironmentCall> $environmentCalls
      */
     public function __invoke(string $filePath, Collection $environmentCalls): void;

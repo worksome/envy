@@ -24,11 +24,11 @@ final class AddEnvironmentVariablesToList implements AddsEnvironmentVariablesToL
     /**
      * The printer used to recreate the config file.
      */
-    private PrettyPrinterAbstract $printer;
+    private readonly PrettyPrinterAbstract $printer;
 
     public function __construct(
-        private Parser $parser,
-        private Finder $finder,
+        private readonly Parser $parser,
+        private readonly Finder $finder,
     ) {
         $this->printer = new Standard();
     }

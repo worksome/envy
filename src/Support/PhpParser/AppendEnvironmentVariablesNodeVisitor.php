@@ -17,7 +17,7 @@ final class AppendEnvironmentVariablesNodeVisitor extends NodeVisitorAbstract
     /**
      * @param Collection<int, EnvironmentVariable> $updates
      */
-    public function __construct(private Collection $updates, private string $arrayKey)
+    public function __construct(private readonly Collection $updates, private readonly string $arrayKey)
     {
     }
 

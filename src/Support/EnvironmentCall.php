@@ -14,11 +14,11 @@ final class EnvironmentCall
      * @param string|null $comment The PHP comment directly above the env call, if given
      */
     public function __construct(
-        private string $file,
-        private int $line,
-        private string $key,
-        private string|null $default = null,
-        private string|null $comment = null,
+        private readonly string $file,
+        private readonly int $line,
+        private readonly string $key,
+        private readonly string|null $default = null,
+        private readonly string|null $comment = null,
     ) {
     }
 

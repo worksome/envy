@@ -1,0 +1,25 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,mixed\>\:\:map\(\) expects callable\(mixed, int\)\: Worksome\\Envy\\Support\\EnvironmentVariable, Closure\(Worksome\\Envy\\Support\\EnvironmentCall\)\: Worksome\\Envy\\Support\\EnvironmentVariable given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Envy.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,mixed\>\:\:map\(\) expects callable\(mixed, int\)\: Worksome\\Envy\\Support\\EnvironmentVariable, Closure\(string\)\: Worksome\\Envy\\Support\\EnvironmentVariable given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Envy.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<int,mixed\>\:\:sortBy\(\) expects array\<array\{string, ''asc''\|''desc''\|SortDirection\}\|\(callable\(mixed, int\)\: mixed\)\|string\>\|\(callable\(mixed, int\)\: mixed\)\|int\|string, Closure\(Worksome\\Envy\\Support\\EnvironmentCall\)\: string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Envy.php
+
+		-
+			message: '#^Parameter \#1 \$key of method Illuminate\\Support\\Collection\<int,mixed\>\:\:unique\(\) expects \(callable\(mixed, int\)\: mixed\)\|string\|null, Closure\(Worksome\\Envy\\Support\\EnvironmentCall\)\: string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Envy.php

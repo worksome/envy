@@ -19,13 +19,13 @@ use Worksome\Envy\Support\EnvironmentVariable;
 final class Envy
 {
     public function __construct(
-        private AddsEnvironmentVariablesToList $addEnvironmentVariablesToList,
-        private FiltersEnvironmentCalls $filtersEnvironmentCalls,
-        private Finder $finder,
-        private FindsEnvironmentCalls $findEnvironmentCalls,
-        private FindsEnvironmentVariablesToPrune $findEnvironmentVariablesToPrune,
-        private PrunesEnvironmentFile $pruneEnvironmentFile,
-        private UpdatesEnvironmentFile $updateEnvironmentFile,
+        private readonly AddsEnvironmentVariablesToList $addEnvironmentVariablesToList,
+        private readonly FiltersEnvironmentCalls $filtersEnvironmentCalls,
+        private readonly Finder $finder,
+        private readonly FindsEnvironmentCalls $findEnvironmentCalls,
+        private readonly FindsEnvironmentVariablesToPrune $findEnvironmentVariablesToPrune,
+        private readonly PrunesEnvironmentFile $pruneEnvironmentFile,
+        private readonly UpdatesEnvironmentFile $updateEnvironmentFile,
     ) {
     }
 
